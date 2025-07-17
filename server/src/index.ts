@@ -15,6 +15,7 @@ import deleteAccounts from './routes/account/delete-accounts';
 import getAccounts from './routes/account/get-accounts';
 import postAccounts from './routes/account/post-accounts';
 import putAccounts from './routes/account/put-accounts';
+import getUser from "./routes/account/get-user";
 import getMe from './routes/account/get-me';
 import putMe from './routes/account/put-me';
 
@@ -44,6 +45,7 @@ app.use('/api', deleteAccounts);
 app.use('/api', getAccounts);
 app.use('/api', postAccounts);
 app.use('/api', putAccounts);
+app.use('/api', getUser);
 app.use('/api', getMe);
 app.use('/api', putMe);
 
