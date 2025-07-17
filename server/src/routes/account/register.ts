@@ -32,10 +32,11 @@ router.post('/register', async (request: Request, response: Response): Promise<v
     response.status(201).json({
       message: 'Account created successfully.',
       user: {
-        id: account._id,
         email: account.email,
         first_name: account.first_name,
         last_name: account.last_name,
+        role: account.role,
+        photo: account.photo,
       },
     });
   } catch (err) {

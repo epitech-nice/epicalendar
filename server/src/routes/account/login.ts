@@ -32,7 +32,13 @@ router.post('/login', async (request: Request, response: Response): Promise<void
     response.json({
       message: 'Login successful.',
       token: generateToken(user._id, user.role),
-      user,
+      user: {
+        email: user.email,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        role: user.role,
+        photo: user.photo,
+      }
     });
   } catch (err) {
     response.status(500).json({ message: 'Server error.', details: err });
