@@ -15,6 +15,11 @@ const RequestSchema = new Schema({
     type: Number,
     required: true
   },
+  created_at: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
 
   account: {
     type: Schema.Types.ObjectId,

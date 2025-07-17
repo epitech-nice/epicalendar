@@ -16,6 +16,9 @@ const DaySchema = new Schema({
     type: Number,
     required: true
   },
+  closed_at: {
+    type: Date,
+  },
 
   aer: [{
     type: Schema.Types.ObjectId,
