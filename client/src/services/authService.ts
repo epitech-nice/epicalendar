@@ -1,17 +1,32 @@
-import api from "api";
+import api from "./api";
+import axios from "axios";
 
 
 
-export const authService = {
+export interface User {
+  email: string;
+  first_name: string;
+  last_name: string;
+  role: 'étudiant' | 'aer' | 'admin';
+  photo: string;
+}
+
+
+
+export const AuthService = {
   async login(data: { email: string; password: string }) {
     try {
       const response = await api.post('/login', data);
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || "Erreur de connexion";
-      throw new Error(message);
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message || "Erreur de connexion";
+        throw new Error(message);
+      } else {
+        throw new Error("Erreur de connexion");
+      }
     }
   },
 
@@ -19,12 +34,16 @@ export const authService = {
   async register(data: { email: string, first_name: string, last_name: string, password: string }) {
     try {
       const response = await api.post('/register', data);
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
-      const message = error.response.data.message || "Erreur d'inscription";
-      throw new Error(message);
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message || "Erreur d'inscription";
+        throw new Error(message);
+      } else {
+        throw new Error("Erreur d'inscription");
+      }
     }
   },
 
@@ -43,12 +62,24 @@ export const authService = {
   },
 
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();
+  async updateUser() {
+    try {
+      const user = (await api.get('user')).data;
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user));
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message || "Erreur lors de la mise à jour de l'utilisateur";
+        throw new Error(message);
+      } else {
+        throw new Error("Erreur lors de la mise à jour de l'utilisateur");
+      }
+    }
   },
 
 
-  getUser() {
+  getUser(): User | null {
     if (typeof window !== 'undefined') {
       const userStr = localStorage.getItem('user');
       return userStr ? JSON.parse(userStr) : null;
@@ -57,13 +88,16 @@ export const authService = {
   },
 
 
-  getProfile() {
+  async getProfile() {
     try {
-      const response = api.get('/me');
-      return response.data;
+      return (await api.get('/me')).data;
     } catch (error) {
-      const message = error.response.data.message || "Erreur lors de la récupération du profil";
-      throw new Error(message);
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message || "Erreur lors de la récupération du profil";
+        throw new Error(message);
+      } else {
+        throw new Error("Erreur lors de la récupération du profil");
+      }
     }
   }
 };
