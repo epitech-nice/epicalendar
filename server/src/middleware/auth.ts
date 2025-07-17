@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import {NextFunction, Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
 
 
@@ -19,8 +19,7 @@ export function authenticateToken(req: AuthenticatedRequest, res: Response, next
     }
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = decoded;
+        req.user = jwt.verify(token, JWT_SECRET); // id and role
         next();
     } catch (err) {
         res.status(403).json({ message: 'Invalid or expired token.' });
