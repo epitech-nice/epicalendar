@@ -1,0 +1,115 @@
+"use client";
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/authContext';
+
+
+
+export default function Login() {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { login } = useAuth();
+
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+
+        try {
+            await login(formData);
+            router.push('/');
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'An error occurred during login.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+    return (
+        <main>
+            <div>
+                <h1>
+                    Sign In
+                </h1>
+
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="email">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            placeholder="your.email@example.com"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            placeholder="Votre mot de passe"
+                        />
+                    </div>
+
+                    {error && (
+                        <div>
+                            {error}
+                        </div>
+                    )}
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading ? 'Signing in...' : 'Sign in'}
+                    </button>
+                </form>
+
+                <div>
+                    <p>
+                        Don&#39;t have an account?{' '}
+                        <Link href="/register">
+                            Sign up
+                        </Link>
+                    </p>
+                </div>
+
+                <div>
+                    <Link href="/">
+                        ← Back to home
+                    </Link>
+                </div>
+            </div>
+        </main>
+    );
+}
