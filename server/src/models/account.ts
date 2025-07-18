@@ -32,8 +32,8 @@ const AccountSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['étudiant', 'aer', 'admin'],
-    default: 'étudiant',
+    enum: ['student', 'aer', 'admin'],
+    default: 'student',
     required: true
   },
   description: {
