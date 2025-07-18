@@ -45,7 +45,7 @@ router.put('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
             { new: true, runValidators: true }
         );
 
-        response.status(200).json({ 
+        response.status(200).json({ // TODO: sa renvoie peut etre le mot de passe haché dans la réponse
             message: 'Account updated successfully.',
             account: updatedAccount 
         });

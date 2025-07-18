@@ -16,4 +16,19 @@ router.get('/accounts', authenticateToken, authorizeAdmin, async (request: Reque
     }
 });
 
+router.get('/accounts/:id', authenticateToken, authorizeAdmin, async (request: Request, response: Response): Promise<void> => {
+    try {
+        const accountId = request.params.id;
+        const account = await Account.findById(accountId, '-password');
+        if (!account) {
+            response.status(404).json({ error: 'Account not found.' });
+            return;
+        }
+        response.json(account);
+    } catch (err) {
+        response.status(500).json({ message: 'Server error.', details: err });
+        console.error("Error fetching account:", err);
+    }
+});
+
 export default router;
