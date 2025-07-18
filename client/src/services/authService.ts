@@ -7,7 +7,7 @@ export interface User {
   email: string;
   first_name: string;
   last_name: string;
-  role: 'étudiant' | 'aer' | 'admin';
+  role: 'student' | 'aer' | 'admin';
   photo: string;
 }
 
@@ -22,10 +22,10 @@ export const AuthService = {
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const message = error.response?.data?.message || "Erreur de connexion";
+        const message = error.response?.data?.message || "Login error";
         throw new Error(message);
       } else {
-        throw new Error("Erreur de connexion");
+        throw new Error("Login error");
       }
     }
   },
@@ -39,10 +39,10 @@ export const AuthService = {
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const message = error.response?.data?.message || "Erreur d'inscription";
+        const message = error.response?.data?.message || "Registration error";
         throw new Error(message);
       } else {
-        throw new Error("Erreur d'inscription");
+        throw new Error("Registration error");
       }
     }
   },
@@ -64,16 +64,16 @@ export const AuthService = {
 
   async updateUser() {
     try {
-      const user = (await api.get('user')).data;
+      const user = (await api.get('user')).data.user;
       if (user) {
         localStorage.setItem('user', JSON.stringify(user));
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const message = error.response?.data?.message || "Erreur lors de la mise à jour de l'utilisateur";
+        const message = error.response?.data?.message || "User update error";
         throw new Error(message);
       } else {
-        throw new Error("Erreur lors de la mise à jour de l'utilisateur");
+        throw new Error("User update error");
       }
     }
   },
@@ -93,10 +93,10 @@ export const AuthService = {
       return (await api.get('/me')).data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const message = error.response?.data?.message || "Erreur lors de la récupération du profil";
+        const message = error.response?.data?.message || "Profile retrieval error";
         throw new Error(message);
       } else {
-        throw new Error("Erreur lors de la récupération du profil");
+        throw new Error("Profile retrieval error");
       }
     }
   }
