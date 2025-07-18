@@ -36,6 +36,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
+
+
     useEffect(() => {
         const checkAuth = async () => {
             const storedToken = AuthService.getToken();
@@ -53,6 +55,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         checkAuth();
     }, []);
 
+
+
     const login = async (data: { email: string; password: string }) => {
         const response = await AuthService.login(data);
         setUser(response.user);
@@ -67,6 +71,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         AuthService.logout();
         setUser(null);
     };
+
+
 
     const value = {
         user,

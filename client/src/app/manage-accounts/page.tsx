@@ -61,7 +61,7 @@ export default function ManagerAccounts() {
 
 
 
-    if (loading) {
+    if (loading) {// TODO: faire un composant de chargement
         return <p>Loading...</p>;
     }
 
@@ -74,6 +74,9 @@ export default function ManagerAccounts() {
     return (
         <main>
             <h1>Manage Accounts</h1>
+            <button onClick={() => router.push(`/manager-accounts/add`)}>
+                Add new account
+            </button>
             <table>
                 <thead>
                     <tr>
@@ -86,7 +89,7 @@ export default function ManagerAccounts() {
                 </thead>
                 <tbody>
                     {accounts.map(account => (
-                        <tr key={account._id}>
+                        <tr key={account._id} onClick={() => router.push(`/manager-accounts/display/${account._id}`)} style={{ cursor: 'pointer' }}>
                             <td>{account.email}</td>
                             <td>{account.first_name}</td>
                             <td>{account.last_name}</td>

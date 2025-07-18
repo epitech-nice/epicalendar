@@ -44,6 +44,9 @@ export default function Header() {
                             <Link href="/manage-guards">
                                 Manage guards
                             </Link>
+                            <Link href="/profile">
+                                Profile
+                            </Link>
                         </>
                     )}
                     {user.role === 'admin' && (
