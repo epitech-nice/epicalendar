@@ -8,16 +8,20 @@ const DaySchema = new Schema({
     required: true,
     unique: true
   },
-  start: {
-    type: Number,
+  start: { // Moment (hours:minutes) when the campus opens [ex: '08:00']
+    type: String,
     required: true
   },
-  end: {
-    type: Number,
+  start_at: { // Moment (hours:minutes) when the garde starts [ex: '18:00']
+    type: String,
     required: true
   },
-  closed_at: {
-    type: Date,
+  end: { // Moment (hours:minutes) when the campus closes [ex: '22:00']
+    type: String,
+    required: true
+  },
+  closed_at: { // Moment (hours:minutes) when the AER closes the campus [ex: '20:00']
+    type: String,
   },
 
   aer: [{
