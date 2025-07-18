@@ -12,7 +12,7 @@ const DaySchema = new Schema({
     type: String,
     required: true
   },
-  start_at: { // Moment (hours:minutes) when the garde starts [ex: '18:00']
+  start_at: { // Moment (hours:minutes) when the guard starts [ex: '18:00']
     type: String,
     required: true
   },

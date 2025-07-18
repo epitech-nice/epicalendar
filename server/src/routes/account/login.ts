@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 const router = Router();
 
 router.post('/login', async (request: Request, response: Response): Promise<void> => {
-    console.log(request);
+  //console.log(request);
   try {
     const { email, password } = request.body;
     if (!email || !password) {
