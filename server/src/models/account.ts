@@ -44,6 +44,10 @@ const AccountSchema = new Schema({
     type: String,
     default: '/default-user.jpg'
   },
+  guard_time: {
+    type: Number,
+    default: 0,
+  },
 
   // Preferences
   day: {

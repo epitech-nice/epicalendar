@@ -9,19 +9,19 @@ const DaySchema = new Schema({
     unique: true
   },
   start: { // Moment (hours:minutes) when the campus opens [ex: '08:00']
-    type: String,
+    type: Date,
     required: true
   },
   start_at: { // Moment (hours:minutes) when the guard starts [ex: '18:00']
-    type: String,
+    type: Date,
     required: true
   },
   end: { // Moment (hours:minutes) when the campus closes [ex: '22:00']
-    type: String,
+    type: Date,
     required: true
   },
   closed_at: { // Moment (hours:minutes) when the AER closes the campus [ex: '20:00']
-    type: String,
+    type: Date,
   },
 
   aer: [{
@@ -29,6 +29,10 @@ const DaySchema = new Schema({
     ref: 'Account',
     required: true
   }],
+  message: {
+    type: String,
+    default: ''
+  },
   observations: {
     type: String,
     default: ''

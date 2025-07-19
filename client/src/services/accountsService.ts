@@ -13,6 +13,7 @@ export interface Account {
     role: 'student' | 'aer' | 'admin';
     description?: string;
     photo?: string;
+    guard_time?: number;
     day?: string;
     room?: string;
 }

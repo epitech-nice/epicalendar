@@ -7,7 +7,7 @@ import { Account, AccountService } from '@/services/accountsService';
 
 
 
-export default function ManagerAccounts() {
+export default function ManageAccounts() {
     const { user, loading, isAuthenticated } = useAuth();
     const [accounts, setAccounts] = useState<Account[]>([]);
     const [error, setError] = useState('');
@@ -51,7 +51,7 @@ export default function ManagerAccounts() {
             return;
         }
 
-        if (user && user.role !== 'admin') {
+        if (!user || (user && user.role !== 'admin')) {
             setError('You do not have permission to access this page.');
             return;
         }
@@ -74,7 +74,7 @@ export default function ManagerAccounts() {
     return (
         <main>
             <h1>Manage Accounts</h1>
-            <button onClick={() => router.push(`/manager-accounts/add`)}>
+            <button onClick={() => router.push(`/manage-accounts/add`)}>
                 Add new account
             </button>
             <table>
@@ -89,13 +89,13 @@ export default function ManagerAccounts() {
                 </thead>
                 <tbody>
                     {accounts.map(account => (
-                        <tr key={account._id} onClick={() => router.push(`/manager-accounts/display/${account._id}`)} style={{ cursor: 'pointer' }}>
+                        <tr key={account._id} onClick={() => router.push(`/manage-accounts/display/${account._id}`)} style={{ cursor: 'pointer' }}>
                             <td>{account.email}</td>
                             <td>{account.first_name}</td>
                             <td>{account.last_name}</td>
                             <td>{account.role}</td>
                             <td>
-                                <button onClick={() => router.push(`/manager-accounts/edit/${account._id}`)}>Edit</button>
+                                <button onClick={() => router.push(`/manage-accounts/edit/${account._id}`)}>Edit</button>
                                 <button onClick={() => handleDeleteAccount(account._id!)}>Delete</button>
                             </td>
                         </tr>
