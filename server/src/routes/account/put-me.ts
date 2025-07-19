@@ -11,6 +11,8 @@ interface AuthenticatedRequest extends Request {
     user?: { id: string };
 }
 
+
+
 router.put('/me', authenticateToken, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
     try {
         if (!request.user || !request.user.id) {
@@ -45,11 +47,15 @@ router.put('/me', authenticateToken, async (request: AuthenticatedRequest, respo
             response.status(404).json({ error: 'Account not found.' });
             return;
         }
+
         response.json(updatedAccount);
-    } catch (err) {
-        response.status(500).json({ message: 'Server error.', details: err });
-        console.error("Error updating account:", err);
+
+    } catch (error) {
+        response.status(500).json({ message: 'Server error.', details: error });
+        console.error("Error updating account:", error);
     }
 });
+
+
 
 export default router;

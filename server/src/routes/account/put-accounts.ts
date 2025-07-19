@@ -3,7 +3,11 @@ import { Account } from "../../models/account";
 import { authenticateToken, authorizeAdmin } from '../../middleware/auth';
 import bcrypt from "bcrypt";
 
+
+
 const router = Router();
+
+
 
 router.put('/accounts/:id', authenticateToken, authorizeAdmin, async (request: Request, response: Response): Promise<void> => {
     try {
@@ -49,10 +53,13 @@ router.put('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
             message: 'Account updated successfully.',
             account: updatedAccount 
         });
-    } catch (err) {
-        response.status(500).json({ message: 'Server error.', details: err });
-        console.error(err);
+
+    } catch (error) {
+        response.status(500).json({ message: 'Server error.', details: error });
+        console.error(error);
     }
 });
+
+
 
 export default router;

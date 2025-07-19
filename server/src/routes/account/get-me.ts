@@ -10,6 +10,8 @@ interface AuthenticatedRequest extends Request {
     user?: { id: string };
 }
 
+
+
 router.get('/me', authenticateToken, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
     try {
         if (!request.user || !request.user.id) {
@@ -22,11 +24,15 @@ router.get('/me', authenticateToken, async (request: AuthenticatedRequest, respo
             response.status(404).json({ error: 'Account not found.' });
             return;
         }
+
         response.json(account);
-    } catch (err) {
-        response.status(500).json({ message: 'Server error.', details: err });
-        console.error("Error fetching account:", err);
+
+    } catch (error) {
+        response.status(500).json({ message: 'Server error.', details: error });
+        console.error("Error fetching account:", error);
     }
 });
+
+
 
 export default router;

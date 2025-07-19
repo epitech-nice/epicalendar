@@ -9,6 +9,8 @@ if (!fs.existsSync(uploadFolder)) {
     fs.mkdirSync(uploadFolder);
 }
 
+
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, uploadFolder);
@@ -18,5 +20,7 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + '-' + file.originalname);
     }
 });
+
+
 
 export const upload = multer({ storage });

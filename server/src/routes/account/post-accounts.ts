@@ -6,6 +6,8 @@ import { authenticateToken, authorizeAdmin } from '../../middleware/auth';
 
 const router = Router();
 
+
+
 router.post('/accounts', authenticateToken, authorizeAdmin, async (request: Request, response: Response): Promise<void> => {
     try {
         let { email, first_name, last_name, password, role, description, photo, day, room } = request.body;
@@ -21,7 +23,6 @@ router.post('/accounts', authenticateToken, authorizeAdmin, async (request: Requ
         }
 
         const formattedFields = await formatAccountFields(first_name, last_name, password);
-
         const newAccount = new Account({
             email,
             first_name: formattedFields.first_name,
@@ -35,10 +36,13 @@ router.post('/accounts', authenticateToken, authorizeAdmin, async (request: Requ
         });
         await newAccount.save();
         response.status(201).json({ message: 'Account created successfully.', account: newAccount });
+
     } catch (err) {
-        response.status(500).json({ error: 'Server error', details: err });
+        response.status(500).json({ message: 'Server error', details: err });
         console.error("Error creating account:", err);
     }
 });
+
+
 
 export default router;
