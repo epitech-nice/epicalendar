@@ -18,8 +18,8 @@ export default function Register() {
         last_name: '',
         password: ''
     });
+    const [responseLoading, setResponseLoading] = useState(false);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
 
 
 
@@ -32,7 +32,7 @@ export default function Register() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
+        setResponseLoading(true);
         setError('');
 
         try {
@@ -47,7 +47,7 @@ export default function Register() {
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : 'An error occurred during registration.');
         } finally {
-            setLoading(false);
+            setResponseLoading(false);
         }
     };
 
@@ -125,7 +125,7 @@ export default function Register() {
                             value={formData.password}
                             onChange={handleChange}
                             required
-                            placeholder="Votre mot de passe"
+                            placeholder="Your password"
                         />
                     </div>
 
@@ -137,8 +137,8 @@ export default function Register() {
 
                     <button
                         type="submit"
-                        disabled={loading}>
-                        {loading ? 'Creating...' : 'Create account'}
+                        disabled={responseLoading}>
+                        {responseLoading ? 'Creating...' : 'Create account'}
                     </button>
                 </form>
 

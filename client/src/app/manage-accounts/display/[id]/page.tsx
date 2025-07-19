@@ -83,6 +83,7 @@ export default function ManageAccountsDisplayId() {
 
 
 
+    //TODO: refaire mais avec des divs et des classes CSS pour le style askip c'est mieux que des tables
     return (
         <main>
             <table><tbody>
@@ -111,25 +112,25 @@ export default function ManageAccountsDisplayId() {
                     <td>
                         <em>
                             <b>ID:</b>
-                            <p>{account?._id}</p>
+                            {account?._id}
                         </em>
                     </td>
                     <td>
                         <em>
                             <b>Created at:</b>
-                            <p>{account?.created_at ?
+                            {account?.created_at ?
                                 new Date(account?.created_at).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric'
-                            }) : 'unknown date' }</p>
+                            }) : 'unknown date' }
                         </em>
                     </td>
                 </tr>
 
                 <tr>
                     <td colSpan={2}>
-                        <p>{account?.first_name} {account?.last_name}</p>
+                        {account?.first_name} {account?.last_name}
                     </td>
                 </tr>
 
@@ -142,27 +143,27 @@ export default function ManageAccountsDisplayId() {
                 <tr>
                     <td colSpan={2}>
                         <b>Total guard time:</b>
-                        <p>{account?.guard_time
+                        {account?.guard_time
                             ? `${Math.floor(account.guard_time / 60)} hours ${account.guard_time % 60} minutes`
-                            : 'No guard time recorded'}</p>
+                            : 'No guard time recorded'}
                     </td>
                 </tr>
 
                 <tr>
                     <td colSpan={2}>
                         <b>description</b>
-                        <p>{account?.description || 'No description provided.'}</p>
+                        {account?.description || 'No description provided.'}
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-                        <b>Preferred room:</b>
-                        <p>{account?.room || 'No preferred room set.'}</p>
+                        <b>Preferred day:</b>
+                        {account?.day || 'No preferred day set.'}
                     </td>
                     <td>
-                        <b>Preferred day:</b>
-                        <p>{account?.day || 'No preferred day set.'}</p>
+                        <b>Preferred room:</b>
+                        {account?.room || 'No preferred room set.'}
                     </td>
                 </tr>
             </tbody></table>

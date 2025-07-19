@@ -75,10 +75,14 @@ export default function ManageAccounts() {
 
     return (
         <main>
-            <h1>Manage Accounts</h1>
+            <h1>
+                Manage accounts
+            </h1>
+
             <button onClick={() => router.push(`/manage-accounts/add`)}>
                 Add new account
             </button>
+
             <table>
                 <thead>
                     <tr>
@@ -89,16 +93,29 @@ export default function ManageAccounts() {
                         <th>Actions</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     {accounts.map(account => (
                         <tr key={account._id} onClick={() => router.push(`/manage-accounts/display/${account._id}`)} style={{ cursor: 'pointer' }}>
-                            <td>{account.email}</td>
-                            <td>{account.first_name}</td>
-                            <td>{account.last_name}</td>
-                            <td>{account.role}</td>
                             <td>
-                                <button onClick={() => router.push(`/manage-accounts/edit/${account._id}`)}>Edit</button>
-                                <button onClick={() => handleDeleteAccount(account._id!)}>Delete</button>
+                                {account.email}
+                            </td>
+                            <td>
+                                {account.first_name}
+                            </td>
+                            <td>
+                                {account.last_name}
+                            </td>
+                            <td>
+                                {account.role}
+                            </td>
+                            <td>
+                                <button onClick={() => router.push(`/manage-accounts/edit/${account._id}`)}>
+                                    Edit
+                                </button>
+                                <button onClick={() => handleDeleteAccount(account._id!)}>
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     ))}

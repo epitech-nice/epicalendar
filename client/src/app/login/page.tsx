@@ -16,8 +16,8 @@ export default function Login() {
         email: '',
         password: ''
     });
+    const [responseLoading, setResponseLoading] = useState(false);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
 
 
 
@@ -30,7 +30,7 @@ export default function Login() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
+        setResponseLoading(true);
         setError('');
 
         try {
@@ -39,7 +39,7 @@ export default function Login() {
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : 'An error occurred during login.');
         } finally {
-            setLoading(false);
+            setResponseLoading(false);
         }
     };
 
@@ -87,7 +87,7 @@ export default function Login() {
                             value={formData.password}
                             onChange={handleChange}
                             required
-                            placeholder="Votre mot de passe"
+                            placeholder="Your password"
                         />
                     </div>
 
@@ -99,9 +99,9 @@ export default function Login() {
 
                     <button
                         type="submit"
-                        disabled={loading}
+                        disabled={responseLoading}
                     >
-                        {loading ? 'Signing in...' : 'Sign in'}
+                        {responseLoading ? 'Signing in...' : 'Sign in'}
                     </button>
                 </form>
 
