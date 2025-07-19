@@ -52,7 +52,7 @@ const AccountSchema = new Schema({
   // Preferences
   day: {
     type: String,
-    enum: ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+    enum: ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     default: '',
   },
   room: {

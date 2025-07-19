@@ -14,7 +14,7 @@ export interface Account {
     description?: string;
     photo?: string;
     guard_time?: number;
-    day?: string;
+    day?: '' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
     room?: string;
 }
 
