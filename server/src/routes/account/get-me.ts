@@ -1,14 +1,10 @@
 import { Request, Response, Router } from "express";
 import { Account } from "../../models/account";
-import { authenticateToken } from '../../middleware/auth';
+import { authenticateToken, AuthenticatedRequest } from '../../middleware/auth';
 
 
 
 const router = Router();
-
-interface AuthenticatedRequest extends Request {
-    user?: { id: string };
-}
 
 
 

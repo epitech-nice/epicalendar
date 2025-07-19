@@ -2,6 +2,7 @@
 import dotenv from 'dotenv';
 import express, { Request, Response} from 'express';
 import cors from 'cors';
+import path from 'path';
 
 /* Import database */
 import * as database from './config/database';
@@ -19,6 +20,10 @@ import getUser from "./routes/account/get-user";
 import getMe from './routes/account/get-me';
 import putMe from './routes/account/put-me';
 
+  /* Images routes */
+import postImage from './routes/images/post-image';
+import getImages from './routes/images/get-images';
+
 
 
 /* Set up app */
@@ -30,6 +35,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 /* Default route */
 app.get('/', (request: Request, response: Response) => {
@@ -48,6 +54,10 @@ app.use('/api', putAccounts);
 app.use('/api', getUser);
 app.use('/api', getMe);
 app.use('/api', putMe);
+
+  /* Upload routes */
+app.use('/api', getImages);
+app.use('/api', postImage);
 
 /* Set not found handler */
 app.use((request: Request, response: Response) => {
