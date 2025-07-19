@@ -10,12 +10,14 @@ import Image from "next/image";
 
 
 export default function ManageAccountsDisplayId() {
-    const params = useParams()
     const router = useRouter()
+    const params = useParams()
+    const id = params?.id as string
+
     const { user, loading, isAuthenticated } = useAuth()
+
     const [account, setAccount] = useState<Account | null>(null)
     const [error, setError] = useState<string | null>(null)
-    const id = params?.id as string
 
 
 

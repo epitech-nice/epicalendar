@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/authContext';
@@ -8,6 +8,10 @@ import { useAuth } from '@/contexts/authContext';
 
 
 export default function Register() {
+    const router = useRouter();
+
+    const { isAuthenticated, register } = useAuth();
+
     const [formData, setFormData] = useState({
         email: '',
         first_name: '',
@@ -16,8 +20,6 @@ export default function Register() {
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
-    const { register } = useAuth();
 
 
 
@@ -48,6 +50,14 @@ export default function Register() {
             setLoading(false);
         }
     };
+
+
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            router.push('/');
+        }
+    }, [isAuthenticated, router]);
 
 
 

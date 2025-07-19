@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/authContext';
@@ -8,14 +8,16 @@ import { useAuth } from '@/contexts/authContext';
 
 
 export default function Login() {
+    const router = useRouter();
+
+    const { isAuthenticated, login } = useAuth();
+
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
-    const { login } = useAuth();
 
 
 
@@ -40,6 +42,14 @@ export default function Login() {
             setLoading(false);
         }
     };
+
+
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            router.push('/');
+        }
+    }, [isAuthenticated, router]);
 
 
 

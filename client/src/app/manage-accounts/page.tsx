@@ -8,10 +8,12 @@ import { Account, AccountService } from '@/services/accountsService';
 
 
 export default function ManageAccounts() {
+    const router = useRouter();
+
     const { user, loading, isAuthenticated } = useAuth();
+
     const [accounts, setAccounts] = useState<Account[]>([]);
     const [error, setError] = useState('');
-    const router = useRouter();
 
 
 
