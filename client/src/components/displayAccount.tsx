@@ -56,11 +56,17 @@ export default function DisplayAccount({ account, profile } : { account: Account
             </div>
 
             <div>
-                <button onClick={() => router.push(`/manage-accounts/edit/${account?._id}`)}>
-                    Edit
-                </button>
+                {profile ? (
+                    <button onClick={() => router.push('/profile/edit')}>
+                        Edit
+                    </button>
+                ) : (
+                    <button onClick={() => router.push(`/manage-accounts/edit/${account?._id}`)}>
+                        Edit
+                    </button>
+                )}
 
-                {account && profile && (
+                {account && !profile && (
                     <button onClick={() => handleDeleteAccount(account._id!)}>
                         Delete
                     </button>

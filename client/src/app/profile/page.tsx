@@ -69,7 +69,7 @@ export default function Profile() {
 
     } else {
         content = account ? (
-            <DisplayAccount account={account}/>
+            <DisplayAccount account={account} profile={true}/>
         ) : null
     }
 
