@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Account, AccountService } from '@/services/accountsService';
+import Loading from "@/components/loading";
+import Link from "next/link";
 
 
 
@@ -63,28 +65,29 @@ export default function ManageAccounts() {
 
 
 
-    if (loading) {// TODO: faire un composant de chargement
-        return <p>Loading...</p>;
-    }
+    let content = null;
 
-    if (error) {
-        return <p className="error">{error}</p>;
-    }
+    if (loading) {
+        content = (
+            <Loading/>
+        )
 
+    } else if (error) {
+        content = (
+            <div className="error">
+                {error}
+            </div>
+        )
 
+    } else {
+        content = (
+            <div>
+                <button onClick={() => router.push(`/manage-accounts/add`)}>
+                    Add new account
+                </button>
 
-    return (
-        <main>
-            <h1>
-                Manage accounts
-            </h1>
-
-            <button onClick={() => router.push(`/manage-accounts/add`)}>
-                Add new account
-            </button>
-
-            <table>
-                <thead>
+                <table>
+                    <thead>
                     <tr>
                         <th>Email</th>
                         <th>First Name</th>
@@ -92,9 +95,9 @@ export default function ManageAccounts() {
                         <th>Role</th>
                         <th>Actions</th>
                     </tr>
-                </thead>
+                    </thead>
 
-                <tbody>
+                    <tbody>
                     {accounts.map(account => (
                         <tr key={account._id} onClick={() => router.push(`/manage-accounts/display/${account._id}`)} style={{ cursor: 'pointer' }}>
                             <td>
@@ -107,7 +110,7 @@ export default function ManageAccounts() {
                                 {account.last_name}
                             </td>
                             <td>
-                                {account.role}
+                                {account.role.toUpperCase()}
                             </td>
                             <td>
                                 <button
@@ -129,8 +132,25 @@ export default function ManageAccounts() {
                             </td>
                         </tr>
                     ))}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+
+
+
+    return (
+        <main>
+            <h1>
+                Manage accounts
+            </h1>
+
+            {content}
+
+            <Link href="/">
+                ← Back to home
+            </Link>
         </main>
     );
 }
