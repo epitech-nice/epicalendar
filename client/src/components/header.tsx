@@ -70,9 +70,14 @@ export default function Header() {
                     </>
                 ) : (
                     <div>
-                        {user && (
+                        {user && user.role !== "student" && (
+                            <Link href="/profile">
+                                {user.first_name} {user.last_name} ({user.role}) {/* TODO: enlever l'affichage du role */}
+                            </Link>
+                        )}
+                        {user && user.role === "student" && (
                             <span>
-                                {user.first_name} {user.last_name} ({user.role})
+                                {user.first_name} {user.last_name}
                             </span>
                         )}
                         <button onClick={logout}>
