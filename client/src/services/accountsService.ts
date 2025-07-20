@@ -33,10 +33,9 @@ export interface AccountUpdate {
 
 
 export const AccountService = {
-    async getAccounts() : Promise<Account[]> {
+    async getAccounts(): Promise<Account[]> {
         try {
-            const response = await api.get('/accounts');
-            return response.data;
+            return (await api.get('/accounts')).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message = error.response?.data?.message || "Error fetching accounts";
@@ -48,10 +47,9 @@ export const AccountService = {
     },
 
 
-    async getAccountById(id: string) : Promise<Account> {
+    async getAccountById(id: string): Promise<Account> {
         try {
-            const response = await api.get(`/accounts/${id}`);
-            return response.data;
+            return (await api.get(`/accounts/${id}`)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message = error.response?.data?.message || "Error fetching account";
@@ -65,8 +63,7 @@ export const AccountService = {
 
     async addAccount(account: Omit<Account, 'id' | 'created_at'>) {
         try {
-            const response = await api.post('/accounts', account);
-            return response.data;
+            return (await api.post('/accounts', account)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message = error.response?.data?.message || "Error adding account";
@@ -78,10 +75,9 @@ export const AccountService = {
     },
 
 
-    async updateAccount(id: string, dataToUpdate: AccountUpdate) : Promise<Account> {
+    async updateAccount(id: string, dataToUpdate: AccountUpdate): Promise<Account> {
         try {
-            const response = await api.put(`/accounts/${id}`, dataToUpdate);
-            return response.data;
+            return (await api.put(`/accounts/${id}`, dataToUpdate)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message = error.response?.data?.message || "Error updating account";
@@ -93,7 +89,7 @@ export const AccountService = {
     },
 
 
-    async deleteAccount(id: string) : Promise<void> {
+    async deleteAccount(id: string): Promise<void> {
         try {
             await api.delete(`/accounts/${id}`);
         } catch (error) {

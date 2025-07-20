@@ -16,10 +16,10 @@ export interface User {
 export const AuthService = {
     async login(data: { email: string; password: string }) {
         try {
-            const response = await api.post('/login', data);
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            return response.data;
+            const response = (await api.post('/login', data)).data;
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            return response;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message = error.response?.data?.message || "Login error";
@@ -33,10 +33,10 @@ export const AuthService = {
 
     async register(data: { email: string, first_name: string, last_name: string, password: string }) {
         try {
-            const response = await api.post('/register', data);
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            return response.data;
+            const response = (await api.post('/register', data)).data;
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            return response;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message = error.response?.data?.message || "Registration error";
