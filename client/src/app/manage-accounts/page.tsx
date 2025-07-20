@@ -110,10 +110,20 @@ export default function ManageAccounts() {
                                 {account.role}
                             </td>
                             <td>
-                                <button onClick={() => router.push(`/manage-accounts/edit/${account._id}`)}>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        router.push(`/manage-accounts/edit/${account._id}`);
+                                    }}
+                                >
                                     Edit
                                 </button>
-                                <button onClick={() => handleDeleteAccount(account._id!)}>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDeleteAccount(account._id!);
+                                    }}
+                                >
                                     Delete
                                 </button>
                             </td>

@@ -140,7 +140,7 @@ export default function ManageAccountsAdd() {
                             value={formData.password}
                             onChange={handleChange}
                             required
-                            placeholder="Votre mot de passe"
+                            placeholder="Your password"
                         />
                     </div>
 
@@ -162,6 +162,15 @@ export default function ManageAccountsAdd() {
                     </div>
 
                     <div>
+                        { formData.photo && (
+                            <ImageUpload
+                                onImageUploaded={handleImageUploaded}
+                                currentImage={"/default-user.jpg"}//formData.photo
+                            />
+                        )}
+                    </div>
+
+                    <div>
                         <label htmlFor="description">
                             Description
                         </label>
@@ -173,15 +182,6 @@ export default function ManageAccountsAdd() {
                             onChange={handleChange}
                             placeholder="A short description of you"
                         />
-                    </div>
-
-                    <div>
-                        { formData.photo && (
-                            <ImageUpload
-                                onImageUploaded={handleImageUploaded}
-                                currentImage={"/default-user.jpg"}//formData.photo
-                            />
-                        )}
                     </div>
 
                     <div>
@@ -230,11 +230,9 @@ export default function ManageAccountsAdd() {
                     </button>
                 </form>
 
-                <div>
-                    <Link href="/manage-accounts">
-                        ← Back to accounts
-                    </Link>
-                </div>
+                <Link href="/manage-accounts">
+                    ← Back to accounts
+                </Link>
             </div>
         </main>
     )
