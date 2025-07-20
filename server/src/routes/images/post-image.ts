@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 
-router.post('/upload-image', authenticateToken, upload.single('image'), (request: AuthenticatedRequest, response: express.Response, next: NextFunction): void => {
+router.post('/image', authenticateToken, upload.single('image'), (request: AuthenticatedRequest, response: express.Response, next: NextFunction): void => {
     try {
         if (!request.file) {
             response.status(400).json({ error: 'No file given.' });

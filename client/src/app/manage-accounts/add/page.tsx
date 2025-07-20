@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/authContext';
 import {Account, AccountService} from '@/services/accountsService';
+import ImageUpload from '@/components/ImageUpload';
 
 
 
@@ -33,6 +34,13 @@ export default function ManageAccountsAdd() {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
+        });
+    };
+
+    const handleImageUploaded = (imageUrl: string) => {
+        setFormData({
+            ...formData,
+            photo: imageUrl
         });
     };
 
@@ -168,17 +176,12 @@ export default function ManageAccountsAdd() {
                     </div>
 
                     <div>
-                        <label htmlFor="photo">
-                            Photo URL
-                        </label>
-                        <input
-                            type="text"
-                            id="photo"
-                            name="photo"
-                            value={formData.photo}
-                            onChange={handleChange}
-                            placeholder="URL of the account's photo"
-                        />
+                        { formData.photo && (
+                            <ImageUpload
+                                onImageUploaded={handleImageUploaded}
+                                currentImage={"/default-user.jpg"}//formData.photo
+                            />
+                        )}
                     </div>
 
                     <div>

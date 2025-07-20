@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation'
 import { AccountService, Account } from '@/services/accountsService'
 import { useAuth } from '@/contexts/authContext'
 import Link from "next/link";
-import Image from "next/image";
 
 
 
@@ -89,7 +88,9 @@ export default function ManageAccountsDisplayId() {
             <table><tbody>
                 <tr>
                     <td colSpan={2}>
-                        <Image src={account?.photo || '/default-user.jpg'} alt="User Photo"/>
+                        { /* Je peux pas faire de balise Image next parce que sa pu et qu'il faut autoriser le lien dans le next config */ }
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={account?.photo || '/default-user.jpg'} alt="User Photo"/>
                     </td>
                 </tr>
 

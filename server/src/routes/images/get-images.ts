@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/images', (request: Request, response: Response): void => {
     try {
-        const uploadsPath = path.join(__dirname, '../../uploads');
+        const uploadsPath = path.join(__dirname, '../../../uploads');
         
         if (!fs.existsSync(uploadsPath)) {
             response.json({
@@ -48,7 +48,7 @@ router.get('/images', (request: Request, response: Response): void => {
 router.get('/image/:filename', (request: Request, response: Response): void => {
     try {
         const { filename } = request.params;
-        const imagePath = path.join(__dirname, '../../uploads', filename);
+        const imagePath = path.join(__dirname, '../../../uploads', filename);
 
         if (!fs.existsSync(imagePath)) {
             response.status(404).json({ error: 'Image not found' });
