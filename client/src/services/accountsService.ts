@@ -18,6 +18,18 @@ export interface Account {
     room?: string;
 }
 
+export interface AccountUpdate {
+    email?: string;
+    password?: string;
+    first_name?: string;
+    last_name?: string;
+    role?: 'student' | 'aer' | 'admin';
+    description?: string;
+    photo?: string;
+    day?: '' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+    room?: string;
+}
+
 
 
 export const AccountService = {
@@ -66,7 +78,7 @@ export const AccountService = {
     },
 
 
-    async updateAccount(id: string, dataToUpdate: never) : Promise<Account> {
+    async updateAccount(id: string, dataToUpdate: AccountUpdate) : Promise<Account> {
         try {
             const response = await api.put(`/accounts/${id}`, dataToUpdate);
             return response.data;
