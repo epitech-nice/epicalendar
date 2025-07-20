@@ -82,92 +82,75 @@ export default function ManageAccountsDisplayId() {
 
 
 
-    //TODO: refaire mais avec des divs et des classes CSS pour le style askip c'est mieux que des tables
     return (
         <main>
-            <table><tbody>
-                <tr>
-                    <td colSpan={2}>
-                        { /* Je peux pas faire de balise Image next parce que sa pu et qu'il faut autoriser le lien dans le next config */ }
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={account?.photo || '/default-user.jpg'} alt="User Photo"/>
-                    </td>
-                </tr>
+            <h1>
+                Manage accounts - Display account
+            </h1>
 
-                <tr>
-                    <td>
-                        <button onClick={() => router.push(`/manage-accounts/edit/${account?._id}`)}>
-                            Edit
-                        </button>
-                    </td>
-                    <td>
-                        {account && (
-                            <button onClick={() => handleDeleteAccount(account._id!)}>
-                                Delete
-                            </button>
-                        )}
-                    </td>
-                </tr>
+            <div>
+                { /* Je peux pas faire de balise Image next parce que sa pu et qu'il faut autoriser le lien dans le next config */ }
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={account?.photo || '/default-user.jpg'} alt="User Photo"/>
+            </div>
 
-                <tr>
-                    <td>
-                        <em>
-                            <b>ID:</b>
-                            {account?._id}
-                        </em>
-                    </td>
-                    <td>
-                        <em>
-                            <b>Created at:</b>
-                            {account?.created_at ?
-                                new Date(account?.created_at).toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            }) : 'unknown date' }
-                        </em>
-                    </td>
-                </tr>
+            <div>
+                <button onClick={() => router.push(`/manage-accounts/edit/${account?._id}`)}>
+                    Edit
+                </button>
 
-                <tr>
-                    <td colSpan={2}>
-                        {account?.first_name} {account?.last_name}
-                    </td>
-                </tr>
+                {account && (
+                    <button onClick={() => handleDeleteAccount(account._id!)}>
+                        Delete
+                    </button>
+                )}
+            </div>
 
-                <tr>
-                    <td colSpan={2}>
-                        <a href={`mailto:${account?.email}`}>{account?.email}</a>
-                    </td>
-                </tr>
+            <div>
+                 <em>
+                     <b>ID:</b>
+                     {account?._id}
+                 </em>
 
-                <tr>
-                    <td colSpan={2}>
-                        <b>Total guard time:</b>
-                        {account?.guard_time
-                            ? `${Math.floor(account.guard_time / 60)} hours ${account.guard_time % 60} minutes`
-                            : 'No guard time recorded'}
-                    </td>
-                </tr>
+                 <em>
+                     <b>Created at:</b>
+                     {account?.created_at ?
+                         new Date(account?.created_at).toLocaleDateString('en-US', {
+                         year: 'numeric',
+                         month: 'long',
+                         day: 'numeric'
+                     }) : 'unknown date' }
+                 </em>
+            </div>
 
-                <tr>
-                    <td colSpan={2}>
-                        <b>description</b>
-                        {account?.description || 'No description provided.'}
-                    </td>
-                </tr>
+            <div>
+                {account?.first_name} {account?.last_name}
+            </div>
 
-                <tr>
-                    <td>
-                        <b>Preferred day:</b>
-                        {account?.day || 'No preferred day set.'}
-                    </td>
-                    <td>
-                        <b>Preferred room:</b>
-                        {account?.room || 'No preferred room set.'}
-                    </td>
-                </tr>
-            </tbody></table>
+            <div>
+                <a href={`mailto:${account?.email}`}>{account?.email}</a>
+            </div>
+
+            <div>
+                <b>Total guard time:</b>
+                {account?.guard_time
+                    ? `${Math.floor(account.guard_time / 60)} hours ${account.guard_time % 60} minutes`
+                    : 'No guard time recorded'}
+            </div>
+
+            <div>
+                <b>description</b>
+                {account?.description || 'No description provided.'}
+            </div>
+
+            <div>
+                <b>Preferred day:</b>
+                {account?.day || 'No preferred day set.'}
+
+
+                <b>Preferred room:</b>
+                {account?.room || 'No preferred room set.'}
+            </div>
 
             <Link href="/manage-accounts">
                 ← Back to accounts
