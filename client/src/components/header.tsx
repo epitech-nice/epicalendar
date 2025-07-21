@@ -38,14 +38,8 @@ export default function Header() {
                     </Link>
                     {['aer', 'admin'].includes(user.role) && (
                         <>
-                            <Link href="/manage-requests">
-                                Manage requests
-                            </Link>
                             <Link href="/manage-guards">
                                 Manage guards
-                            </Link>
-                            <Link href="/profile">
-                                Profile
                             </Link>
                         </>
                     )}
