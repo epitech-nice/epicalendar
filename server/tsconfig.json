@@ -10,9 +10,9 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "types": ["node", "express"],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    //"paths": {
+    //  "@/*": ["./src/*"]
+    //}
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
