@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { Account } from "../../models/account";
-import { authenticateToken, AuthenticatedRequest } from '../../middleware/auth';
+import { authenticateToken, AuthenticatedRequest } from "../../middleware/auth";
 import bcrypt from "bcrypt";
 
 

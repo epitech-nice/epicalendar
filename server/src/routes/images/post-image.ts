@@ -1,6 +1,6 @@
 import express, { NextFunction } from 'express';
-import { upload } from '../../middleware/upload';
-import { authenticateToken, AuthenticatedRequest } from '../../middleware/auth';
+import { upload } from "../../middleware/upload";
+import { authenticateToken, AuthenticatedRequest } from "../../middleware/auth";
 
 
 

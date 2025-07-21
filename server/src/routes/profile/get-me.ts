@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { Account } from "../../models/account";
-import { authenticateToken, AuthenticatedRequest } from '../../middleware/auth';
+import { authenticateToken, AuthenticatedRequest } from "../../middleware/auth";
 
 
 
@@ -8,7 +8,7 @@ const router = Router();
 
 
 
-router.get('/user', authenticateToken, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+router.get('/me', authenticateToken, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
     try {
         if (!request.user || !request.user.id) {
             response.status(401).json({ error: 'Unauthorized access.' });
@@ -21,15 +21,7 @@ router.get('/user', authenticateToken, async (request: AuthenticatedRequest, res
             return;
         }
 
-        response.json({
-            user: {
-                email: account.email,
-                first_name: account.first_name,
-                last_name: account.last_name,
-                role: account.role,
-                photo: account.photo,
-            },
-        });
+        response.json(account);
 
     } catch (error) {
         response.status(500).json({ message: 'Server error.', details: error });
