@@ -65,13 +65,16 @@ const AccountSchema = new Schema({
 
 export const Account = model('Account', AccountSchema);
 
-export async function formatAccountFields(first_name: string, last_name: string, password: string): Promise<{ first_name: string, last_name: string, password: string }> {
-  const formattedFirstName = first_name
+export async function formatAccountFields(first_name: string | null, last_name: string, password: string): Promise<{ first_name: string | null, last_name: string | null, password: string | null }> {
+  const formattedFirstName = !first_name ? null :
+      first_name
       .split(/[-\s]/)
       .map((part: string) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
       .join(first_name.includes('-') ? '-' : ' ');
-  const formattedLastName = last_name.toUpperCase();
-  const formattedPassword = await bcrypt.hash(password, 10);
+  const formattedLastName = !first_name ? null :
+      last_name.toUpperCase();
+  const formattedPassword = !first_name ? null :
+      await bcrypt.hash(password, 10);
 
   return {
     first_name: formattedFirstName,

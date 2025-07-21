@@ -2,17 +2,17 @@ import { Schema, model } from 'mongoose';
 
 
 
-const RequestSchema = new Schema({
+const OpeningRequestSchema = new Schema({
   date: {
     type: Date,
     required: true,
   },
   start: {
-    type: Number,
+    type: Date,
     required: true
   },
   end: {
-    type: Number,
+    type: Date,
     required: true
   },
   created_at: {
@@ -28,13 +28,12 @@ const RequestSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['en attente', 'acceptée', 'refusée'],
-    default: 'en attente',
+    enum: ['waiting', 'accepted', 'rejected'],
+    default: 'waiting',
     required: true
   },
   message: {
     type: String,
-    default: '',
     required: true
   },
   response: {
@@ -45,4 +44,4 @@ const RequestSchema = new Schema({
   id: false
 });
 
-export const Request = model('Request', RequestSchema);
+export const OpeningRequest = model('OpeningRequest', OpeningRequestSchema);

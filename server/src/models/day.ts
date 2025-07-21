@@ -27,7 +27,6 @@ const DaySchema = new Schema({
   aer: [{
     type: Schema.Types.ObjectId,
     ref: 'Account',
-    required: true
   }],
   message: {
     type: String,
