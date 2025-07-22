@@ -32,7 +32,7 @@ export interface AccountUpdate {
 
 
 
-export const AccountService = {
+export const AccountsService = {
     async getAccounts(): Promise<Account[]> {
         try {
             return (await api.get('/accounts')).data;
@@ -75,7 +75,7 @@ export const AccountService = {
     },
 
 
-    async addAccount(account: Omit<Account, 'id' | 'created_at'>) {
+    async addAccount(account: Account) {
         try {
             return (await api.post('/accounts', account)).data;
         } catch (error) {
