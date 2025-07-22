@@ -86,18 +86,4 @@ export const AuthService = {
         }
         return null;
     },
-
-
-    async getProfile() {
-        try {
-            return (await api.get('/me')).data;
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Profile retrieval error";
-                throw new Error(message);
-            } else {
-                throw new Error("Profile retrieval error");
-            }
-        }
-    }
 };
