@@ -15,14 +15,14 @@ router.put('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
 
         const existingAccount = await Account.findById(id);
         if (!existingAccount) {
-            response.status(404).json({ error: 'Account not found.' });
+            response.status(404).json({ message: 'Account not found.' });
             return;
         }
 
         if (request.body.email && request.body.email !== existingAccount.email) {
             const emailExists = await Account.findOne({ email: request.body.email });
             if (emailExists) {
-                response.status(409).json({ error: 'Email already in use.' });
+                response.status(409).json({ message: 'Email already in use.' });
                 return;
             }
         }
@@ -38,6 +38,11 @@ router.put('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
             request.body.password = formattedFields.password;
         }
 
+        if (request.body._id)
+            delete request.body._id;
+        if (request.body.created_at)
+            delete request.body.created_at;
+
         let updatedAccount = await Account.findByIdAndUpdate(
             id,
             request.body,
@@ -51,7 +56,7 @@ router.put('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
         });
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error(error);
     }
 });

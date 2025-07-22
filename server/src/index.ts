@@ -97,7 +97,7 @@ app.use('/api', putMe);
 
 /* Set not found handler */
 app.use((request: Request, response: Response) => {
-    response.status(404).json({ error: "Not found." });
+    response.status(404).json({ message: "Not found." });
 });
 
 

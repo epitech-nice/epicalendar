@@ -42,7 +42,7 @@ router.post('/register', async (request: Request, response: Response): Promise<v
         });
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.log(error);
     }
 });

@@ -14,7 +14,7 @@ router.put('/days/:id', authenticateToken, async (request: Request, response: Re
 
         const existingDay = await Day.findById(id);
         if (!existingDay) {
-            response.status(404).json({ error: 'Gay not found.' });
+            response.status(404).json({ message: 'Day not found.' });
             return;
         }
 
@@ -62,7 +62,7 @@ router.put('/days/:id', authenticateToken, async (request: Request, response: Re
         });
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error(error);
     }
 });

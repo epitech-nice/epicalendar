@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { AuthenticatedRequest, authenticateToken } from "../../middleware/auth";
+import { AuthenticatedRequest, authenticateToken, authorizeAer } from "../../middleware/auth";
 import {OpeningRequest} from "../../models/opening-request";
 
 
@@ -8,13 +8,13 @@ const router = Router();
 
 
 
-router.put('/opening-request/:id', authenticateToken, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+router.put('/opening-request/:id', authenticateToken, authorizeAer, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
     try {
         const { id } = request.params;
 
         const existingOpeningRequest = await OpeningRequest.findById(id);
         if (!existingOpeningRequest) {
-            response.status(404).json({ error: 'Opening request not found.' });
+            response.status(404).json({ message: 'Opening request not found.' });
             return;
         }
 
@@ -58,7 +58,7 @@ router.put('/opening-request/:id', authenticateToken, async (request: Authentica
         });
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error(error);
     }
 });

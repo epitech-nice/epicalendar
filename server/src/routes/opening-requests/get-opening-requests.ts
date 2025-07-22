@@ -19,7 +19,7 @@ router.get('/opening-requests', authenticateToken, async (request: Authenticated
         }
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error("Error fetching opening requests:", error);
     }
 });
@@ -32,19 +32,19 @@ router.get('/opening-requests/:id', authenticateToken, async (request: Authentic
         const openingRequest = await OpeningRequest.findById(openingRequestId);
 
         if (!openingRequest) {
-            response.status(404).json({ error: 'Opening request not found.' });
+            response.status(404).json({ message: 'Opening request not found.' });
             return;
         }
 
         if (request.user.role === "student" && openingRequest.account.toString() !== request.user._id.toString()) {
-            response.status(403).json({ error: 'You can only view your own opening requests.' });
+            response.status(403).json({ message: 'You can only view your own opening requests.' });
             return;
         }
 
         response.json(openingRequest);
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error("Error fetching opening request:", error);
     }
 });

@@ -11,7 +11,7 @@ const router = Router();
 router.post('/days', authenticateToken, authorizeAer, async (request: Request, response: Response): Promise<void> => {
     try {
         if (!request.body.date && !request.body.start && !request.body.start_at && !request.body.end) {
-            response.status(400).json({ error: 'Fields are missing. Please provide date, start, start_at, and end.' });
+            response.status(400).json({ message: 'Fields are missing. Please provide date, start, start_at, and end.' });
             return;
         }
 
@@ -28,15 +28,15 @@ router.post('/days', authenticateToken, authorizeAer, async (request: Request, r
         request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
 
         if (request.body.start >= request.body.end) {
-            response.status(400).json({ error: 'Start time must be before end time.' });
+            response.status(400).json({ message: 'Start time must be before end time.' });
             return;
         }
         if (request.body.start_at >= request.body.end) {
-            response.status(400).json({ error: 'Guard start time must be before end time.' });
+            response.status(400).json({ message: 'Guard start time must be before end time.' });
             return;
         }
         if (request.body.start > request.body.start_at) {
-            response.status(400).json({ error: 'The guard start time must be between start and end time.' });
+            response.status(400).json({ message: 'The guard start time must be between start and end time.' });
             return;
         }
 
@@ -44,9 +44,9 @@ router.post('/days', authenticateToken, authorizeAer, async (request: Request, r
         await newOpeningRequest.save();
         response.status(201).json({ message: 'Day created successfully.', day: newOpeningRequest });
 
-    } catch (err) {
-        response.status(500).json({ message: 'Server error', details: err });
-        console.error("Error creating day:", err);
+    } catch (error) {
+        response.status(500).json({ message: `Server error: ${error}` });
+        console.error("Error creating day:", error);
     }
 });
 

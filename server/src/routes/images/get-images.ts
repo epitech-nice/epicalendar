@@ -51,7 +51,7 @@ router.get('/image/:filename', (request: Request, response: Response): void => {
         const imagePath = path.join(__dirname, '../../../uploads', filename);
 
         if (!fs.existsSync(imagePath)) {
-            response.status(404).json({ error: 'Image not found' });
+            response.status(404).json({ message: 'Image not found' });
             return;
         }
 
@@ -79,7 +79,7 @@ router.get('/image/:filename', (request: Request, response: Response): void => {
         response.sendFile(imagePath);
 
     } catch (error) {
-        response.status(500).json({ error: 'Server error', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error('Error fetching image:', error);
     }
 });

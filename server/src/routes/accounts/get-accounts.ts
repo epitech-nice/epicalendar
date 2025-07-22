@@ -34,7 +34,7 @@ router.get('/accounts', authenticateToken, authorizeAdmin, async (request: Reque
         response.json(accounts);
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error("Error fetching accounts:", error);
     }
 });
@@ -47,14 +47,14 @@ router.get('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
         const account = await Account.findById(accountId, '-password');
 
         if (!account) {
-            response.status(404).json({ error: 'Account not found.' });
+            response.status(404).json({ message: 'Account not found.' });
             return;
         }
 
         response.json(account);
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error("Error fetching account:", error);
     }
 });
@@ -65,7 +65,7 @@ router.get('/accounts/aer', authenticateToken, authorizeAer, async (request: Req
         response.json(accounts);
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error("Error fetching account:", error);
     }
 });

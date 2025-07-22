@@ -11,13 +11,13 @@ const router = express.Router();
 router.post('/image', authenticateToken, upload.single('image'), (request: AuthenticatedRequest, response: express.Response, next: NextFunction): void => {
     try {
         if (!request.file) {
-            response.status(400).json({ error: 'No file given.' });
+            response.status(400).json({ message: 'No file given.' });
             return;
         }
 
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
         if (!allowedTypes.includes(request.file.mimetype)) {
-            response.status(400).json({ error: 'Invalid file type. Allowed types: jpeg, jpg, png, gif, webp.' });
+            response.status(400).json({ message: 'Invalid file type. Allowed types: jpeg, jpg, png, gif, webp.' });
             return;
         }
 
@@ -32,7 +32,7 @@ router.post('/image', authenticateToken, upload.single('image'), (request: Authe
         });
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.error('Error uploading image:', error);
     }
 });

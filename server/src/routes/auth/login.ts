@@ -44,7 +44,7 @@ router.post('/login', async (request: Request, response: Response): Promise<void
         });
 
     } catch (error) {
-        response.status(500).json({ message: 'Server error.', details: error });
+        response.status(500).json({ message: `Server error: ${error}` });
         console.log(error);
     }
 });
