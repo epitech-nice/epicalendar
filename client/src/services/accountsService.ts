@@ -61,6 +61,20 @@ export const AccountService = {
     },
 
 
+    async getAer(): Promise<Account[]> {
+        try {
+            return (await api.get('/accounts/aer')).data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const message = error.response?.data?.message || "Error fetching AER";
+                throw new Error(message);
+            } else {
+                throw new Error("Error fetching AER");
+            }
+        }
+    },
+
+
     async addAccount(account: Omit<Account, 'id' | 'created_at'>) {
         try {
             return (await api.post('/accounts', account)).data;

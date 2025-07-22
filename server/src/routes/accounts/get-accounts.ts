@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { Account } from "../../models/account";
-import { authenticateToken, authorizeAdmin } from '../../middleware/auth';
+import { authenticateToken, authorizeAdmin, authorizeAer } from '../../middleware/auth';
 
 
 
@@ -52,6 +52,17 @@ router.get('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
         }
 
         response.json(account);
+
+    } catch (error) {
+        response.status(500).json({ message: 'Server error.', details: error });
+        console.error("Error fetching account:", error);
+    }
+});
+
+router.get('/accounts/aer', authenticateToken, authorizeAer, async (request: Request, response: Response): Promise<void> => {
+    try {
+        const accounts = await Account.find({ role: 'aer' }, '-password').sort({ email: 1 });
+        response.json(accounts);
 
     } catch (error) {
         response.status(500).json({ message: 'Server error.', details: error });
