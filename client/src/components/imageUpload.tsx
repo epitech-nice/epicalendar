@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { ImageService } from '@/services/imageService'
+import { ImagesService } from '@/services/imagesService'
 
 
 
@@ -26,7 +26,7 @@ export default function ImageUpload({ onImageUploaded, currentImage }: ImageUplo
             setUploading(true)
             setError(null)
             
-            const response = await ImageService.uploadImage(file)
+            const response = await ImagesService.uploadImage(file)
             console.log('Upload response:', response)
             
             if (response.success && response.imageUrl) {
@@ -52,7 +52,7 @@ export default function ImageUpload({ onImageUploaded, currentImage }: ImageUplo
             return
         }
 
-        const validation = ImageService.validateImageFile(file)
+        const validation = ImagesService.validateImageFile(file)
         if (!validation.valid) {
             setError(validation.error || 'Invalid file.')
             return

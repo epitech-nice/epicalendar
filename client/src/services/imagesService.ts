@@ -14,7 +14,7 @@ export interface UploadResponse {
 
 
 
-export const ImageService = {
+export const ImagesService = {
     async uploadImage(file: File): Promise<UploadResponse> {
         try {
             const formData = new FormData();
