@@ -56,7 +56,7 @@ export const OpeningRequestsService = {
     },
 
 
-    async addOpeningRequest(openingRequest: Omit<OpeningRequest, 'id' | 'created_at'>) {
+    async addOpeningRequest(openingRequest: OpeningRequest) {
         try {
             return (await api.post('/opening-requests', openingRequest)).data;
         } catch (error) {

@@ -9,6 +9,7 @@ export interface Day {
     start: Date;
     start_at: Date;
     end: Date;
+    closed_at?: Date;
     aer?: string[];
     message?: string;
     observations?: string;
@@ -18,6 +19,7 @@ export interface DayUpdate {
     date?: Date;
     start?: Date;
     start_at?: Date;
+    closed_at?: Date;
     end?: Date;
     aer?: string[];
     message?: string;
@@ -68,7 +70,7 @@ export const DaysService = {
     },
 
 
-    async addDay(day: Omit<Day, 'id' | 'created_at'>) {
+    async addDay(day: Day) {
         try {
             return (await api.post('/days', day)).data;
         } catch (error) {
