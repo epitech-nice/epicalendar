@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/authContext';
-import {Account, AccountService} from '@/services/accountsService';
+import {Account, AccountsService} from '@/services/accountsService';
 import ImageUpload from '@/components/imageUpload';
 import Loading from "@/components/loading";
 
@@ -15,7 +15,7 @@ export default function ManageAccountsAdd() {
 
     const { user, loading, isAuthenticated } = useAuth()
 
-    const [formData, setFormData] = useState<Omit<Account, "id" | "created_at">>({
+    const [formData, setFormData] = useState<Account>({
         email: '',
         password: '',
         first_name: '',
@@ -51,7 +51,7 @@ export default function ManageAccountsAdd() {
         setError('');
 
         try {
-            await AccountService.addAccount(formData);
+            await AccountsService.addAccount(formData);
             router.push('/manage-accounts');
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : 'An error occurred while adding the account.');

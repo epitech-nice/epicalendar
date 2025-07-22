@@ -2,7 +2,7 @@
 
 import {useCallback, useEffect, useState} from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { AccountService, Account } from '@/services/accountsService'
+import { AccountsService, Account } from '@/services/accountsService'
 import { useAuth } from '@/contexts/authContext'
 import Link from "next/link";
 import Loading from "@/components/loading";
@@ -25,7 +25,7 @@ export default function ManageAccountsDisplayId() {
     const fetchAccount = useCallback(async () => {
         try {
             setError(null)
-            const accountData = await AccountService.getAccountById(id)
+            const accountData = await AccountsService.getAccountById(id)
             setAccount(accountData)
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while fetching the account.')

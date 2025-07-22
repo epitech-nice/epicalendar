@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
-import { Account, AccountService } from '@/services/accountsService';
+import { Account, AccountsService } from '@/services/accountsService';
 import Loading from "@/components/loading";
 import Link from "next/link";
 
@@ -21,8 +21,8 @@ export default function ManageAccounts() {
 
     const fetchAccounts = async () => {
         try {
-            console.log(await AccountService.getAccounts());
-            setAccounts(await AccountService.getAccounts());
+            console.log(await AccountsService.getAccounts());
+            setAccounts(await AccountsService.getAccounts());
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while fetching accounts.');
         }
@@ -36,7 +36,7 @@ export default function ManageAccounts() {
         }
 
         try {
-            await AccountService.deleteAccount(accountId);
+            await AccountsService.deleteAccount(accountId);
             fetchAccounts();
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while deleting the account.');
@@ -88,50 +88,50 @@ export default function ManageAccounts() {
 
                 <table>
                     <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
+                        <tr>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {accounts.map(account => (
-                        <tr key={account._id} onClick={() => router.push(`/manage-accounts/display/${account._id}`)} style={{ cursor: 'pointer' }}>
-                            <td>
-                                {account.email}
-                            </td>
-                            <td>
-                                {account.first_name}
-                            </td>
-                            <td>
-                                {account.last_name}
-                            </td>
-                            <td>
-                                {account.role.toUpperCase()}
-                            </td>
-                            <td>
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        router.push(`/manage-accounts/edit/${account._id}`);
-                                    }}
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDeleteAccount(account._id!);
-                                    }}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                        {accounts.map(account => (
+                            <tr key={account._id} onClick={() => router.push(`/manage-accounts/display/${account._id}`)} style={{ cursor: 'pointer' }}>
+                                <td>
+                                    {account.email}
+                                </td>
+                                <td>
+                                    {account.first_name}
+                                </td>
+                                <td>
+                                    {account.last_name}
+                                </td>
+                                <td>
+                                    {account.role.toUpperCase()}
+                                </td>
+                                <td>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            router.push(`/manage-accounts/edit/${account._id}`);
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleDeleteAccount(account._id!);
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

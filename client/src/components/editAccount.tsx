@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import { useRouter } from 'next/navigation'
-import { AccountService, Account, AccountUpdate } from '@/services/accountsService'
+import { AccountsService, Account, AccountUpdate } from '@/services/accountsService'
 import { useAuth } from '@/contexts/authContext'
 import ImageUpload from "@/components/imageUpload";
 import { ProfileService } from "@/services/profileService";
@@ -66,7 +66,7 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
                 await ProfileService.updateProfile(finalFormData);
                 router.push('/profile');
             } else if (id) {
-                await AccountService.updateAccount(id, finalFormData);
+                await AccountsService.updateAccount(id, finalFormData);
                 router.push('/manage-accounts');
             }
 

@@ -3,7 +3,7 @@
 import {useState} from 'react'
 import {useRouter} from "next/navigation";
 import {useAuth} from "@/contexts/authContext";
-import {Account, AccountService} from "@/services/accountsService";
+import {Account, AccountsService} from "@/services/accountsService";
 
 
 
@@ -24,7 +24,7 @@ export default function DisplayAccount({ account, profile } : { account: Account
         }
 
         try {
-            await AccountService.deleteAccount(accountId);
+            await AccountsService.deleteAccount(accountId);
             router.push('/manage-accounts');
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while deleting the account.');
