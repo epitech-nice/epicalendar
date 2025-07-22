@@ -27,13 +27,13 @@ export default function Header() {
             {/* Other pages */}
             {isAuthenticated && user && (
                 <nav>
-                    <Link href="/activities">
+                    <Link href="/calendar">
                         Calendar
                     </Link>
-                    <Link href="/request">
-                        Opening request
+                    <Link href="/opening-requests">
+                        Opening requests
                     </Link>
-                    <Link href="/suck">
+                    <Link href="/stuck">
                         I&#39;m stuck
                     </Link>
                     {['aer', 'admin'].includes(user.role) && (
