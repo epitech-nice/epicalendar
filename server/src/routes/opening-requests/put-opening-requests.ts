@@ -41,6 +41,11 @@ router.put('/opening-request/:id', authenticateToken, async (request: Authentica
             request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
         }
 
+        if (request.body.created_at)
+            delete request.body.created_at;
+        if (request.body.account)
+            delete request.body.account;
+
         const updatedOpeningRequest = await OpeningRequest.findByIdAndUpdate(
             id,
             request.body,

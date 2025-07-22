@@ -30,6 +30,9 @@ router.post('/opening-requests', authenticateToken, async (request: Authenticate
         }
 
         request.body.account = request.user._id;
+        if (request.body.status)
+            delete request.body.status;
+
         const newOpeningRequest = new OpeningRequest(request.body);
         await newOpeningRequest.save();
         response.status(201).json({ message: 'Opening request created successfully.', opening_request: newOpeningRequest });
