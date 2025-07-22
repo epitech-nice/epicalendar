@@ -41,7 +41,7 @@ router.get('/days/:id', authenticateToken, async (request: Request, response: Re
 
 
 
-router.get('/days/current/', authenticateToken, async (request: Request, response: Response): Promise<void> => {
+router.get('/days/current', authenticateToken, async (request: Request, response: Response): Promise<void> => {
     try {
         const today = new Date();
         today.setHours(0, 0, 0, 0);

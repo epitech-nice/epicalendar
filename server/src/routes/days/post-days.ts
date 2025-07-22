@@ -7,7 +7,7 @@ import {OpeningRequest} from "../../models/opening-request";
 const router = Router();
 
 
-
+//TODO: faut que sa mette à jour le compte des heures des aer
 router.post('/days', authenticateToken, authorizeAer, async (request: Request, response: Response): Promise<void> => {
     try {
         if (!request.body.date && !request.body.start && !request.body.start_at && !request.body.end) {

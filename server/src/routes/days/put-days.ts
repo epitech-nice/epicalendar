@@ -7,7 +7,7 @@ import {Day} from "../../models/day";
 const router = Router();
 
 
-
+//TODO: faut que sa mette à jour le compte des heures des aer
 router.put('/days/:id', authenticateToken, async (request: Request, response: Response): Promise<void> => {
     try {
         const { id } = request.params;
