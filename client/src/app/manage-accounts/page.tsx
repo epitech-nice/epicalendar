@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Account, AccountsService } from '@/services/accountsService';
@@ -19,14 +19,14 @@ export default function ManageAccounts() {
 
 
 
-    const fetchAccounts = async () => {
+    const fetchAccounts = useCallback(async () => {
         try {
             console.log(await AccountsService.getAccounts());
             setAccounts(await AccountsService.getAccounts());
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while fetching accounts.');
         }
-    };
+    }, []);
 
     const handleDeleteAccount = async (accountId: string) => {
         console.log('Attempting to delete account with ID:', accountId);
@@ -37,7 +37,7 @@ export default function ManageAccounts() {
 
         try {
             await AccountsService.deleteAccount(accountId);
-            fetchAccounts();
+            await fetchAccounts();
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while deleting the account.');
         }
@@ -61,7 +61,7 @@ export default function ManageAccounts() {
         }
 
         fetchAccounts();
-    }, [isAuthenticated, loading, user, router]);
+    }, [isAuthenticated, loading, user, router, fetchAccounts]);
 
 
 

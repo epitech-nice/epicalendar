@@ -26,7 +26,7 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
         room: account.room || '',
     })
     const [responseLoading, setResponseLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState('')
 
 
 

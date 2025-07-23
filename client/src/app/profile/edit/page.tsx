@@ -17,13 +17,12 @@ export default function ProfileEdit() {
     const { user, loading, isAuthenticated } = useAuth()
 
     const [account, setAccount] = useState<Account | null>(null)
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState('')
 
 
 
     const fetchAccount = useCallback(async () => {
         try {
-            setError(null)
             const accountData = await ProfileService.getProfile()
             setAccount(accountData)
         } catch (err) {

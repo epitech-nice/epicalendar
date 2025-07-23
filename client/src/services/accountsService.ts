@@ -61,9 +61,28 @@ export const AccountsService = {
     },
 
 
-    async getAer(): Promise<Account[]> {
+    async getAers(): Promise<Account[]> {
         try {
             return (await api.get('/accounts/aer')).data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const message = error.response?.data?.message || "Error fetching AERs";
+                throw new Error(message);
+            } else {
+                throw new Error("Error fetching AERs");
+            }
+        }
+    },
+
+
+    async getAerById(id: string): Promise<Account> {
+        try {
+            const aers = this.getAers();
+            const aer = (await aers).find(aer => aer._id === id);
+            if (!aer) {
+                throw new Error("AER not found");
+            }
+            return aer;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message = error.response?.data?.message || "Error fetching AER";

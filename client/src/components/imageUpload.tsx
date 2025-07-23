@@ -17,14 +17,14 @@ export default function ImageUpload({ onImageUploaded, currentImage }: ImageUplo
 
     const [uploading, setUploading] = useState(false)
     const [preview, setPreview] = useState<string>(currentImage)
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState('')
 
 
 
     const handleUpload = async (file: File) => {
         try {
             setUploading(true)
-            setError(null)
+            setError('')
             
             const response = await ImagesService.uploadImage(file)
             console.log('Upload response:', response)
@@ -45,7 +45,7 @@ export default function ImageUpload({ onImageUploaded, currentImage }: ImageUplo
     }
 
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setError(null)
+        setError('')
 
         const file = event.target.files?.[0]
         if (!file) {
@@ -71,7 +71,7 @@ export default function ImageUpload({ onImageUploaded, currentImage }: ImageUplo
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
-        setError(null);
+        setError('');
     }
 
 
