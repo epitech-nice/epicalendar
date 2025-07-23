@@ -39,6 +39,12 @@ router.put('/days/:id', authenticateToken, async (request: Request, response: Re
         if (request.body.date) {
             request.body.date = new Date(request.body.date);
             request.body.date.setHours(0, 0, 0, 0);
+            const existingDate = await Day.findOne({ date: request.body.date });
+            if (existingDate) {
+                response.status(409).json({ message: 'A day already exists for this date.' });
+                return;
+            }
+
             const orignalStart = request.body.start ? new Date(request.body.start) : existingDay.start;
             request.body.start = new Date(request.body.date);
             request.body.start.setHours(orignalStart.getHours(), orignalStart.getMinutes(), 0, 0);

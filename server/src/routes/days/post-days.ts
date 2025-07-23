@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import {authenticateToken, authorizeAer} from "../../middleware/auth";
-import {OpeningRequest} from "../../models/opening-request";
+import {Day} from "../../models/day";
+import {Account} from "../../models/account";
 
 
 
@@ -17,6 +18,12 @@ router.post('/days', authenticateToken, authorizeAer, async (request: Request, r
 
         request.body.date = new Date(request.body.date);
         request.body.date.setHours(0, 0, 0, 0);
+        const existingDate = await Day.findOne({ date: request.body.date });
+        if (existingDate) {
+            response.status(409).json({ message: 'A day already exists for this date.' });
+            return;
+        }
+
         const orignalStart = new Date(request.body.start);
         request.body.start = new Date(request.body.date);
         request.body.start.setHours(orignalStart.getHours(), orignalStart.getMinutes(), 0, 0);
@@ -40,9 +47,9 @@ router.post('/days', authenticateToken, authorizeAer, async (request: Request, r
             return;
         }
 
-        const newOpeningRequest = new OpeningRequest(request.body);
-        await newOpeningRequest.save();
-        response.status(201).json({ message: 'Day created successfully.', day: newOpeningRequest });
+        const newDay = new Day(request.body);
+        await newDay.save();
+        response.status(201).json({ message: 'Day created successfully.', day: newDay });
 
     } catch (error) {
         response.status(500).json({ message: `Server error: ${error}` });
