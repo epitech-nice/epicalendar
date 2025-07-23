@@ -10,7 +10,7 @@ const router = Router();
 
 router.get('/days', authenticateToken, async (request: Request, response: Response): Promise<void> => {
     try {
-        const days = await Day.find().sort({ date: 1 });
+        const days = await Day.find().sort({ date: -1 });
         response.json(days);
 
     } catch (error) {
@@ -25,7 +25,7 @@ router.get('/days/current', authenticateToken, async (request: Request, response
     try {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        const currentDay = await Day.findOne({ date: today }).sort({ date: 1 });
+        const currentDay = await Day.findOne({ date: today });
 
         if (!currentDay) {
             response.status(404).json({ message: 'No current day found.' });

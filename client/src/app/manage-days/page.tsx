@@ -120,7 +120,7 @@ export default function ManageDays() {
                         {days.map(day => (
                             <tr key={day._id} onClick={() => router.push(`/manage-days/display/${day._id}`)} style={{ cursor: 'pointer' }}>
                                 <td>
-                                    {new Date(day.date).toLocaleDateString('en-US', {
+                                    {new Date(day.date).toLocaleDateString('fr-FR', {
                                         year: 'numeric',
                                         month: '2-digit',
                                         day: '2-digit'

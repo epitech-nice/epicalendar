@@ -186,7 +186,7 @@ export default function ManageDaysAdd() {
                     DatePicker
                         selected={formData.date}
                         onChange={(date) => handleDateChange("date", date)}
-                        dateFormat="dd-mm-yyyy"
+                        dateFormat="dd-MM-yyyy"
                         required
                     />
                 </div>
@@ -253,17 +253,40 @@ export default function ManageDaysAdd() {
                 </div>
 
                 <div>
-                    <label htmlFor="message">
-                        Optional message
-                    </label>
-                    <input
-                        type="text"
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        placeholder="A informative message for the day"
-                    />
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Total guard time</th>
+                                <th>Preferred day</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {aers.map(aer => (
+                                <tr key={aer._id}>
+                                    <td>
+                                        {aer.email}
+                                    </td>
+
+                                    <td>
+                                        {aer.first_name} {aer.last_name}
+                                    </td>
+
+                                    <td>
+                                        {aer.guard_time
+                                            ? `${Math.floor(aer.guard_time / 60)} hours ${aer.guard_time % 60} minutes`
+                                            : 'N/A'}
+                                    </td>
+
+                                    <td>
+                                        {aer.day || ''}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
 
                 <div>
@@ -296,6 +319,20 @@ export default function ManageDaysAdd() {
                             </div>
                         );
                     })}
+                </div>
+
+                <div>
+                    <label htmlFor="message">
+                        Optional message
+                    </label>
+                    <input
+                        type="text"
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        placeholder="A informative message for the day"
+                    />
                 </div>
 
                 {error && (

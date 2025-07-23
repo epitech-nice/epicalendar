@@ -83,7 +83,7 @@ export default function DisplayAccount({ account, profile } : { account: Account
                     <em>
                         <b>Created at:</b>
                         {account?.created_at ?
-                            new Date(account?.created_at).toLocaleDateString('en-US', {
+                            new Date(account?.created_at).toLocaleDateString('fr-FR', {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric'
