@@ -1,0 +1,334 @@
+"use client";
+
+import {useCallback, useEffect, useState} from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/authContext';
+import {Day, DaysService} from '@/services/daysService';
+import Loading from "@/components/loading";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {Account, AccountsService} from "@/services/accountsService";
+
+
+
+export default function ManageDaysAdd() {
+    const router = useRouter();
+
+    const { user, loading, isAuthenticated } = useAuth()
+
+    const [aers, setAers] = useState<Account[]>([]);
+    const [formData, setFormData] = useState<Day>({
+        date: new Date(),
+        start: new Date(),
+        start_at: new Date(),
+        end: new Date(),
+        aer: [],
+        message: '',
+    });
+    const [preset, setPreset] = useState<string>('Custom');
+    const [responseLoading, setResponseLoading] = useState(false);
+    const [error, setError] = useState('');
+
+
+
+    const fetchAers = useCallback(async () => {
+        try {
+            const aersData = await AccountsService.getAers();
+            setAers(aersData);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An error occurred while fetching the account.')
+        }
+    }, []);
+
+    function setTime(baseDate: Date, hours: number, minutes: number): Date {
+        const newDate = new Date(baseDate);
+        newDate.setHours(hours, minutes, 0, 0);
+        return newDate;
+    }
+
+    const handlePreset = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const selected = e.target.value;
+        setPreset(selected);
+
+        if (selected === 'Normal') {
+            setFormData(prev => ({
+                ...prev,
+                start: setTime(prev.start, 8, 0),
+                start_at: setTime(prev.start_at, 18, 0),
+                end: setTime(prev.end, 22, 0),
+            }));
+        } else if (selected === 'Pool') {
+            setFormData(prev => ({
+                ...prev,
+                start: setTime(prev.start, 8, 0),
+                start_at: setTime(prev.start_at, 18, 0),
+                end: setTime(prev.end, 23, 42),
+            }));
+        } else if (selected === 'Summer') {
+            setFormData(prev => ({
+                ...prev,
+                start: setTime(prev.start, 8, 0),
+                start_at: setTime(prev.start_at, 18, 0),
+                end: setTime(prev.end, 20, 0),
+            }));
+        } else if (selected === 'Week-end') {
+            setFormData(prev => ({
+                ...prev,
+                start: setTime(prev.start, 10, 0),
+                start_at: setTime(prev.start_at, 10, 0),
+                end: setTime(prev.end, 20, 0),
+            }));
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleDateChange = (name: keyof Day, value: Date | null) => {
+        if (!value) return;
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleAerChange = (e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const input = (e.target as HTMLInputElement).value.trim();
+            const aer = aers.find(a => a.email === input);
+
+            if (!aer) {
+                setError("No AER found with that email.");
+                return;
+            }
+
+            if (formData.aer && formData.aer.includes(aer._id!)) {
+                setError("This AER is already added.");
+                return;
+            }
+
+            setFormData(prev => ({
+                ...prev,
+                aer: [...(prev.aer || []), aer._id!]
+            }));
+
+            (e.target as HTMLInputElement).value = '';
+        }
+    }
+
+    const handleDeleteAer = (id: string) => {
+        setFormData(prev => ({
+            ...prev,
+            aer: prev.aer ? prev.aer.filter(aerId => aerId !== id) : []
+        }));
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setResponseLoading(true);
+        setError('');
+
+        try {
+            await DaysService.addDay(formData);
+            router.push('/manage-days');
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'An error occurred while adding the day.');
+        } finally {
+            setResponseLoading(false);
+        }
+    };
+
+
+
+    useEffect(() => {
+        if (loading) {
+            return;
+        }
+
+        if (!isAuthenticated) {
+            router.push('/login');
+            return;
+        }
+
+        if (!user || (user && user.role === 'student')) {
+            setError('You do not have permission to access this page.');
+            return;
+        }
+
+        fetchAers();
+    }, [isAuthenticated, loading, user, router, fetchAers]);
+
+
+
+    let content = null;
+
+    if (loading) {
+        content = (
+            <Loading/>
+        )
+
+    } else {
+        content = (
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="date">
+                        Date
+                    </label><
+                    DatePicker
+                        selected={formData.date}
+                        onChange={(date) => handleDateChange("date", date)}
+                        dateFormat="dd-mm-yyyy"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="preset">Preset</label>
+                    <select
+                        id="preset"
+                        name="preset"
+                        value={preset}
+                        onChange={handlePreset}
+                    >
+                        <option value="Custom">Custom</option>
+                        <option value="Normal">Normal (8h–18h–22h)</option>
+                        <option value="Pool">Pool (8h–18h–23h42)</option>
+                        <option value="Summer">Summer (8h–18h–20h)</option>
+                        <option value="Week-end">Week-end (10h–10h–20h)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label htmlFor="start">
+                        Campus opens at
+                    </label>
+                    <DatePicker
+                        selected={formData.start}
+                        onChange={(date) => handleDateChange("start", date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={15}
+                        timeCaption="Start"
+                        dateFormat="HH:mm"
+                        timeFormat="HH:mm"
+                        required
+                    />
+                    <label htmlFor="start_at">
+                        Guard start at
+                    </label>
+                    <DatePicker
+                        selected={formData.start_at}
+                        onChange={(date) => handleDateChange("start_at", date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={15}
+                        timeCaption="Guard start at"
+                        dateFormat="HH:mm"
+                        timeFormat="HH:mm"
+                        required
+                    />
+                    <label htmlFor="end">
+                        Campus closes at
+                    </label>
+                    <DatePicker
+                        selected={formData.end}
+                        onChange={(date) => handleDateChange("end", date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={15}
+                        timeCaption="End"
+                        dateFormat="HH:mm"
+                        timeFormat="HH:mm"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="message">
+                        Optional message
+                    </label>
+                    <input
+                        type="text"
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        placeholder="A informative message for the day"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="aerInput">Add AER by email</label>
+                    <input
+                        type="text"
+                        id="aerInput"
+                        list="aerOptions"
+                        onKeyDown={handleAerChange}
+                        placeholder="Enter AER email and press Enter"
+                    />
+                    <datalist id="aerOptions">
+                        {aers.map(aer => (
+                            <option key={aer._id} value={aer.email}/>
+                        ))}
+                    </datalist>
+                </div>
+
+                <div>
+                    {formData.aer && formData.aer.map(id => {
+                        const aer = aers.find(a => a._id === id);
+                        if (!aer)
+                            return null;
+                        return (
+                            <div key={id}>
+                                <span>{aer.first_name} {aer.last_name}</span>
+                                <button onClick={() => handleDeleteAer(id)}>
+                                    ❌
+                                </button>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                {error && (
+                    <div>
+                        {error}
+                    </div>
+                )}
+
+                <button
+                    type="submit"
+                    disabled={responseLoading}
+                >
+                    {responseLoading ? 'Adding...' : 'Add Day'}
+                </button>
+            </form>
+        );
+    }
+
+
+
+    return (
+        <main>
+            <div>
+                <h1>
+                    Manage days - Add day
+                </h1>
+
+                {content}
+
+                <Link href="/manage-days">
+                    ← Back to days
+                </Link>
+            </div>
+        </main>
+    )
+}

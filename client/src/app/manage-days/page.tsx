@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation';
 import { Day, DaysService } from '@/services/daysService';
@@ -10,24 +10,40 @@ import {AccountsService} from "@/services/accountsService";
 
 
 
-export default function ManageGuards() {
+export default function ManageDays() {
     const router = useRouter();
 
     const { user, loading, isAuthenticated } = useAuth();
 
     const [days, setDays] = useState<Day[]>([]);
-    const [error, setError] = useState('');
+    const [error, setError] = useState<string | null>('');
 
 
 
-    const fetchDays = async () => {
+    const fetchDays = useCallback(async () => {
         try {
-            console.log(await DaysService.getDays());
-            setDays(await DaysService.getDays());
+            const fetchedDays = await DaysService.getDays();
+            for (const day of fetchedDays) {
+                const aers: string[] = [];
+                for (const aerId of day.aer || []) {
+                    try {
+                        const account = await AccountsService.getAerById(aerId);
+                        if (account) {
+                            aers.push(`${account.first_name} ${account.last_name}`);
+                        } else {
+                            console.warn(`AER with ID ${aerId} not found.`);
+                        }
+                    } catch (err) {
+                        console.error(`Error fetching AER with ID ${aerId}:`, err);
+                    }
+                }
+                day.aer = aers;
+            }
+            setDays(fetchedDays);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while fetching days.');
         }
-    };
+    }, []);
 
     const handleDeleteDay = async (dayId: string) => {
         console.log('Attempting to delete day with ID:', dayId);
@@ -38,7 +54,7 @@ export default function ManageGuards() {
 
         try {
             await DaysService.deleteDay(dayId);
-            fetchDays();
+            await fetchDays();
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while deleting the day.');
         }
@@ -62,7 +78,7 @@ export default function ManageGuards() {
         }
 
         fetchDays();
-    }, [isAuthenticated, loading, user, router]);
+    }, [isAuthenticated, loading, user, router, fetchDays]);
 
 
 
@@ -83,7 +99,7 @@ export default function ManageGuards() {
     } else {
         content = (
             <div>
-                <button onClick={() => router.push(`/manage-guards/add`)}>
+                <button onClick={() => router.push(`/manage-days/add`)}>
                     Add new day
                 </button>
 
@@ -92,9 +108,9 @@ export default function ManageGuards() {
                         <tr>
                             <th>Date</th>
                             <th>AER</th>
-                            <th>Opens at</th>
+                            <th>Campus opens at</th>
                             <th>Guard starts at</th>
-                            <th>Closes at</th>
+                            <th>Campus closes at</th>
                             <th>Was closed at</th>
                             <th>Actions</th>
                         </tr>
@@ -102,7 +118,7 @@ export default function ManageGuards() {
 
                     <tbody>
                         {days.map(day => (
-                            <tr key={day._id} onClick={() => router.push(`/manage-guards/display/${day._id}`)} style={{ cursor: 'pointer' }}>
+                            <tr key={day._id} onClick={() => router.push(`/manage-days/display/${day._id}`)} style={{ cursor: 'pointer' }}>
                                 <td>
                                     {new Date(day.date).toLocaleDateString('en-US', {
                                         year: 'numeric',
@@ -112,36 +128,32 @@ export default function ManageGuards() {
                                 </td>
 
                                 <td>
-                                    {day.aer?.map(aer => (
-                                        AccountsService.getAccountById(aer)
-                                            .then(account => account ? `${account.first_name} ${account.last_name}` : 'Unknown')
-                                            .catch(() => 'Unknown')
-                                    ))}
+                                    {day.aer && day.aer.length > 0 ? day.aer.join(', ') : 'N/A'}
                                 </td>
 
                                 <td>
-                                    {new Date(day.start).toLocaleTimeString('en-US', {
+                                    {new Date(day.start).toLocaleTimeString('fr-FR', {
                                         hour: '2-digit',
                                         minute: '2-digit'
                                     })}
                                 </td>
 
                                 <td>
-                                    {new Date(day.start_at).toLocaleTimeString('en-US', {
+                                    {new Date(day.start_at).toLocaleTimeString('fr-FR', {
                                         hour: '2-digit',
                                         minute: '2-digit'
                                     })}
                                 </td>
 
                                 <td>
-                                    {new Date(day.end).toLocaleTimeString('en-US', {
+                                    {new Date(day.end).toLocaleTimeString('fr-FR', {
                                         hour: '2-digit',
                                         minute: '2-digit'
                                     })}
                                 </td>
 
                                 <td>
-                                    {day.closed_at ? new Date(day.closed_at).toLocaleTimeString('en-US', {
+                                    {day.closed_at ? new Date(day.closed_at).toLocaleTimeString('fr-FR', {
                                         hour: '2-digit',
                                         minute: '2-digit'
                                     }) : 'N/A'}
@@ -151,7 +163,7 @@ export default function ManageGuards() {
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            router.push(`/manage-guards/edit/${day._id}`);
+                                            router.push(`/manage-days/edit/${day._id}`);
                                         }}
                                     >
                                         Edit
@@ -178,7 +190,7 @@ export default function ManageGuards() {
     return (
         <main>
             <h1>
-                Manage guards
+                Manage days
             </h1>
 
             {content}
