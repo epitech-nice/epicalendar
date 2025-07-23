@@ -21,26 +21,6 @@ router.get('/days', authenticateToken, async (request: Request, response: Respon
 
 
 
-router.get('/days/:id', authenticateToken, async (request: Request, response: Response): Promise<void> => {
-    try {
-        const dayId = request.params.id;
-        const day = await Day.findById(dayId);
-
-        if (!day) {
-            response.status(404).json({ message: 'Day not found.' });
-            return;
-        }
-
-        response.json(day);
-
-    } catch (error) {
-        response.status(500).json({ message: `Server error: ${error}` });
-        console.error("Error fetching day:", error);
-    }
-});
-
-
-
 router.get('/days/current', authenticateToken, async (request: Request, response: Response): Promise<void> => {
     try {
         const today = new Date();
@@ -53,6 +33,26 @@ router.get('/days/current', authenticateToken, async (request: Request, response
         }
 
         response.json(currentDay);
+
+    } catch (error) {
+        response.status(500).json({ message: `Server error: ${error}` });
+        console.error("Error fetching day:", error);
+    }
+});
+
+
+
+router.get('/days/:id', authenticateToken, async (request: Request, response: Response): Promise<void> => {
+    try {
+        const dayId = request.params.id;
+        const day = await Day.findById(dayId);
+
+        if (!day) {
+            response.status(404).json({ message: 'Day not found.' });
+            return;
+        }
+
+        response.json(day);
 
     } catch (error) {
         response.status(500).json({ message: `Server error: ${error}` });
