@@ -6,8 +6,8 @@ import axios from "axios";
 export interface OpeningRequest {
     _id?: string;
     date: Date;
-    start: Date;
-    end: Date;
+    open: Date;
+    close: Date;
     create_at: Date;
     account: string;
     status: string;
@@ -17,8 +17,8 @@ export interface OpeningRequest {
 
 export interface OpeningRequestUpdate {
     date?: Date;
-    start?: Date;
-    end?: Date;
+    open?: Date;
+    close?: Date;
     create_at?: Date;
     status?: string;
     message?: string;

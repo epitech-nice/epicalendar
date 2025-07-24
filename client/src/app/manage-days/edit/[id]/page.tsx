@@ -41,21 +41,21 @@ export default function ManageDaysEditId() {
         try {
             const dayData = await DaysService.getDayById(id);
             dayData.date = new Date(dayData.date);
+            dayData.open = new Date(dayData.open);
             dayData.start = new Date(dayData.start);
-            dayData.start_at = new Date(dayData.start_at);
-            dayData.end = new Date(dayData.end);
-            if (dayData.closed_at) {
-                dayData.closed_at = new Date(dayData.closed_at);
+            dayData.close = new Date(dayData.close);
+            if (dayData.end) {
+                dayData.end = new Date(dayData.end);
             }
             setDay(dayData)
             if (formData === null) {
                 setFormData({
                     date: new Date(dayData.date),
+                    open: new Date(dayData.open),
                     start: new Date(dayData.start),
-                    start_at: new Date(dayData.start_at),
-                    end: new Date(dayData.end),
-                    closed_at: dayData.closed_at ? new Date(dayData.closed_at) : undefined,
-                    aer: dayData.aer || [],
+                    close: new Date(dayData.close),
+                    end: dayData.end ? new Date(dayData.end) : undefined,
+                    aers: dayData.aers || [],
                     message: dayData.message || '',
                     observations: dayData.observations || '',
                 });
@@ -78,30 +78,30 @@ export default function ManageDaysEditId() {
         if (selected === 'Normal') {
             setFormData(prev => ({
                 ...prev,
-                start: getHours(8, 0),
-                start_at: getHours(18, 0),
-                end: getHours(22, 0),
+                open: getHours(8, 0),
+                start: getHours(18, 0),
+                close: getHours(22, 0),
             }));
         } else if (selected === 'Pool') {
             setFormData(prev => ({
                 ...prev,
-                start: getHours(8, 0),
-                start_at: getHours(18, 0),
-                end: getHours(23, 42),
+                open: getHours(8, 0),
+                start: getHours(18, 0),
+                close: getHours(23, 42),
             }));
         } else if (selected === 'Summer') {
             setFormData(prev => ({
                 ...prev,
-                start: getHours(8, 0),
-                start_at: getHours(18, 0),
-                end: getHours(20, 0),
+                open: getHours(8, 0),
+                start: getHours(18, 0),
+                close: getHours(20, 0),
             }));
         } else if (selected === 'Week-end') {
             setFormData(prev => ({
                 ...prev,
-                start: getHours(10, 0),
-                start_at: getHours( 10, 0),
-                end: getHours(20, 0),
+                open: getHours(10, 0),
+                start: getHours( 10, 0),
+                close: getHours(20, 0),
             }));
         }
     };
@@ -135,14 +135,14 @@ export default function ManageDaysEditId() {
                 return;
             }
 
-            if (formData?.aer && formData.aer.includes(aer._id!)) {
+            if (formData?.aers && formData.aers.includes(aer._id!)) {
                 setError("This AER is already added.");
                 return;
             }
 
             setFormData(prev => ({
                 ...prev,
-                aer: [...(prev?.aer || []), aer._id!]
+                aers: [...(prev?.aers || []), aer._id!]
             }));
 
             (e.target as HTMLInputElement).value = '';
@@ -152,7 +152,7 @@ export default function ManageDaysEditId() {
     const handleDeleteAer = (id: string) => {
         setFormData(prev => ({
             ...prev,
-            aer: prev?.aer ? prev.aer.filter(aerId => aerId !== id) : []
+            aers: prev?.aers ? prev.aers.filter(aerId => aerId !== id) : []
         }));
     }
 
@@ -255,8 +255,22 @@ export default function ManageDaysEditId() {
                 </div>
 
                 <div>
-                    <label htmlFor="start">
+                    <label htmlFor="open">
                         Campus opens at
+                    </label>
+                    <DatePicker
+                        selected={formData?.open}
+                        onChange={(date) => handleDateChange("open", date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={15}
+                        timeCaption="Open"
+                        dateFormat="HH:mm"
+                        timeFormat="HH:mm"
+                        required
+                    />
+                    <label htmlFor="start">
+                        Guard start at
                     </label>
                     <DatePicker
                         selected={formData?.start}
@@ -264,21 +278,7 @@ export default function ManageDaysEditId() {
                         showTimeSelect
                         showTimeSelectOnly
                         timeIntervals={15}
-                        timeCaption="Start"
-                        dateFormat="HH:mm"
-                        timeFormat="HH:mm"
-                        required
-                    />
-                    <label htmlFor="start_at">
-                        Guard start at
-                    </label>
-                    <DatePicker
-                        selected={formData?.start_at}
-                        onChange={(date) => handleDateChange("start_at", date)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Guard start at"
+                        timeCaption="Sstart"
                         dateFormat="HH:mm"
                         timeFormat="HH:mm"
                         required
@@ -286,8 +286,22 @@ export default function ManageDaysEditId() {
                 </div>
 
                 <div>
-                    <label htmlFor="end">
+                    <label htmlFor="close">
                         Campus closes at
+                    </label>
+                    <DatePicker
+                        selected={formData?.close}
+                        onChange={(date) => handleDateChange("close", date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={15}
+                        timeCaption="Close"
+                        dateFormat="HH:mm"
+                        timeFormat="HH:mm"
+                        required
+                    />
+                    <label htmlFor="end">
+                        Guard ends at
                     </label>
                     <DatePicker
                         selected={formData?.end}
@@ -296,20 +310,6 @@ export default function ManageDaysEditId() {
                         showTimeSelectOnly
                         timeIntervals={15}
                         timeCaption="End"
-                        dateFormat="HH:mm"
-                        timeFormat="HH:mm"
-                        required
-                    />
-                    <label htmlFor="closed_at">
-                        Guard ends at
-                    </label>
-                    <DatePicker
-                        selected={formData?.closed_at}
-                        onChange={(date) => handleDateChange("closed_at", date)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Guard ends at"
                         dateFormat="HH:mm"
                         timeFormat="HH:mm"
                     />
@@ -341,9 +341,7 @@ export default function ManageDaysEditId() {
                                 </td>
 
                                 <td>
-                                    {aer.guard_time
-                                        ? `${Math.floor(aer.guard_time / 60)} hours ${aer.guard_time % 60} minutes`
-                                        : 'N/A'}
+                                    {aer.guard_time ? `${aer.guard_time.total}` : 'N/A'}
                                 </td>
 
                                 <td>
@@ -372,7 +370,7 @@ export default function ManageDaysEditId() {
                 </div>
 
                 <div>
-                    {formData?.aer && formData.aer.map(id => {
+                    {formData?.aers && formData.aers.map(id => {
                         const aer = aers.find(a => a._id === id);
                         if (!aer)
                             return null;

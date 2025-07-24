@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import {Account, formatAccountFields} from "../../models/account";
+import {Account, addGuardTime, formatAccountFields} from "../../models/account";
 import { authenticateToken, authorizeAdmin } from "../../middleware/auth";
 import bcrypt from "bcrypt";
 
@@ -49,10 +49,16 @@ router.put('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
             { new: true, runValidators: true }
         );
         updatedAccount = await Account.findById(id, "-password");
+        if (!updatedAccount) {
+            response.status(404).json({ message: 'Account not found after update.' });
+            return;
+        }
 
+        const accountJson = updatedAccount.toObject();
+        await addGuardTime(accountJson);
         response.status(200).json({
             message: 'Account updated successfully.',
-            account: updatedAccount 
+            account: accountJson
         });
 
     } catch (error) {

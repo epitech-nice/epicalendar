@@ -3,6 +3,17 @@ import axios from "axios";
 
 
 
+export interface GuardTime {
+    monday: number;
+    tuesday: number;
+    wednesday: number;
+    thursday: number;
+    friday: number;
+    saturday: number;
+    sunday: number;
+    total: number;
+}
+
 export interface Account {
     _id?: string;
     email: string;
@@ -13,7 +24,7 @@ export interface Account {
     role: 'student' | 'aer' | 'admin';
     description?: string;
     photo?: string;
-    guard_time?: number;
+    guard_time?: GuardTime;
     day?: '' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
     room?: string;
 }
@@ -63,6 +74,7 @@ export const AccountsService = {
 
     async getAers(): Promise<Account[]> {
         try {
+            console.log((await api.get('/accounts/aer')).data)
             return (await api.get('/accounts/aer')).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {

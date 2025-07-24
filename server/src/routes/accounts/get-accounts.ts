@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { Account } from "../../models/account";
+import {Account, addGuardTime} from "../../models/account";
 import { authenticateToken, authorizeAdmin, authorizeAer } from '../../middleware/auth';
 
 
@@ -31,6 +31,9 @@ router.get('/accounts', authenticateToken, authorizeAdmin, async (request: Reque
             { $project: { password: 0, role_order: 0 } }
         ]);
 
+        for (const account of accounts) {
+            await addGuardTime(account);
+        }
         response.json(accounts);
 
     } catch (error) {
@@ -41,10 +44,17 @@ router.get('/accounts', authenticateToken, authorizeAdmin, async (request: Reque
 
 
 
-router.get('/accounts/aer', authenticateToken, authorizeAer, async (request: Request, response: Response): Promise<void> => {
+router.get('/accounts/aer', authenticateToken, async (request: Request, response: Response): Promise<void> => {
     try {
         const accounts = await Account.find({ role: 'aer' }, '-password').sort({ email: 1 });
-        response.json(accounts);
+        let accountsJson = [];
+
+        for (const account of accounts) {
+            const accountJson = account.toObject();
+            await addGuardTime(accountJson);
+            accountsJson.push(accountJson);
+        }
+        response.json(accountsJson);
 
     } catch (error) {
         response.status(500).json({ message: `Server error: ${error}` });
@@ -64,7 +74,9 @@ router.get('/accounts/:id', authenticateToken, authorizeAdmin, async (request: R
             return;
         }
 
-        response.json(account);
+        const accountJson = account.toObject();
+        await addGuardTime(accountJson);
+        response.json(accountJson);
 
     } catch (error) {
         response.status(500).json({ message: `Server error: ${error}` });

@@ -6,22 +6,22 @@ import axios from "axios";
 export interface Day {
     _id?: string;
     date: Date;
+    open: Date;
     start: Date;
-    start_at: Date;
-    end: Date;
-    closed_at?: Date;
-    aer?: string[];
+    close: Date;
+    end?: Date;
+    aers?: string[];
     message?: string;
     observations?: string;
 }
 
 export interface DayUpdate {
     date?: Date;
+    open?: Date;
     start?: Date;
-    start_at?: Date;
-    closed_at?: Date;
+    close?: Date;
     end?: Date;
-    aer?: string[];
+    aers?: string[];
     message?: string;
     observations?: string;
 }
@@ -31,6 +31,7 @@ export interface DayUpdate {
 export const DaysService = {
     async getDays(): Promise<Day[]> {
         try {
+            console.log((await api.get('/days')).data)
             return (await api.get('/days')).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {

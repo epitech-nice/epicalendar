@@ -8,11 +8,11 @@ import {Account} from "../../models/account";
 const router = Router();
 
 
-//TODO: faut que sa mette à jour le compte des heures des aer
+
 router.post('/days', authenticateToken, authorizeAer, async (request: Request, response: Response): Promise<void> => {
     try {
-        if (!request.body.date && !request.body.start && !request.body.start_at && !request.body.end) {
-            response.status(400).json({ message: 'Fields are missing. Please provide date, start, start_at, and end.' });
+        if (!request.body.date && !request.body.open && !request.body.start && !request.body.close) {
+            response.status(400).json({ message: 'Fields are missing. Please provide date, open, start, and close.' });
             return;
         }
 
@@ -24,26 +24,26 @@ router.post('/days', authenticateToken, authorizeAer, async (request: Request, r
             return;
         }
 
+        const orignalOpen = new Date(request.body.start);
+        request.body.open = new Date(request.body.date);
+        request.body.open.setHours(orignalOpen.getHours(), orignalOpen.getMinutes(), 0, 0);
         const orignalStart = new Date(request.body.start);
         request.body.start = new Date(request.body.date);
         request.body.start.setHours(orignalStart.getHours(), orignalStart.getMinutes(), 0, 0);
-        const orignalStartAt = new Date(request.body.start_at);
-        request.body.start_at = new Date(request.body.date);
-        request.body.start_at.setHours(orignalStartAt.getHours(), orignalStartAt.getMinutes(), 0, 0);
-        const orignalEnd = new Date(request.body.end);
-        request.body.end = new Date(request.body.date);
-        request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
+        const orignalClose = new Date(request.body.close);
+        request.body.close = new Date(request.body.date);
+        request.body.close.setHours(orignalClose.getHours(), orignalClose.getMinutes(), 0, 0);
 
-        if (request.body.start >= request.body.end) {
-            response.status(400).json({ message: 'Start time must be before end time.' });
+        if (request.body.open >= request.body.close) {
+            response.status(400).json({ message: 'Open time must be before close time.' });
             return;
         }
-        if (request.body.start_at >= request.body.end) {
-            response.status(400).json({ message: 'Guard start time must be before end time.' });
+        if (request.body.start >= request.body.close) {
+            response.status(400).json({ message: 'Guard start time must be before close time.' });
             return;
         }
-        if (request.body.start > request.body.start_at) {
-            response.status(400).json({ message: 'The guard start time must be between start and end time.' });
+        if (request.body.open > request.body.start) {
+            response.status(400).json({ message: 'The guard start time must be between open and close time.' });
             return;
         }
 

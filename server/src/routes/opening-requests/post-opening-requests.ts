@@ -10,22 +10,22 @@ const router = Router();
 
 router.post('/opening-requests', authenticateToken, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
     try {
-        if (!request.body.date && !request.body.start && !request.body.end && !request.body.message) {
-            response.status(400).json({ message: 'Fields are missing. Please provide date, start, end, and message.' });
+        if (!request.body.date && !request.body.open && !request.body.close && !request.body.message) {
+            response.status(400).json({ message: 'Fields are missing. Please provide date, open, close, and message.' });
             return;
         }
 
         request.body.date = new Date(request.body.date);
         request.body.date.setHours(0, 0, 0, 0);
-        const orignalStart = new Date(request.body.start);
-        request.body.start = new Date(request.body.date);
-        request.body.start.setHours(orignalStart.getHours(), orignalStart.getMinutes(), 0, 0);
-        const orignalEnd = new Date(request.body.end);
-        request.body.end = new Date(request.body.date);
-        request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
+        const orignalOpen = new Date(request.body.open);
+        request.body.open = new Date(request.body.date);
+        request.body.open.setHours(orignalOpen.getHours(), orignalOpen.getMinutes(), 0, 0);
+        const orignalClose = new Date(request.body.close);
+        request.body.close = new Date(request.body.date);
+        request.body.close.setHours(orignalClose.getHours(), orignalClose.getMinutes(), 0, 0);
 
-        if (request.body.start >= request.body.end) {
-            response.status(400).json({ message: 'Start time must be before end time.' });
+        if (request.body.open >= request.body.close) {
+            response.status(400).json({ message: 'Open time must be before close time.' });
             return;
         }
 

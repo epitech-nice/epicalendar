@@ -13,6 +13,7 @@ export default function DisplayAccount({ account, profile } : { account: Account
     const { user, loading } = useAuth()
 
     const [error, setError] = useState('')
+    console.log(account)
 
 
 
@@ -104,9 +105,36 @@ export default function DisplayAccount({ account, profile } : { account: Account
                 <b>Role:</b>
                 {account?.role ? account.role.toUpperCase() : 'No role assigned'}
                 <b>Total guard time:</b>
-                {account?.guard_time
-                    ? `${Math.floor(account.guard_time / 60)} hours ${account.guard_time % 60} minutes`
-                    : 'No guard time recorded'}
+                {!account?.guard_time ?
+                    'No guard time recorded' :
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                                <th>Saturday</th>
+                                <th>Sunday</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>{account?.guard_time?.monday || '0h'}</td>
+                                <td>{account?.guard_time?.tuesday || '0h'}</td>
+                                <td>{account?.guard_time?.wednesday || '0h'}</td>
+                                <td>{account?.guard_time?.thursday || '0h'}</td>
+                                <td>{account?.guard_time?.friday || '0h'}</td>
+                                <td>{account?.guard_time?.saturday || '0h'}</td>
+                                <td>{account?.guard_time?.sunday || '0h'}</td>
+                                <td>{account?.guard_time ? account.guard_time.total : '0h'}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
             </div>
 
             <div>

@@ -7,7 +7,7 @@ import {Day} from "../../models/day";
 const router = Router();
 
 
-//TODO: faut que sa mette à jour le compte des heures des aer
+
 router.put('/days/:id', authenticateToken, async (request: Request, response: Response): Promise<void> => {
     try {
         const { id } = request.params;
@@ -18,16 +18,22 @@ router.put('/days/:id', authenticateToken, async (request: Request, response: Re
             return;
         }
 
+        if (request.body.open) {
+            const orignalOpen = new Date(request.body.open);
+            request.body.open = new Date(existingDay.date);
+            request.body.open.setHours(orignalOpen.getHours(), orignalOpen.getMinutes(), 0, 0);
+        }
+
         if (request.body.start) {
             const orignalStart = new Date(request.body.start);
             request.body.start = new Date(existingDay.date);
             request.body.start.setHours(orignalStart.getHours(), orignalStart.getMinutes(), 0, 0);
         }
 
-        if (request.body.start_at) {
-            const orignalStartAt = new Date(request.body.start);
-            request.body.start_at = new Date(existingDay.date);
-            request.body.start_at.setHours(orignalStartAt.getHours(), orignalStartAt.getMinutes(), 0, 0);
+        if (request.body.close) {
+            const orignalClose = new Date(request.body.close);
+            request.body.close = new Date(existingDay.date);
+            request.body.close.setHours(orignalClose.getHours(), orignalClose.getMinutes(), 0, 0);
         }
 
         if (request.body.end) {
@@ -45,15 +51,39 @@ router.put('/days/:id', authenticateToken, async (request: Request, response: Re
                 return;
             }
 
+            const orignalOpen = request.body.open ? new Date(request.body.open) : existingDay.open;
+            request.body.open = new Date(request.body.date);
+            request.body.open.setHours(orignalOpen.getHours(), orignalOpen.getMinutes(), 0, 0);
             const orignalStart = request.body.start ? new Date(request.body.start) : existingDay.start;
             request.body.start = new Date(request.body.date);
             request.body.start.setHours(orignalStart.getHours(), orignalStart.getMinutes(), 0, 0);
-            const orignalStartAt = request.body.start_at ? new Date(request.body.start) : existingDay.start_at;
-            request.body.start_at = new Date(request.body.date);
-            request.body.start_at.setHours(orignalStartAt.getHours(), orignalStartAt.getMinutes(), 0, 0);
+            const orignalClose = request.body.close ? new Date(request.body.close) : existingDay.close;
+            request.body.close = new Date(request.body.date);
+            request.body.close.setHours(orignalClose.getHours(), orignalClose.getMinutes(), 0, 0);
             const orignalEnd = request.body.end ? new Date(request.body.end) : existingDay.end;
-            request.body.end = new Date(request.body.date);
-            request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
+            if (orignalEnd) {
+                request.body.end = new Date(request.body.date);
+                request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
+            }
+        }
+
+        if ((request.body.open && request.body.close && request.body.open >= request.body.close) ||
+        (request.body.open && !request.body.close && request.body.open >= existingDay.close) ||
+        (!request.body.open && request.body.close && existingDay.open >= request.body.close)) {
+            response.status(400).json({ message: 'Open time must be before close time.' });
+            return;
+        }
+        if ((request.body.start && request.body.close && request.body.start >= request.body.close) ||
+        (request.body.start && !request.body.close && request.body.start >= existingDay.close) ||
+        (!request.body.start && request.body.close && existingDay.start >= request.body.close)) {
+            response.status(400).json({ message: 'Guard start time must be before close time.' });
+            return;
+        }
+        if ((request.body.open && request.body.start && request.body.open > request.body.start) ||
+        (request.body.open && !request.body.start && existingDay.open > existingDay.start) ||
+        (!request.body.open && request.body.start && existingDay.open > request.body.start)) {
+            response.status(400).json({ message: 'The guard start time must be between open and close time.' });
+            return;
         }
 
         const updatedDay = await Day.findByIdAndUpdate(

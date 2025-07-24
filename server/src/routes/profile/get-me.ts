@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { Account } from "../../models/account";
+import {Account, addGuardTime} from "../../models/account";
 import { authenticateToken, AuthenticatedRequest } from "../../middleware/auth";
 
 
@@ -21,7 +21,9 @@ router.get('/me', authenticateToken, async (request: AuthenticatedRequest, respo
             return;
         }
 
-        response.json(account);
+        const accountJson = account.toObject();
+        await addGuardTime(accountJson);
+        response.json(accountJson);
 
     } catch (error) {
         response.status(500).json({ message: `Server error: ${error}` });

@@ -26,7 +26,7 @@ export default function ManageDaysDisplayId() {
         try {
             const dayData = await DaysService.getDayById(id)
             const aers: string[] = [];
-            for (const aerId of dayData.aer || []) {
+            for (const aerId of dayData.aers || []) {
                 try {
                     const account = await AccountsService.getAerById(aerId);
                     if (account) {
@@ -38,7 +38,7 @@ export default function ManageDaysDisplayId() {
                     console.error(`Error fetching AER with ID ${aerId}:`, err);
                 }
             }
-            dayData.aer = aers;
+            dayData.aers = aers;
             setDay(dayData)
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while fetching the day.')
@@ -124,12 +124,12 @@ export default function ManageDaysDisplayId() {
 
                 <div>
                     <b>Campus opens at:</b>
-                    {day.start ? new Date(day.start).toLocaleTimeString('fr-FR', {
+                    {day.open ? new Date(day.open).toLocaleTimeString('fr-FR', {
                         hour: '2-digit',
                         minute: '2-digit'
                     }) : 'Not set'}
                     <b>Guard starts at:</b>
-                    {day.start_at ? new Date(day.start_at).toLocaleTimeString('fr-FR', {
+                    {day.start ? new Date(day.start).toLocaleTimeString('fr-FR', {
                         hour: '2-digit',
                         minute: '2-digit'
                     }) : 'Not set'}
@@ -137,12 +137,12 @@ export default function ManageDaysDisplayId() {
 
                 <div>
                     <b>Campus closes at:</b>
-                    {day.end ? new Date(day.end).toLocaleTimeString('fr-FR', {
+                    {day.close ? new Date(day.close).toLocaleTimeString('fr-FR', {
                         hour: '2-digit',
                         minute: '2-digit'
                     }) : 'Not set'}
                     <b>Guard ends at:</b>
-                    {day.closed_at ? new Date(day.closed_at).toLocaleTimeString('fr-FR', {
+                    {day.end ? new Date(day.end).toLocaleTimeString('fr-FR', {
                         hour: '2-digit',
                         minute: '2-digit'
                     }) : 'Not set'}
@@ -150,7 +150,7 @@ export default function ManageDaysDisplayId() {
 
                 <div>
                     <b>AER:</b>
-                    {day.aer && day.aer.length > 0 ? day.aer.join(', ') : 'fr-FR'}
+                    {day.aers && day.aers.length > 0 ? day.aers.join(', ') : 'No AER assigned'}
                 </div>
 
                 <div>

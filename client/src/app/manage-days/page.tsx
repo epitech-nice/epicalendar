@@ -25,7 +25,7 @@ export default function ManageDays() {
             const fetchedDays = await DaysService.getDays();
             for (const day of fetchedDays) {
                 const aers: string[] = [];
-                for (const aerId of day.aer || []) {
+                for (const aerId of day.aers || []) {
                     try {
                         const account = await AccountsService.getAerById(aerId);
                         if (account) {
@@ -37,7 +37,7 @@ export default function ManageDays() {
                         console.error(`Error fetching AER with ID ${aerId}:`, err);
                     }
                 }
-                day.aer = aers;
+                day.aers = aers;
             }
             setDays(fetchedDays);
         } catch (err) {
@@ -128,7 +128,14 @@ export default function ManageDays() {
                                 </td>
 
                                 <td>
-                                    {day.aer && day.aer.length > 0 ? day.aer.join(', ') : 'N/A'}
+                                    {day.aers && day.aers.length > 0 ? day.aers.join(', ') : 'N/A'}
+                                </td>
+
+                                <td>
+                                    {new Date(day.open).toLocaleTimeString('fr-FR', {
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}
                                 </td>
 
                                 <td>
@@ -139,21 +146,14 @@ export default function ManageDays() {
                                 </td>
 
                                 <td>
-                                    {new Date(day.start_at).toLocaleTimeString('fr-FR', {
+                                    {new Date(day.close).toLocaleTimeString('fr-FR', {
                                         hour: '2-digit',
                                         minute: '2-digit'
                                     })}
                                 </td>
 
                                 <td>
-                                    {new Date(day.end).toLocaleTimeString('fr-FR', {
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    })}
-                                </td>
-
-                                <td>
-                                    {day.closed_at ? new Date(day.closed_at).toLocaleTimeString('fr-FR', {
+                                    {day.end ? new Date(day.end).toLocaleTimeString('fr-FR', {
                                         hour: '2-digit',
                                         minute: '2-digit'
                                     }) : 'N/A'}

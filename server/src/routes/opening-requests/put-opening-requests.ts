@@ -18,27 +18,34 @@ router.put('/opening-request/:id', authenticateToken, authorizeAer, async (reque
             return;
         }
 
-        if (request.body.start) {
-            const orignalStart = new Date(request.body.start);
-            request.body.start = new Date(existingOpeningRequest.date);
-            request.body.start.setHours(orignalStart.getHours(), orignalStart.getMinutes(), 0, 0);
+        if (request.body.open) {
+            const orignalOpen = new Date(request.body.open);
+            request.body.open = new Date(existingOpeningRequest.date);
+            request.body.open.setHours(orignalOpen.getHours(), orignalOpen.getMinutes(), 0, 0);
         }
 
-        if (request.body.end) {
-            const orignalEnd = new Date(request.body.end);
-            request.body.end = new Date(existingOpeningRequest.date);
-            request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
+        if (request.body.close) {
+            const orignalClose = new Date(request.body.close);
+            request.body.close = new Date(existingOpeningRequest.date);
+            request.body.close.setHours(orignalClose.getHours(), orignalClose.getMinutes(), 0, 0);
         }
 
         if (request.body.date) {
             request.body.date = new Date(request.body.date);
             request.body.date.setHours(0, 0, 0, 0);
-            const orignalStart = request.body.start ? new Date(request.body.start) : existingOpeningRequest.start;
-            request.body.start = new Date(request.body.date);
-            request.body.start.setHours(orignalStart.getHours(), orignalStart.getMinutes(), 0, 0);
-            const orignalEnd = request.body.end ? new Date(request.body.end) : existingOpeningRequest.end;
-            request.body.end = new Date(request.body.date);
-            request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
+            const orignalOpen = request.body.open ? new Date(request.body.open) : existingOpeningRequest.open;
+            request.body.open = new Date(request.body.date);
+            request.body.open.setHours(orignalOpen.getHours(), orignalOpen.getMinutes(), 0, 0);
+            const orignalClose = request.body.close ? new Date(request.body.close) : existingOpeningRequest.close;
+            request.body.close = new Date(request.body.date);
+            request.body.close.setHours(orignalClose.getHours(), orignalClose.getMinutes(), 0, 0);
+        }
+
+        if ((request.body.open && request.body.close && request.body.open >= request.body.close) ||
+        (request.body.open && !request.body.close && request.body.open >= existingOpeningRequest.close) ||
+        (!request.body.open && request.body.close && existingOpeningRequest.open >= request.body.close)) {
+            response.status(400).json({ message: 'Open time must be before close time.' });
+            return;
         }
 
         if (request.body.created_at)
