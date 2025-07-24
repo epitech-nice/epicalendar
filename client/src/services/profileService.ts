@@ -7,7 +7,6 @@ import {Account, AccountUpdate} from "@/services/accountsService";
 export const ProfileService = {
     async getProfile() : Promise<Account> {
         try {
-            console.log((await api.get('/me')).data)
             return (await api.get('/me')).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {

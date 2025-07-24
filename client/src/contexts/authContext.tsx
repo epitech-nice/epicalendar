@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                     await AuthService.updateUser();
                     setUser(AuthService.getUser());
                 } catch (error) {
-                    console.error('\x1b[31mError validating token:\x1b[0m', error);
+                    console.error("Error validating token:", error);
                     logout();
                 }
             }

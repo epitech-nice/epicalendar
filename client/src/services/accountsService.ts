@@ -74,7 +74,6 @@ export const AccountsService = {
 
     async getAers(): Promise<Account[]> {
         try {
-            console.log((await api.get('/accounts/aer')).data)
             return (await api.get('/accounts/aer')).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {

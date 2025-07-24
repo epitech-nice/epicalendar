@@ -21,7 +21,6 @@ export default function ManageAccounts() {
 
     const fetchAccounts = useCallback(async () => {
         try {
-            console.log(await AccountsService.getAccounts());
             setAccounts(await AccountsService.getAccounts());
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred while fetching accounts.');

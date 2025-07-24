@@ -13,7 +13,6 @@ export default function DisplayAccount({ account, profile } : { account: Account
     const { user, loading } = useAuth()
 
     const [error, setError] = useState('')
-    console.log(account)
 
 
 

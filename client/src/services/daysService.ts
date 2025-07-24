@@ -31,7 +31,6 @@ export interface DayUpdate {
 export const DaysService = {
     async getDays(): Promise<Day[]> {
         try {
-            console.log((await api.get('/days')).data)
             return (await api.get('/days')).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
