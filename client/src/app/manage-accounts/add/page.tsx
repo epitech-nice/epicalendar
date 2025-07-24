@@ -239,17 +239,15 @@ export default function ManageAccountsAdd() {
 
     return (
         <main>
-            <div>
-                <h1>
-                    Manage accounts - Add account
-                </h1>
+            <h1>
+                Manage accounts - Add account
+            </h1>
 
-                {content}
+            {content}
 
-                <Link href="/manage-accounts">
-                    ← Back to accounts
-                </Link>
-            </div>
+            <Link href="/manage-accounts">
+                ← Back to accounts
+            </Link>
         </main>
     )
 }

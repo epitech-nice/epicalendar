@@ -356,17 +356,15 @@ export default function ManageDaysAdd() {
 
     return (
         <main>
-            <div>
-                <h1>
-                    Manage days - Add day
-                </h1>
+            <h1>
+                Manage days - Add day
+            </h1>
 
-                {content}
+            {content}
 
-                <Link href="/manage-days">
-                    ← Back to days
-                </Link>
-            </div>
+            <Link href="/manage-days">
+                ← Back to days
+            </Link>
         </main>
     )
 }

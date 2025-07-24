@@ -24,7 +24,7 @@ router.post('/days', authenticateToken, authorizeAer, async (request: Request, r
             return;
         }
 
-        const orignalOpen = new Date(request.body.start);
+        const orignalOpen = new Date(request.body.open);
         request.body.open = new Date(request.body.date);
         request.body.open.setHours(orignalOpen.getHours(), orignalOpen.getMinutes(), 0, 0);
         const orignalStart = new Date(request.body.start);

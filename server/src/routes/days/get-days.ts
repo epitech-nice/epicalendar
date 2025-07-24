@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { authenticateToken } from '../../middleware/auth';
+import {authenticateToken, authorizeAer} from '../../middleware/auth';
 import { Day } from "../../models/day";
 
 
@@ -10,7 +10,7 @@ const router = Router();
 
 router.get('/days', authenticateToken, async (request: Request, response: Response): Promise<void> => {
     try {
-        const days = await Day.find().sort({ date: -1 });
+        const days = await Day.find().select('-observations').sort({ date: -1 });
         response.json(days);
 
     } catch (error) {
@@ -25,7 +25,7 @@ router.get('/days/current', authenticateToken, async (request: Request, response
     try {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        const currentDay = await Day.findOne({ date: today });
+        const currentDay = await Day.findOne({ date: today }).select('-observations');
 
         if (!currentDay) {
             response.status(404).json({ message: 'No current day found.' });
@@ -42,7 +42,7 @@ router.get('/days/current', authenticateToken, async (request: Request, response
 
 
 
-router.get('/days/:id', authenticateToken, async (request: Request, response: Response): Promise<void> => {
+router.get('/days/:id', authenticateToken, authorizeAer, async (request: Request, response: Response): Promise<void> => {
     try {
         const dayId = request.params.id;
         const day = await Day.findById(dayId);
