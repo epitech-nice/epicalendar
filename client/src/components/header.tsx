@@ -25,31 +25,33 @@ export default function Header() {
             </Link>
 
             {/* Other pages */}
-            {isAuthenticated && user && (
-                <nav>
-                    <Link href="/calendar">
-                        Calendar
-                    </Link>
-                    <Link href="/opening-requests">
-                        Opening requests
-                    </Link>
-                    <Link href="/stuck">
-                        I&#39;m stuck
-                    </Link>
-                    {['aer', 'admin'].includes(user.role) && (
-                        <>
-                            <Link href="/manage-days">
-                                Manage days
+            <nav>
+                <Link href="/calendar">
+                    Calendar
+                </Link>
+                <Link href="/opening-requests">
+                    Opening requests
+                </Link>
+                <Link href="/stuck">
+                    I&#39;m stuck
+                </Link>
+                {isAuthenticated && user && (
+                    <>
+                        {['aer', 'admin'].includes(user.role) && (
+                            <>
+                                <Link href="/manage-days">
+                                    Manage days
+                                </Link>
+                            </>
+                        )}
+                        {user.role === 'admin' && (
+                            <Link href="/manage-accounts">
+                                Manage accounts
                             </Link>
-                        </>
-                    )}
-                    {user.role === 'admin' && (
-                        <Link href="/manage-accounts">
-                            Manage accounts
-                        </Link>
-                    )}
-                </nav>
-            )}
+                        )}
+                    </>
+                )}
+            </nav>
 
             {/* Connection */}
             <nav>

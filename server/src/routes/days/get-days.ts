@@ -8,7 +8,7 @@ const router = Router();
 
 
 
-router.get('/days', authenticateToken, async (request: Request, response: Response): Promise<void> => {
+router.get('/days', async (request: Request, response: Response): Promise<void> => {
     try {
         const days = await Day.find().select('-observations').sort({ date: -1 });
         response.json(days);
@@ -21,7 +21,7 @@ router.get('/days', authenticateToken, async (request: Request, response: Respon
 
 
 
-router.get('/days/current', authenticateToken, async (request: Request, response: Response): Promise<void> => {
+router.get('/days/current', async (request: Request, response: Response): Promise<void> => {
     try {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
