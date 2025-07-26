@@ -42,7 +42,7 @@ export default function Profile() {
             return
         }
 
-        if (!user || (user && user.role === 'student')) {
+        if (!user || user.role === 'student') {
             setError('You do not have permission to access this page.');
             return;
         }

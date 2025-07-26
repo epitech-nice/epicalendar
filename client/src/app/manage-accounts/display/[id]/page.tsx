@@ -48,7 +48,7 @@ export default function ManageAccountsDisplayId() {
             return
         }
 
-        if (!user || (user && user.role !== 'admin')) {
+        if (!user || user.role !== 'admin') {
             setError('You do not have permission to access this page.');
             return;
         }
