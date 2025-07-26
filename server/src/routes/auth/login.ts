@@ -33,7 +33,7 @@ router.post('/login', async (request: Request, response: Response): Promise<void
 
         response.json({
             message: 'Login successful.',
-            token: generateToken(user._id, user.role),
+            token: generateToken(user._id, user.email, user.role),
             user: {
                 email: user.email,
                 first_name: user.first_name,

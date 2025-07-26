@@ -22,8 +22,7 @@ const OpeningRequestSchema = new Schema({
     },
 
     account: {
-        type: Schema.Types.ObjectId,
-        ref: 'Account',
+        type: String,
         required: true
     },
     status: {

@@ -29,7 +29,7 @@ router.post('/opening-requests', authenticateToken, async (request: Authenticate
             return;
         }
 
-        request.body.account = request.user._id;
+        request.body.account = request.user.email;
         if (request.body.status)
             delete request.body.status;
         if (request.body.response)

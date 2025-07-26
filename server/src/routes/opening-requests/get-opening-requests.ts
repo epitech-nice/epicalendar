@@ -14,7 +14,7 @@ router.get('/opening-requests', authenticateToken, async (request: Authenticated
             const openingRequests = await OpeningRequest.find().sort({ date: 1 });
             response.json(openingRequests);
         } else {
-            const openingRequests = await OpeningRequest.find({ account: request.user._id }).sort({ date: 1 });
+            const openingRequests = await OpeningRequest.find({ account: request.user.email }).sort({ date: 1 });
             response.json(openingRequests);
         }
 
@@ -36,7 +36,7 @@ router.get('/opening-requests/:id', authenticateToken, async (request: Authentic
             return;
         }
 
-        if (request.user.role === "student" && openingRequest.account.toString() !== request.user._id.toString()) {
+        if (request.user.role === "student" && openingRequest.account !== request.user.email) {
             response.status(403).json({ message: 'You can only view your own opening requests.' });
             return;
         }

@@ -82,9 +82,9 @@ export async function formatAccountFields(first_name: string | null, last_name: 
     };
 }
 
-export function generateToken(id: Types.ObjectId, role: string): string {
+export function generateToken(id: Types.ObjectId, email: string, role: string): string {
     return jwt.sign(
-        { id: id, role: role },
+        { id: id, email: email, role: role },
         process.env.JWT_SECRET as string,
         { expiresIn: '24h' });
 }

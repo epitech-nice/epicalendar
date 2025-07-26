@@ -21,7 +21,7 @@ router.delete('/opening-requests/:id', authenticateToken, async (request: Authen
             return;
         }
 
-        if (request.user?.role === "student" && deletedOpeningRequest.account.toString() !== request.user._id.toString()) {
+        if (request.user?.role === "student" && deletedOpeningRequest.account !== request.user.email) {
             response.status(403).json({ message: 'You can only delete your own opening requests.' });
             return;
         }
