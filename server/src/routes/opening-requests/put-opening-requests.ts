@@ -8,7 +8,7 @@ const router = Router();
 
 
 
-router.put('/opening-request/:id', authenticateToken, authorizeAer, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+router.put('/opening-requests/:id', authenticateToken, authorizeAer, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
     try {
         const { id } = request.params;
 

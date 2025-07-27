@@ -11,10 +11,10 @@ const router = Router();
 router.get('/opening-requests', authenticateToken, async (request: AuthenticatedRequest, response: Response): Promise<void> => {
     try {
         if (request.user.role !== "student") {
-            const openingRequests = await OpeningRequest.find().sort({ date: 1 });
+            const openingRequests = await OpeningRequest.find().sort({ date: -1 });
             response.json(openingRequests);
         } else {
-            const openingRequests = await OpeningRequest.find({ account: request.user.email }).sort({ date: 1 });
+            const openingRequests = await OpeningRequest.find({ account: request.user.email }).sort({ date: -1 });
             response.json(openingRequests);
         }
 

@@ -8,9 +8,9 @@ export interface OpeningRequest {
     date: Date;
     open: Date;
     close: Date;
-    create_at: Date;
-    account: string;
-    status: string;
+    created_at?: Date;
+    account?: string;
+    status?: 'waiting' | 'accepted' | 'rejected';
     message: string;
     response?: string;
 }
@@ -19,8 +19,7 @@ export interface OpeningRequestUpdate {
     date?: Date;
     open?: Date;
     close?: Date;
-    create_at?: Date;
-    status?: string;
+    status?: 'waiting' | 'accepted' | 'rejected';
     message?: string;
     response?: string;
 }

@@ -181,7 +181,7 @@ export default function ManageDaysEditId() {
             await DaysService.updateDay(id, finalFormData);
             router.push('/manage-days');
         } catch (err: unknown) {
-            setError(err instanceof Error ? err.message : 'An error occurred while adding the day.');
+            setError(err instanceof Error ? err.message : 'An error occurred while updating the day.');
         } finally {
             setResponseLoading(false);
         }
@@ -423,7 +423,7 @@ export default function ManageDaysEditId() {
                     type="submit"
                     disabled={responseLoading}
                 >
-                    {responseLoading ? 'Updating...' : 'Update Day'}
+                    {responseLoading ? 'Updating...' : 'Update day'}
                 </button>
             </form>
         ) : null

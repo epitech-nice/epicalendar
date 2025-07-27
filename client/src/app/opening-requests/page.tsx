@@ -82,7 +82,7 @@ export default function ManageOpeningRequests() {
     } else {
         content = (
             <div>
-                <button onClick={() => router.push(`/opening-request/add`)}>
+                <button onClick={() => router.push(`/opening-requests/add`)}>
                     Add new opening request
                 </button>
 
@@ -95,6 +95,7 @@ export default function ManageOpeningRequests() {
                         )}
                         <th>Campus opens at</th>
                         <th>Campus closes at</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -128,6 +129,10 @@ export default function ManageOpeningRequests() {
                                     hour: '2-digit',
                                     minute: '2-digit'
                                 })}
+                            </td>
+
+                            <td>
+                                {openingRequest.status}
                             </td>
 
                             <td>

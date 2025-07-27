@@ -346,7 +346,7 @@ export default function ManageDaysAdd() {
                     type="submit"
                     disabled={responseLoading}
                 >
-                    {responseLoading ? 'Adding...' : 'Add Day'}
+                    {responseLoading ? 'Adding...' : 'Add day'}
                 </button>
             </form>
         );
