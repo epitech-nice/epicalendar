@@ -28,7 +28,7 @@ router.get('/days/current', async (request: Request, response: Response): Promis
         const currentDay = await Day.findOne({ date: today }).select('-observations');
 
         if (!currentDay) {
-            response.status(404).json({ message: 'No current day found.' });
+            response.status(404).json({ message: 'The campus is closed today.' });
             return;
         }
 

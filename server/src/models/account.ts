@@ -86,7 +86,7 @@ export function generateToken(id: Types.ObjectId, email: string, role: string): 
     return jwt.sign(
         { id: id, email: email, role: role },
         process.env.JWT_SECRET as string,
-        { expiresIn: '24h' });
+        { expiresIn: '7d' });
 }
 
 function msToHHMM(ms: number): string {

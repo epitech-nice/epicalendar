@@ -100,9 +100,11 @@ export default function CalendarPage() {
 
     if (error) {
         return (
-            <div className="error">
-                {error}
-            </div>
+            <main>
+                <div className="error">
+                    {error}
+                </div>
+            </main>
         )
     }
 

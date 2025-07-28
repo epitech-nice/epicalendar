@@ -37,7 +37,7 @@ export default function ManageDaysAdd() {
             const aersData = await AccountsService.getAers();
             setAers(aersData);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred while fetching the account.')
+            setError(err instanceof Error ? err.message : 'An error occurred while fetching the aers.')
         }
     }, []);
 
