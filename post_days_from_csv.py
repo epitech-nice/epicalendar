@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 API_URL = "http://localhost:3001/api/days"
-JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODc4MWJkYjBiNGJmYjAzYWZlMDZkZSIsImVtYWlsIjoibmljb2xhcy50b3JvQGVwaXRlY2guZXUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTM3MTExMTksImV4cCI6MTc1NDMxNTkxOX0.4jj0IdJk7jcpkT2LSIAlgjRmqUwhPuy69XIP58V6-bA"
+JWT_TOKEN = "your-json-web-token"
 CSV_PATH = "days.csv"
 headers = {
     "Authorization": f"Bearer {JWT_TOKEN}",
