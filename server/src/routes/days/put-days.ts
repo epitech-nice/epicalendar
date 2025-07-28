@@ -80,9 +80,14 @@ router.put('/days/:id', authenticateToken, async (request: Request, response: Re
             return;
         }
         if ((request.body.open && request.body.start && request.body.open > request.body.start) ||
-        (request.body.open && !request.body.start && existingDay.open > existingDay.start) ||
+        (request.body.open && !request.body.start && request.body.open > existingDay.start) ||
         (!request.body.open && request.body.start && existingDay.open > request.body.start)) {
             response.status(400).json({ message: 'The guard start time must be between open and close time.' });
+            return;
+        }
+        if ((request.body.end && request.body.start && request.body.end < request.body.start) ||
+        (request.body.end && !request.body.start && request.body.end < existingDay.start)) {
+            response.status(400).json({ message: 'The guard end time must be after the guard start time.' });
             return;
         }
 
