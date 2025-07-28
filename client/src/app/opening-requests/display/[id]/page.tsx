@@ -176,7 +176,7 @@ export default function ManageOpeningRequestsDisplayId() {
     return (
         <main>
             <h1>
-                Opening requests - Display opening request
+                Opening requests - Display
             </h1>
 
             {content}

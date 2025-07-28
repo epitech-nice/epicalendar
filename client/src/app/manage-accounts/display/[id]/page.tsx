@@ -83,7 +83,7 @@ export default function ManageAccountsDisplayId() {
     return (
         <main>
             <h1>
-                Manage accounts - Display account
+                Manage accounts - Display
             </h1>
 
             {content}

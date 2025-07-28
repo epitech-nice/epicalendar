@@ -357,7 +357,7 @@ export default function ManageDaysAdd() {
     return (
         <main>
             <h1>
-                Manage days - Add day
+                Manage days - Add
             </h1>
 
             {content}

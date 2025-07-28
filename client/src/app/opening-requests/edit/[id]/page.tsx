@@ -264,7 +264,7 @@ export default function ManageOpeningRequestsEditId() {
     return (
         <main>
             <h1>
-                Opening requests - Edit opening request
+                Opening requests - Edit
             </h1>
 
             {content}

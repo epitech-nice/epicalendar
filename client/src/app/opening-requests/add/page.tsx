@@ -173,7 +173,7 @@ export default function ManageOpeningRequestsAdd() {
     return (
         <main>
             <h1>
-                Opening requests - Add opening requests
+                Opening requests - Add
             </h1>
 
             <div>

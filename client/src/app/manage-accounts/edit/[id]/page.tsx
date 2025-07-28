@@ -83,7 +83,7 @@ export default function ManageAccountsEditId() {
     return (
         <main>
             <h1>
-                Manage accounts - Edit account
+                Manage accounts - Edit
             </h1>
 
             {content}

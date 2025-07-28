@@ -171,7 +171,7 @@ export default function ManageDaysDisplayId() {
     return (
         <main>
             <h1>
-                Manage days - Display day
+                Manage days - Display
             </h1>
 
             {content}

@@ -240,7 +240,7 @@ export default function ManageAccountsAdd() {
     return (
         <main>
             <h1>
-                Manage accounts - Add account
+                Manage accounts - Add
             </h1>
 
             {content}

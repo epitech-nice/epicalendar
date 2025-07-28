@@ -434,7 +434,7 @@ export default function ManageDaysEditId() {
     return (
         <main>
             <h1>
-                Manage days - Edit day
+                Manage days - Edit
             </h1>
 
             {content}
