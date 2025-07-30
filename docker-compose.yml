@@ -1,0 +1,63 @@
+services:
+  db:
+    image: mongo:latest
+    container_name: epicalendar-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_DATABASE: epicalendar_db
+      MONGODB_URI: mongodb://mongo:mongo@localhost:27017/epicalendar?authSource=admin
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - app-network
+    restart: always
+
+  # Service pour le serveur backend
+  server:
+    build:
+      context: server/
+    container_name: epicalendar-server
+    depends_on:
+      - db
+    environment:
+      MONGODB_URI: mongodb://mongo:mongo@db:27017/epicalendar?authSource=admin
+      PORT: 5000
+      CLIENT_URL: http://localhost:3000
+      JWT_SECRET: "epitech"
+      JWT_EXPIRATION: "7d"
+      TZ: Europe/Paris
+    ports:
+      - "5000:5000"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - app-network
+    restart: always
+
+  # Service pour le client frontend
+  client:
+    build:
+      context: client
+    container_name: epicalendar-client
+    depends_on:
+      - server
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:5000/api
+    ports:
+      - "3002:3000"
+    networks:
+      - app-network
+    restart: always
+
+# Volumes pour persister les données
+volumes:
+  mongodb_data:
+
+# Réseau commun pour tous les services
+networks:
+  app-network:
+    driver: bridge
