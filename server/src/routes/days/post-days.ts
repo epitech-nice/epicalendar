@@ -33,9 +33,11 @@ router.post('/days', authenticateToken, authorizeAer, async (request: Request, r
         const orignalClose = new Date(request.body.close);
         request.body.close = new Date(request.body.date);
         request.body.close.setHours(orignalClose.getHours(), orignalClose.getMinutes(), 0, 0);
-        const orignalEnd = new Date(request.body.end);
-        request.body.end = new Date(request.body.date);
-        request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
+        if (request.body.end) {
+            const orignalEnd = new Date(request.body.end);
+            request.body.end = new Date(request.body.date);
+            request.body.end.setHours(orignalEnd.getHours(), orignalEnd.getMinutes(), 0, 0);
+        }
 
         if (request.body.open >= request.body.close) {
             response.status(400).json({ message: 'Open time must be before close time.' });
