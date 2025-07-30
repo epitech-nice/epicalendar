@@ -23,6 +23,8 @@
     "multer": "^2.0.1"
   },
   "devDependencies": {
+    "ts-node": "^10.9.1",
+    "nodemon": "^3.0.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
