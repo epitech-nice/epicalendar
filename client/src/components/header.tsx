@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/authContext';
+import "./header.css";
 
 
 
@@ -14,14 +15,15 @@ export default function Header() {
     return (
         <header>
             {/* Logo */}
-            <Link href="/">
+            <Link href="/" className="home-link">
                 <Image
-                    src="/favicon.ico"
-                    alt="EpiCalendar Logo"
                     width={32}
                     height={32}
+                    src="/favicon.ico"
+                    alt="EpiCalendar Logo"
+                    className="logo"
                 />
-                <span>EpiCalendar</span>
+                <span className="title">EpiCalendar</span>
             </Link>
 
             {/* Other pages */}

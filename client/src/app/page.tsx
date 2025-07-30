@@ -10,6 +10,7 @@ import {getDay} from "date-fns/getDay";
 import {useCallback, useEffect, useState} from "react";
 import {Account, AccountsService} from "@/services/accountsService";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './styles.css';
 
 
 
@@ -143,6 +144,18 @@ export default function Home() {
                     toolbar={false}
                     onNavigate={() => {}}
                     formats={formats}
+                    eventPropGetter={(event) => {
+                        const backgroundColor = event.title === 'AER guard' ? 'var(--color-epitech)' : '#00FF90';
+                        return {
+                            style: {
+                                backgroundColor,
+                                borderRadius: '0.5rem',
+                                color: 'var(--foreground)',
+                                border: 'none',
+                                padding: '0.5rem',
+                            },
+                        };
+                    }}
                 />
             </div>
 

@@ -1,0 +1,58 @@
+@font-face {
+    font-family: 'Nasalization';
+    src: url('/nasalization.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+header {
+    background: var(--background-item);
+
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #d0d0d0;
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 4rem;
+}
+
+@media (min-width: 640px) {
+    header {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    header {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+.home-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo {
+    width: 2rem;
+    height: 2rem;
+
+    margin-right: 0.25rem;
+}
+
+.title {
+    margin-left: 0.25rem;
+
+    font-family: 'Nasalization', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-epitech);
+}
