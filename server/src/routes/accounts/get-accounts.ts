@@ -44,7 +44,7 @@ router.get('/accounts', authenticateToken, authorizeAdmin, async (request: Reque
 
 
 
-router.get('/accounts/aer', authenticateToken, async (request: Request, response: Response): Promise<void> => {
+router.get('/accounts/aer', async (request: Request, response: Response): Promise<void> => {
     try {
         const accounts = await Account.find({ role: 'aer' }, '-password').sort({ email: 1 });
         let accountsJson = [];
