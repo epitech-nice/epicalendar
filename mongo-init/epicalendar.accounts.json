@@ -2,12 +2,12 @@
   "_id": {
     "$oid": "688781bdb0b4bfb03afe06de"
   },
-  "email": "nicolas.toro@epitech.eu",
-  "password": "$2b$10$MWSAv.BZMb4sFMe7pGozF./kGu7gy0EXGVo/rBNyisEvXJG6yF5ee",
-  "first_name": "Nicolas",
-  "last_name": "TORO",
+  "email": "admin@epitech.eu",
+  "password": "$2b$10$C9zZyrIsg5Joeqv9q8Se0ebgacgsEwg8JtAusE4ITXJn8Tz9eIT.O",
+  "first_name": "Admin",
+  "last_name": "ADMIN",
   "role": "admin",
-  "description": "",
+  "description": "Administrator account for development",
   "photo": "/default-user.jpg",
   "day": "",
   "room": "",
@@ -26,9 +26,9 @@
   "last_name": "TORO",
   "role": "aer",
   "description": "AER tek3",
-  "photo": "http://localhost:3001/api/image/1753711603830-627932149-nicolas.toro@epitech.eu (1).jpg",
-  "day": "",
-  "room": "bibliothèque",
+  "photo": "http://localhost:5000/api/image/1753892492618-340087074-nicolas2.toro@epitech.eu.jpg",
+  "day": "Monday",
+  "room": "3rd floor - Library",
   "created_at": {
     "$date": "2025-07-28T14:00:13.236Z"
   },
@@ -44,9 +44,9 @@
   "last_name": "PELLEGRINO",
   "role": "aer",
   "description": "AER tek3",
-  "photo": "http://localhost:3001/api/image/1753711270264-386112259-lou.pellegrino@epitech.eu (1).jpg",
-  "day": "",
-  "room": "bibliothèque",
+  "photo": "http://localhost:5000/api/image/1753892448779-37371710-lou1.pellegrino@epitech.eu.jpg",
+  "day": "Friday",
+  "room": "3rd floor - Library",
   "created_at": {
     "$date": "2025-07-28T14:01:25.272Z"
   },
@@ -62,9 +62,9 @@
   "last_name": "TUERO",
   "role": "aer",
   "description": "AER tek3",
-  "photo": "http://localhost:3001/api/image/1753711316801-599450353-gianni.tuero@epitech.eu (1).jpg",
-  "day": "",
-  "room": "bibliothèque",
+  "photo": "http://localhost:5000/api/image/1753892460570-469441919-gianni1.tuero@epitech.eu.jpg",
+  "day": "Monday",
+  "room": "3rd floor - Library",
   "created_at": {
     "$date": "2025-07-28T14:01:58.713Z"
   },
@@ -80,9 +80,9 @@
   "last_name": "VANDEVOIR",
   "role": "aer",
   "description": "AER tek3",
-  "photo": "http://localhost:3001/api/image/1753711367677-417134830-christophe.vandevoir@epitech.eu.jpg",
-  "day": "",
-  "room": "bibliothèque",
+  "photo": "http://localhost:5000/api/image/1753892393205-299684102-christophe1.vandevoir@epitech.eu.jpg",
+  "day": "Tuesday",
+  "room": "3rd floor - Library",
   "created_at": {
     "$date": "2025-07-28T14:02:49.336Z"
   },
@@ -98,9 +98,9 @@
   "last_name": "LAUNAY",
   "role": "aer",
   "description": "AER tek3",
-  "photo": "http://localhost:3001/api/image/1753711426299-858193794-raphael.launay@epitech.eu (1).jpg",
-  "day": "",
-  "room": "bibliothèque",
+  "photo": "http://localhost:5000/api/image/1753892564376-695401337-raphael1.launay@epitech.eu.jpg",
+  "day": "Thursday",
+  "room": "3rd floor - Library",
   "created_at": {
     "$date": "2025-07-28T14:03:50.611Z"
   },
@@ -116,9 +116,9 @@
   "last_name": "POUECH",
   "role": "aer",
   "description": "AER tek3",
-  "photo": "http://localhost:3001/api/image/1753711503316-874374253-olivier.pouech@epitech.eu (1).jpg",
-  "day": "",
-  "room": "accueil",
+  "photo": "http://localhost:5000/api/image/1753892553267-822076796-olivier1.pouech@epitech.eu.jpg",
+  "day": "Thursday",
+  "room": "Reception",
   "created_at": {
     "$date": "2025-07-28T14:05:08.975Z"
   },
@@ -128,17 +128,89 @@
   "_id": {
     "$oid": "688783dcb0b4bfb03afe074d"
   },
-  "email": "arthur1.warin@eoitech.eu",
+  "email": "arthur1.warin@epitech.eu",
   "password": "$2b$10$J/GiQG06SyylZFjETOX.IO8wgrDsdwiz0gIVx1j6MROZKTCw3rmuW",
   "first_name": "Arthur",
   "last_name": "WARIN",
   "role": "aer",
-  "description": "",
-  "photo": "http://localhost:3001/api/image/1753711577837-848033054-arthur.warin@epitech.eu (1).jpg",
+  "description": "AER tek3",
+  "photo": "http://localhost:5000/api/image/1753892346861-896920682-arthur1.warin@epitech.eu.jpg",
+  "day": "Wednesday",
+  "room": "4th floor - Grace Hopper [402]",
+  "created_at": {
+    "$date": "2025-07-28T14:06:20.981Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a47a8598eaeb977dad190"
+  },
+  "email": "darius1.morel@epitech.eu",
+  "password": "$2b$10$4e8aQyvFJTfDmLwv3Cx6bOvidefG4EE8mAaEUvasqRNQgCGnRgEiC",
+  "first_name": "Darius",
+  "last_name": "MOREL",
+  "role": "admin",
+  "description": "Educational mentor at Epitech",
+  "photo": "/default-user.jpg",
   "day": "",
   "room": "",
   "created_at": {
-    "$date": "2025-07-28T14:06:20.981Z"
+    "$date": "2025-07-30T16:26:16.649Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a47ef598eaeb977dad19d"
+  },
+  "email": "renaud1.juliani@epitech.eu",
+  "password": "$2b$10$a75XGToDxBk4K4U0FQvgJ.ShK5MiL4jIo/UrbPmRD3Po8yHWBY.Cq",
+  "first_name": "Renaud",
+  "last_name": "JULIANI",
+  "role": "admin",
+  "description": "Educational mentor at Epitech",
+  "photo": "/default-user.jpg",
+  "day": "",
+  "room": "",
+  "created_at": {
+    "$date": "2025-07-30T16:27:27.103Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a481d598eaeb977dad1ab"
+  },
+  "email": "romaric1.moy@epitech.eu",
+  "password": "$2b$10$YTpD230GBeJeaJ7ucC4nM.lgYJ6d9pdRTQY4U5POSObJnXEAjR97a",
+  "first_name": "Romaric",
+  "last_name": "MOY",
+  "role": "admin",
+  "description": "Educational mentor at Epitech",
+  "photo": "/default-user.jpg",
+  "day": "",
+  "room": "",
+  "created_at": {
+    "$date": "2025-07-30T16:28:13.972Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a486a598eaeb977dad1cc"
+  },
+  "email": "eric1.deschodt@epitech.eu",
+  "password": "$2b$10$JD2hiF7uWV74ji4uxgLwZO4qsNkifhghrNd0UsU2EE3GreIAGClG6",
+  "first_name": "Eric",
+  "last_name": "DESCHODT",
+  "role": "admin",
+  "description": "Educational Director at Epitech",
+  "photo": "http://localhost:5000/api/image/1753892952425-468165886-eric1.deschodt@epitech.eu.jpg",
+  "day": "",
+  "room": "",
+  "created_at": {
+    "$date": "2025-07-30T16:29:30.309Z"
   },
   "__v": 0
 }]
