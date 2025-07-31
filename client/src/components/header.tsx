@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/authContext';
+
 import "./header.css";
 
 

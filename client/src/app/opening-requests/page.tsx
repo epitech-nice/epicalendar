@@ -165,7 +165,7 @@ export default function ManageOpeningRequests() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Opening requests
             </h1>
 

@@ -82,7 +82,7 @@ export default function ManageAccountsDisplayId() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Manage accounts - Display
             </h1>
 

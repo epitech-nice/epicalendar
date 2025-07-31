@@ -76,7 +76,7 @@ export default function ProfileEdit() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Edit profile
             </h1>
 

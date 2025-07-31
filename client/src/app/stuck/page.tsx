@@ -5,7 +5,9 @@
 export default function Stuck() {
     return (
         <main>
-            <h1>I&#39;m stuck</h1>
+            <h1 className="page-title">
+                I&#39;m stuck
+            </h1>
 
             <p>
                 You are stuck on the campus with no way out?

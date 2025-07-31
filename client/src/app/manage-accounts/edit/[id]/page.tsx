@@ -82,7 +82,7 @@ export default function ManageAccountsEditId() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Manage accounts - Edit
             </h1>
 

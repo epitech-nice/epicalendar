@@ -239,7 +239,7 @@ export default function ManageAccountsAdd() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Manage accounts - Add
             </h1>
 

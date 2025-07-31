@@ -7,7 +7,6 @@ import { useAuth } from '@/contexts/authContext';
 import {Day, DaysService} from '@/services/daysService';
 import Loading from "@/components/loading";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import {Account, AccountsService} from "@/services/accountsService";
 
 
@@ -356,7 +355,7 @@ export default function ManageDaysAdd() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Manage days - Add
             </h1>
 

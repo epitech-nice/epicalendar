@@ -76,7 +76,7 @@ export default function Profile() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 My profile
             </h1>
 

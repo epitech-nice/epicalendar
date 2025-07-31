@@ -9,8 +9,6 @@ import {startOfWeek} from "date-fns/startOfWeek";
 import {getDay} from "date-fns/getDay";
 import {useCallback, useEffect, useState} from "react";
 import {Account, AccountsService} from "@/services/accountsService";
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './styles.css';
 
 
 

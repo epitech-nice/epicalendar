@@ -7,7 +7,6 @@ import { useAuth } from '@/contexts/authContext'
 import Link from "next/link";
 import Loading from "@/components/loading";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import {Account, AccountsService} from "@/services/accountsService";
 
 

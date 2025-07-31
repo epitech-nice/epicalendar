@@ -170,7 +170,7 @@ export default function ManageDaysDisplayId() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Manage days - Display
             </h1>
 

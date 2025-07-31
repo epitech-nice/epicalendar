@@ -64,7 +64,7 @@ export default function Register() {
     return (
         <main>
             <div>
-                <h1>
+                <h1 className="page-title">
                     Sign Up
                 </h1>
 

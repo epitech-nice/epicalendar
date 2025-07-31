@@ -175,7 +175,7 @@ export default function ManageOpeningRequestsDisplayId() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Opening requests - Display
             </h1>
 

@@ -263,7 +263,7 @@ export default function ManageOpeningRequestsEditId() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Opening requests - Edit
             </h1>
 

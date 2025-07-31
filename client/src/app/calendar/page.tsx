@@ -8,8 +8,6 @@ import { parse } from 'date-fns/parse';
 import { startOfWeek } from 'date-fns/startOfWeek';
 import { getDay } from 'date-fns/getDay';
 import { fr } from 'date-fns/locale/fr';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './styles.css';
 import { format as formatDate } from 'date-fns';
 
 
@@ -113,7 +111,10 @@ export default function CalendarPage() {
 
     return (
         <main>
-            <h1 className="page-title">Opening Calendar</h1>
+            <h1 className="page-title">
+                Opening Calendar
+            </h1>
+
             <Calendar
                 localizer={localizer}
                 events={events}

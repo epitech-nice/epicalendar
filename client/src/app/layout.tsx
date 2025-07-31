@@ -1,6 +1,9 @@
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import "./styles.css";
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./styles.css";
 import {AuthProvider} from "@/contexts/authContext";
 import ClientLayout from "@/components/clientLayout";
 

@@ -7,7 +7,6 @@ import { useAuth } from '@/contexts/authContext';
 import {OpeningRequest, OpeningRequestsService} from '@/services/openingRequestsService';
 import Loading from "@/components/loading";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 
 
@@ -172,7 +171,7 @@ export default function ManageOpeningRequestsAdd() {
 
     return (
         <main>
-            <h1>
+            <h1 className="page-title">
                 Opening requests - Add
             </h1>
 
