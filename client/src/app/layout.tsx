@@ -1,13 +1,11 @@
-import "react-datepicker/dist/react-datepicker.css";
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "./styles.css";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import {AuthProvider} from "@/contexts/authContext";
+import { AuthProvider } from "@/contexts/authContext";
 import ClientLayout from "@/components/clientLayout";
-
-
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -19,19 +17,19 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
-
-
 export const metadata: Metadata = {
     title: "EpiCalendar",
     description: "The IONIS Nice campus opening schedule",
 };
 
-
-
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+export default function RootLayout({
+    children,
+}: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            >
                 <AuthProvider>
                     <ClientLayout>{children}</ClientLayout>
                 </AuthProvider>

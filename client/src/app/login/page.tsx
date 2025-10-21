@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/authContext';
 
-
-
 export default function Login() {
     const router = useRouter();
 

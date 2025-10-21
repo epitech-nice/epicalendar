@@ -1,67 +1,76 @@
-'use client'
+"use client";
 
-import {useState} from 'react'
-import {useRouter} from "next/navigation";
-import {useAuth} from "@/contexts/authContext";
-import {Account, AccountsService} from "@/services/accountsService";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext";
+import { Account, AccountsService } from "@/services/accountsService";
 
+export default function DisplayAccount({
+    account,
+    profile,
+}: {
+    account: Account;
+    profile?: boolean;
+}) {
+    const router = useRouter();
 
+    const { user, loading } = useAuth();
 
-export default function DisplayAccount({ account, profile } : { account: Account, profile?: boolean }) {
-    const router = useRouter()
-
-    const { user, loading } = useAuth()
-
-    const [error, setError] = useState('')
-
-
+    const [error, setError] = useState("");
 
     const handleDeleteAccount = async (accountId: string) => {
-        console.log('Attempting to delete account with ID:', accountId);
+        console.log("Attempting to delete account with ID:", accountId);
 
-        if (!confirm('Are you sure you want to delete this account? This action cannot be undone.')) {
+        if (
+            !confirm(
+                "Are you sure you want to delete this account? This action cannot be undone."
+            )
+        ) {
             return;
         }
 
         try {
             await AccountsService.deleteAccount(accountId);
-            router.push('/manage-accounts');
+            router.push("/manage-accounts");
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred while deleting the account.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred while deleting the account."
+            );
         }
     };
-
-
 
     if (loading) {
         return;
     }
 
     if (error) {
-        return (
-            <div className="error">
-                {error}
-            </div>
-        );
+        return <div className="error">{error}</div>;
     }
-
-
 
     return (
         <div>
             <div>
-                { /* Je peux pas faire de balise Image next parce que sa pu et qu'il faut autoriser le lien dans le next config */ }
+                {/* Je peux pas faire de balise Image next parce que sa pu et qu'il faut autoriser le lien dans le next config */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={account?.photo || '/default-user.jpg'} alt="User Photo"/>
+                <img
+                    src={account?.photo || "/default-user.jpg"}
+                    alt="User Photo"
+                />
             </div>
 
             <div>
                 {profile ? (
-                    <button onClick={() => router.push('/profile/edit')}>
+                    <button onClick={() => router.push("/profile/edit")}>
                         Edit
                     </button>
                 ) : (
-                    <button onClick={() => router.push(`/manage-accounts/edit/${account?._id}`)}>
+                    <button
+                        onClick={() =>
+                            router.push(`/manage-accounts/edit/${account?._id}`)
+                        }
+                    >
                         Edit
                     </button>
                 )}
@@ -73,7 +82,7 @@ export default function DisplayAccount({ account, profile } : { account: Account
                 )}
             </div>
 
-            { user?.role === 'admin' && (
+            {user?.role === "admin" && (
                 <div>
                     <em>
                         <b>ID:</b>
@@ -82,12 +91,16 @@ export default function DisplayAccount({ account, profile } : { account: Account
 
                     <em>
                         <b>Created at:</b>
-                        {account?.created_at ?
-                            new Date(account?.created_at).toLocaleDateString('fr-FR', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            }) : 'unknown date' }
+                        {account?.created_at
+                            ? new Date(account?.created_at).toLocaleDateString(
+                                  "fr-FR",
+                                  {
+                                      year: "numeric",
+                                      month: "long",
+                                      day: "numeric",
+                                  }
+                              )
+                            : "unknown date"}
                     </em>
                 </div>
             )}
@@ -102,10 +115,13 @@ export default function DisplayAccount({ account, profile } : { account: Account
 
             <div>
                 <b>Role:</b>
-                {account?.role ? account.role.toUpperCase() : 'No role assigned'}
+                {account?.role
+                    ? account.role.toUpperCase()
+                    : "No role assigned"}
                 <b>Total guard time:</b>
-                {!account?.guard_time ?
-                    'No guard time recorded' :
+                {!account?.guard_time ? (
+                    "No guard time recorded"
+                ) : (
                     <table>
                         <thead>
                             <tr>
@@ -122,33 +138,38 @@ export default function DisplayAccount({ account, profile } : { account: Account
 
                         <tbody>
                             <tr>
-                                <td>{account?.guard_time?.monday || '0h'}</td>
-                                <td>{account?.guard_time?.tuesday || '0h'}</td>
-                                <td>{account?.guard_time?.wednesday || '0h'}</td>
-                                <td>{account?.guard_time?.thursday || '0h'}</td>
-                                <td>{account?.guard_time?.friday || '0h'}</td>
-                                <td>{account?.guard_time?.saturday || '0h'}</td>
-                                <td>{account?.guard_time?.sunday || '0h'}</td>
-                                <td>{account?.guard_time ? account.guard_time.total : '0h'}</td>
+                                <td>{account?.guard_time?.monday || "0h"}</td>
+                                <td>{account?.guard_time?.tuesday || "0h"}</td>
+                                <td>
+                                    {account?.guard_time?.wednesday || "0h"}
+                                </td>
+                                <td>{account?.guard_time?.thursday || "0h"}</td>
+                                <td>{account?.guard_time?.friday || "0h"}</td>
+                                <td>{account?.guard_time?.saturday || "0h"}</td>
+                                <td>{account?.guard_time?.sunday || "0h"}</td>
+                                <td>
+                                    {account?.guard_time
+                                        ? account.guard_time.total
+                                        : "0h"}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-                }
+                )}
             </div>
 
             <div>
                 <b>description</b>
-                {account?.description || 'No description provided.'}
+                {account?.description || "No description provided."}
             </div>
 
             <div>
                 <b>Preferred day:</b>
-                {account?.day || 'No preferred day set.'}
-
+                {account?.day || "No preferred day set."}
 
                 <b>Preferred room:</b>
-                {account?.room || 'No preferred room set.'}
+                {account?.room || "No preferred room set."}
             </div>
         </div>
-    )
+    );
 }

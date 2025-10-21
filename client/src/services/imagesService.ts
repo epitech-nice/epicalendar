@@ -1,8 +1,6 @@
 import api from "./api";
 import axios from "axios";
 
-
-
 export interface UploadResponse {
     success: boolean;
     message: string;
@@ -12,17 +10,15 @@ export interface UploadResponse {
     size?: number;
 }
 
-
-
 export const ImagesService = {
     async uploadImage(file: File): Promise<UploadResponse> {
         try {
             const formData = new FormData();
-            formData.append('image', file);
+            formData.append("image", file);
 
-            const response = await api.post('/image', formData, {
+            const response = await api.post("/image", formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    "Content-Type": "multipart/form-data",
                 },
             });
             const data = response.data;
@@ -31,10 +27,11 @@ export const ImagesService = {
                 data.imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/image/${data.filename}`;
             }
             return data;
-
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "An error occurred while uploading the image";
+                const message =
+                    error.response?.data?.message ||
+                    "An error occurred while uploading the image";
                 throw new Error(message);
             } else {
                 throw new Error("An error occurred while uploading the image");
@@ -42,16 +39,21 @@ export const ImagesService = {
         }
     },
 
-
     validateImageFile(file: File): { valid: boolean; error?: string } {
-        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        const allowedTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/gif",
+            "image/webp",
+        ];
         if (!allowedTypes.includes(file.type)) {
             return {
                 valid: false,
-                error: 'Invalid file type. Allowed types: jpeg, jpg, png, gif, webp.'
+                error: "Invalid file type. Allowed types: jpeg, jpg, png, gif, webp.",
             };
         }
 
         return { valid: true };
-    }
+    },
 };

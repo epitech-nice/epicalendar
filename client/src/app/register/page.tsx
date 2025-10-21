@@ -1,11 +1,9 @@
 "use client";
 
-import {useEffect, useState} from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/authContext';
-
-
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext";
 
 export default function Register() {
     const router = useRouter();
@@ -13,27 +11,25 @@ export default function Register() {
     const { isAuthenticated, register } = useAuth();
 
     const [formData, setFormData] = useState({
-        email: '',
-        first_name: '',
-        last_name: '',
-        password: ''
+        email: "",
+        first_name: "",
+        last_name: "",
+        password: "",
     });
     const [responseLoading, setResponseLoading] = useState(false);
-    const [error, setError] = useState('');
-
-
+    const [error, setError] = useState("");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setResponseLoading(true);
-        setError('');
+        setError("");
 
         try {
             const registerData = {
@@ -43,36 +39,32 @@ export default function Register() {
                 password: formData.password,
             };
             await register(registerData);
-            router.push('/');
+            router.push("/");
         } catch (err: unknown) {
-            setError(err instanceof Error ? err.message : 'An error occurred during registration.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred during registration."
+            );
         } finally {
             setResponseLoading(false);
         }
     };
 
-
-
     useEffect(() => {
         if (isAuthenticated) {
-            router.push('/');
+            router.push("/");
         }
     }, [isAuthenticated, router]);
-
-
 
     return (
         <main>
             <div>
-                <h1 className="page-title">
-                    Sign Up
-                </h1>
+                <h1 className="page-title">Sign Up</h1>
 
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="email">
-                            Email
-                        </label>
+                        <label htmlFor="email">Email</label>
                         <input
                             type="email"
                             id="email"
@@ -85,9 +77,7 @@ export default function Register() {
                     </div>
 
                     <div>
-                        <label htmlFor="first_name">
-                            First Name
-                        </label>
+                        <label htmlFor="first_name">First Name</label>
                         <input
                             type="text"
                             id="first_name"
@@ -100,9 +90,7 @@ export default function Register() {
                     </div>
 
                     <div>
-                        <label htmlFor="last_name">
-                            Last Name
-                        </label>
+                        <label htmlFor="last_name">Last Name</label>
                         <input
                             type="text"
                             id="last_name"
@@ -115,9 +103,7 @@ export default function Register() {
                     </div>
 
                     <div>
-                        <label htmlFor="password">
-                            Password
-                        </label>
+                        <label htmlFor="password">Password</label>
                         <input
                             type="password"
                             id="password"
@@ -129,32 +115,22 @@ export default function Register() {
                         />
                     </div>
 
-                    {error && (
-                        <div>
-                            {error}
-                        </div>
-                    )}
+                    {error && <div>{error}</div>}
 
-                    <button
-                        type="submit"
-                        disabled={responseLoading}>
-                        {responseLoading ? 'Creating...' : 'Create account'}
+                    <button type="submit" disabled={responseLoading}>
+                        {responseLoading ? "Creating..." : "Create account"}
                     </button>
                 </form>
 
                 <div>
                     <p>
-                        Already have an account?{' '}
-                        <Link href="/login">
-                            Sign in
-                        </Link>
+                        Already have an account?{" "}
+                        <Link href="/login">Sign in</Link>
                     </p>
                 </div>
 
                 <div>
-                    <Link href="/">
-                        ← Back to home
-                    </Link>
+                    <Link href="/">← Back to home</Link>
                 </div>
             </div>
         </main>

@@ -1,20 +1,18 @@
 "use client";
 
-import {useCallback, useEffect, useState} from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/authContext';
-import {Day, DaysService} from '@/services/daysService';
-import Loading from "@/components/loading";
+import Link from "next/link";
 import DatePicker from "react-datepicker";
-import {Account, AccountsService} from "@/services/accountsService";
-
-
+import Loading from "@/components/loading";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext";
+import { useCallback, useEffect, useState } from "react";
+import { Day, DaysService } from "@/services/daysService";
+import { Account, AccountsService } from "@/services/accountsService";
 
 export default function ManageDaysAdd() {
     const router = useRouter();
 
-    const { user, loading, isAuthenticated } = useAuth()
+    const { user, loading, isAuthenticated } = useAuth();
 
     const [aers, setAers] = useState<Account[]>([]);
     const [formData, setFormData] = useState<Day>({
@@ -23,20 +21,22 @@ export default function ManageDaysAdd() {
         start: new Date(),
         close: new Date(),
         aers: [],
-        message: '',
+        message: "",
     });
-    const [preset, setPreset] = useState<string>('Custom');
+    const [preset, setPreset] = useState<string>("Custom");
     const [responseLoading, setResponseLoading] = useState(false);
-    const [error, setError] = useState('');
-
-
+    const [error, setError] = useState("");
 
     const fetchAers = useCallback(async () => {
         try {
             const aersData = await AccountsService.getAers();
             setAers(aersData);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred while fetching the aers.')
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred while fetching the aers."
+            );
         }
     }, []);
 
@@ -46,33 +46,35 @@ export default function ManageDaysAdd() {
         return newDate;
     }
 
-    const handlePreset = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handlePreset = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         const selected = e.target.value;
         setPreset(selected);
 
-        if (selected === 'Normal') {
-            setFormData(prev => ({
+        if (selected === "Normal") {
+            setFormData((prev) => ({
                 ...prev,
                 open: getHours(8, 0),
                 start: getHours(18, 0),
                 close: getHours(22, 0),
             }));
-        } else if (selected === 'Pool') {
-            setFormData(prev => ({
+        } else if (selected === "Pool") {
+            setFormData((prev) => ({
                 ...prev,
                 open: getHours(8, 0),
                 start: getHours(18, 0),
                 close: getHours(23, 42),
             }));
-        } else if (selected === 'Summer') {
-            setFormData(prev => ({
+        } else if (selected === "Summer") {
+            setFormData((prev) => ({
                 ...prev,
                 open: getHours(8, 0),
                 start: getHours(18, 0),
                 close: getHours(20, 0),
             }));
-        } else if (selected === 'Week-end') {
-            setFormData(prev => ({
+        } else if (selected === "Week-end") {
+            setFormData((prev) => ({
                 ...prev,
                 open: getHours(10, 0),
                 start: getHours(10, 0),
@@ -81,10 +83,12 @@ export default function ManageDaysAdd() {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         const { name, value } = e.target;
 
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
@@ -93,17 +97,19 @@ export default function ManageDaysAdd() {
     const handleDateChange = (name: keyof Day, value: Date | null) => {
         if (!value) return;
 
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
     };
 
-    const handleAerChange = (e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>) => {
-        if (e.key === 'Enter') {
+    const handleAerChange = (
+        e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
+        if (e.key === "Enter") {
             e.preventDefault();
             const input = (e.target as HTMLInputElement).value.trim();
-            const aer = aers.find(a => a.email === input);
+            const aer = aers.find((a) => a.email === input);
 
             if (!aer) {
                 setError("No AER found with that email.");
@@ -115,38 +121,40 @@ export default function ManageDaysAdd() {
                 return;
             }
 
-            setFormData(prev => ({
+            setFormData((prev) => ({
                 ...prev,
-                aers: [...(prev.aers || []), aer._id!]
+                aers: [...(prev.aers || []), aer._id!],
             }));
 
-            (e.target as HTMLInputElement).value = '';
+            (e.target as HTMLInputElement).value = "";
         }
-    }
+    };
 
     const handleDeleteAer = (id: string) => {
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            aers: prev.aers ? prev.aers.filter(aerId => aerId !== id) : []
+            aers: prev.aers ? prev.aers.filter((aerId) => aerId !== id) : [],
         }));
-    }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setResponseLoading(true);
-        setError('');
+        setError("");
 
         try {
             await DaysService.addDay(formData);
-            router.push('/manage-days');
+            router.push("/manage-days");
         } catch (err: unknown) {
-            setError(err instanceof Error ? err.message : 'An error occurred while adding the day.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred while adding the day."
+            );
         } finally {
             setResponseLoading(false);
         }
     };
-
-
 
     useEffect(() => {
         if (loading) {
@@ -154,35 +162,28 @@ export default function ManageDaysAdd() {
         }
 
         if (!isAuthenticated) {
-            router.push('/login');
+            router.push("/login");
             return;
         }
 
-        if (!user || user.role === 'student') {
-            setError('You do not have permission to access this page.');
+        if (!user || user.role === "student") {
+            setError("You do not have permission to access this page.");
             return;
         }
 
         fetchAers();
     }, [isAuthenticated, loading, user, router, fetchAers]);
 
-
-
     let content = null;
 
     if (loading) {
-        content = (
-            <Loading/>
-        )
-
+        content = <Loading />;
     } else {
         content = (
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="date">
-                        Date
-                    </label><
-                    DatePicker
+                    <label htmlFor="date">Date</label>
+                    <DatePicker
                         selected={formData.date}
                         onChange={(date) => handleDateChange("date", date)}
                         dateFormat="dd-MM-yyyy"
@@ -207,9 +208,7 @@ export default function ManageDaysAdd() {
                 </div>
 
                 <div>
-                    <label htmlFor="open">
-                        Campus opens at
-                    </label>
+                    <label htmlFor="open">Campus opens at</label>
                     <DatePicker
                         selected={formData.open}
                         onChange={(date) => handleDateChange("open", date)}
@@ -221,9 +220,7 @@ export default function ManageDaysAdd() {
                         timeFormat="HH:mm"
                         required
                     />
-                    <label htmlFor="start">
-                        Guard start at
-                    </label>
+                    <label htmlFor="start">Guard start at</label>
                     <DatePicker
                         selected={formData.start}
                         onChange={(date) => handleDateChange("start", date)}
@@ -235,9 +232,7 @@ export default function ManageDaysAdd() {
                         timeFormat="HH:mm"
                         required
                     />
-                    <label htmlFor="close">
-                        Campus closes at
-                    </label>
+                    <label htmlFor="close">Campus closes at</label>
                     <DatePicker
                         selected={formData.close}
                         onChange={(date) => handleDateChange("close", date)}
@@ -252,9 +247,7 @@ export default function ManageDaysAdd() {
                 </div>
 
                 <div>
-                    <label>
-                        AER list
-                    </label>
+                    <label>AER list</label>
                     <table>
                         <thead>
                             <tr>
@@ -266,23 +259,21 @@ export default function ManageDaysAdd() {
                         </thead>
 
                         <tbody>
-                            {aers.map(aer => (
+                            {aers.map((aer) => (
                                 <tr key={aer._id}>
-                                    <td>
-                                        {aer.email}
-                                    </td>
+                                    <td>{aer.email}</td>
 
                                     <td>
                                         {aer.first_name} {aer.last_name}
                                     </td>
 
                                     <td>
-                                        {aer.guard_time ? `${aer.guard_time.total}` : 'N/A'}
+                                        {aer.guard_time
+                                            ? `${aer.guard_time.total}`
+                                            : "N/A"}
                                     </td>
 
-                                    <td>
-                                        {aer.day || ''}
-                                    </td>
+                                    <td>{aer.day || ""}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -299,32 +290,32 @@ export default function ManageDaysAdd() {
                         placeholder="Enter AER email and press Enter"
                     />
                     <datalist id="aerOptions">
-                        {aers.map(aer => (
-                            <option key={aer._id} value={aer.email}/>
+                        {aers.map((aer) => (
+                            <option key={aer._id} value={aer.email} />
                         ))}
                     </datalist>
                 </div>
 
                 <div>
-                    {formData.aers && formData.aers.map(id => {
-                        const aer = aers.find(a => a._id === id);
-                        if (!aer)
-                            return null;
-                        return (
-                            <div key={id}>
-                                <span>{aer.first_name} {aer.last_name}</span>
-                                <button onClick={() => handleDeleteAer(id)}>
-                                    ❌
-                                </button>
-                            </div>
-                        );
-                    })}
+                    {formData.aers &&
+                        formData.aers.map((id) => {
+                            const aer = aers.find((a) => a._id === id);
+                            if (!aer) return null;
+                            return (
+                                <div key={id}>
+                                    <span>
+                                        {aer.first_name} {aer.last_name}
+                                    </span>
+                                    <button onClick={() => handleDeleteAer(id)}>
+                                        ❌
+                                    </button>
+                                </div>
+                            );
+                        })}
                 </div>
 
                 <div>
-                    <label htmlFor="message">
-                        Optional message
-                    </label>
+                    <label htmlFor="message">Optional message</label>
                     <input
                         type="text"
                         id="message"
@@ -335,35 +326,22 @@ export default function ManageDaysAdd() {
                     />
                 </div>
 
-                {error && (
-                    <div>
-                        {error}
-                    </div>
-                )}
+                {error && <div>{error}</div>}
 
-                <button
-                    type="submit"
-                    disabled={responseLoading}
-                >
-                    {responseLoading ? 'Adding...' : 'Add day'}
+                <button type="submit" disabled={responseLoading}>
+                    {responseLoading ? "Adding..." : "Add day"}
                 </button>
             </form>
         );
     }
 
-
-
     return (
         <main>
-            <h1 className="page-title">
-                Manage days - Add
-            </h1>
+            <h1 className="page-title">Manage days - Add</h1>
 
             {content}
 
-            <Link href="/manage-days">
-                ← Back to days
-            </Link>
+            <Link href="/manage-days">← Back to days</Link>
         </main>
-    )
+    );
 }
