@@ -10,11 +10,12 @@
         ".next/**"
       ]
     },
+    "lint": {},
+    "lint:fix": {},
+    "test": {},
     "dev": {
       "cache": false
     },
-    "lint": {},
-    "test": {},
     "start": {
       "dependsOn": [
         "build"
