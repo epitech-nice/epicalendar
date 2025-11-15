@@ -1,16 +1,14 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { Calendar, Views, dateFnsLocalizer } from 'react-big-calendar';
-import {Day, DaysService} from '@/services/daysService';
-import { format } from 'date-fns/format';
-import { parse } from 'date-fns/parse';
-import { startOfWeek } from 'date-fns/startOfWeek';
-import { getDay } from 'date-fns/getDay';
-import { fr } from 'date-fns/locale/fr';
-import { format as formatDate } from 'date-fns';
-
-
+import { useEffect, useState } from "react";
+import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
+import { Day, DaysService } from "@/services/daysService";
+import { format } from "date-fns/format";
+import { parse } from "date-fns/parse";
+import { startOfWeek } from "date-fns/startOfWeek";
+import { getDay } from "date-fns/getDay";
+import { fr } from "date-fns/locale/fr";
+import { format as formatDate } from "date-fns";
 
 interface Event {
     title: string;
@@ -31,21 +29,17 @@ const localizer = dateFnsLocalizer({
     locales,
 });
 
-
-
 export default function CalendarPage() {
     const [events, setEvents] = useState<Event[]>([]);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<string>("");
 
     const formats = {
-        timeGutterFormat: (date: Date) => formatDate(date, 'HH:mm'),
+        timeGutterFormat: (date: Date) => formatDate(date, "HH:mm"),
         eventTimeRangeFormat: ({ start, end }: { start: Date; end: Date }) =>
-            `${formatDate(start, 'HH:mm')} – ${formatDate(end, 'HH:mm')}`,
+            `${formatDate(start, "HH:mm")} – ${formatDate(end, "HH:mm")}`,
         dayRangeHeaderFormat: ({ start, end }: { start: Date; end: Date }) =>
-            `${formatDate(start, 'dd/MM/yyyy')} - ${formatDate(end, 'dd/MM/yyyy')}`,
+            `${formatDate(start, "dd/MM/yyyy")} - ${formatDate(end, "dd/MM/yyyy")}`,
     };
-
-
 
     useEffect(() => {
         const fetchDays = async () => {
@@ -55,7 +49,7 @@ export default function CalendarPage() {
 
                 for (const day of days) {
                     formattedEvents.push({
-                        title: 'Campus open',
+                        title: "Campus open",
                         start: new Date(day.open),
                         end: new Date(day.close),
                         resource: day,
@@ -67,18 +61,22 @@ export default function CalendarPage() {
                         endGuard.setHours(23, 59, 59, 999);
                     }
                     formattedEvents.push({
-                        title: 'AER guard',
+                        title: "AER guard",
                         start: startGuard,
                         end: endGuard,
                         resource: day,
                     });
                     endGuard = new Date(day.end ?? day.close);
                     if (endGuard < startGuard) {
-                        endGuard = new Date(endGuard.getTime() + 24 * 60 * 60 * 1000);
-                        startGuard = new Date(startGuard.getTime() + 24 * 60 * 60 * 1000);
+                        endGuard = new Date(
+                            endGuard.getTime() + 24 * 60 * 60 * 1000,
+                        );
+                        startGuard = new Date(
+                            startGuard.getTime() + 24 * 60 * 60 * 1000,
+                        );
                         startGuard.setHours(0, 0, 0, 0);
                         formattedEvents.push({
-                            title: 'AER guard',
+                            title: "AER guard",
                             start: startGuard,
                             end: endGuard,
                             resource: day,
@@ -88,32 +86,28 @@ export default function CalendarPage() {
 
                 setEvents(formattedEvents);
             } catch (error) {
-                setError(error instanceof Error ? error.message : 'An error occurred while fetching days.');
+                setError(
+                    error instanceof Error
+                        ? error.message
+                        : "An error occurred while fetching days.",
+                );
             }
-        }
+        };
 
         fetchDays();
     }, []);
 
-
-
     if (error) {
         return (
             <main>
-                <div className="error">
-                    {error}
-                </div>
+                <div className="error">{error}</div>
             </main>
-        )
+        );
     }
-
-
 
     return (
         <main>
-            <h1 className="page-title">
-                Opening Calendar
-            </h1>
+            <h1 className="page-title">Opening Calendar</h1>
 
             <Calendar
                 localizer={localizer}
@@ -124,14 +118,17 @@ export default function CalendarPage() {
                 endAccessor="end"
                 formats={formats}
                 eventPropGetter={(event) => {
-                    const backgroundColor = event.title === 'AER guard' ? 'var(--color-epitech)' : '#00FF90';
+                    const backgroundColor =
+                        event.title === "AER guard"
+                            ? "var(--color-epitech)"
+                            : "#00FF90";
                     return {
                         style: {
                             backgroundColor,
-                            borderRadius: '0.5rem',
-                            color: 'var(--foreground)',
-                            border: 'none',
-                            padding: '0.5rem',
+                            borderRadius: "0.5rem",
+                            color: "var(--foreground)",
+                            border: "none",
+                            padding: "0.5rem",
                         },
                     };
                 }}

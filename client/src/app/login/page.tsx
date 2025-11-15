@@ -1,11 +1,9 @@
 "use client";
 
-import {useEffect, useState} from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/authContext';
-
-
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext";
 
 export default function Login() {
     const router = useRouter();
@@ -13,58 +11,52 @@ export default function Login() {
     const { isAuthenticated, login } = useAuth();
 
     const [formData, setFormData] = useState({
-        email: '',
-        password: ''
+        email: "",
+        password: "",
     });
     const [responseLoading, setResponseLoading] = useState(false);
-    const [error, setError] = useState('');
-
-
+    const [error, setError] = useState("");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setResponseLoading(true);
-        setError('');
+        setError("");
 
         try {
             await login(formData);
-            router.push('/');
+            router.push("/");
         } catch (err: unknown) {
-            setError(err instanceof Error ? err.message : 'An error occurred during login.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred during login.",
+            );
         } finally {
             setResponseLoading(false);
         }
     };
 
-
-
     useEffect(() => {
         if (isAuthenticated) {
-            router.push('/');
+            router.push("/");
         }
     }, [isAuthenticated, router]);
-
-
 
     return (
         <main>
             <div>
-                <h1 className="page-title">
-                    Sign In
-                </h1>
+                <h1 className="page-title">Sign In</h1>
 
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="email">
-                            Email
-                        </label>
+                        <label htmlFor="email">Email</label>
                         <input
                             type="email"
                             id="email"
@@ -77,9 +69,7 @@ export default function Login() {
                     </div>
 
                     <div>
-                        <label htmlFor="password">
-                            Password
-                        </label>
+                        <label htmlFor="password">Password</label>
                         <input
                             type="password"
                             id="password"
@@ -91,33 +81,22 @@ export default function Login() {
                         />
                     </div>
 
-                    {error && (
-                        <div>
-                            {error}
-                        </div>
-                    )}
+                    {error && <div>{error}</div>}
 
-                    <button
-                        type="submit"
-                        disabled={responseLoading}
-                    >
-                        {responseLoading ? 'Signing in...' : 'Sign in'}
+                    <button type="submit" disabled={responseLoading}>
+                        {responseLoading ? "Signing in..." : "Sign in"}
                     </button>
                 </form>
 
                 <div>
                     <p>
-                        Don&#39;t have an account?{' '}
-                        <Link href="/register">
-                            Sign up
-                        </Link>
+                        Don&#39;t have an account?{" "}
+                        <Link href="/register">Sign up</Link>
                     </p>
                 </div>
 
                 <div>
-                    <Link href="/">
-                        ← Back to home
-                    </Link>
+                    <Link href="/">← Back to home</Link>
                 </div>
             </div>
         </main>

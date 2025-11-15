@@ -1,66 +1,66 @@
 "use client";
 
-import {useEffect, useState} from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/authContext';
-import {Account, AccountsService} from '@/services/accountsService';
-import ImageUpload from '@/components/imageUpload';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext";
+import { Account, AccountsService } from "@/services/accountsService";
+import ImageUpload from "@/components/imageUpload";
 import Loading from "@/components/loading";
-
-
 
 export default function ManageAccountsAdd() {
     const router = useRouter();
 
-    const { user, loading, isAuthenticated } = useAuth()
+    const { user, loading, isAuthenticated } = useAuth();
 
     const [formData, setFormData] = useState<Account>({
-        email: '',
-        password: '',
-        first_name: '',
-        last_name: '',
-        role: 'student',
-        description: '',
-        photo: '/default-user.jpg',
-        day: '',
-        room: '',
+        email: "",
+        password: "",
+        first_name: "",
+        last_name: "",
+        role: "student",
+        description: "",
+        photo: "/default-user.jpg",
+        day: "",
+        room: "",
     });
     const [responseLoading, setResponseLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
-
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    ) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
     const handleImageUploaded = (imageUrl: string) => {
         setFormData({
             ...formData,
-            photo: imageUrl
+            photo: imageUrl,
         });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setResponseLoading(true);
-        setError('');
+        setError("");
 
         try {
             await AccountsService.addAccount(formData);
-            router.push('/manage-accounts');
+            router.push("/manage-accounts");
         } catch (err: unknown) {
-            setError(err instanceof Error ? err.message : 'An error occurred while adding the account.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred while adding the account.",
+            );
         } finally {
             setResponseLoading(false);
         }
     };
-
-
 
     useEffect(() => {
         if (loading) {
@@ -68,32 +68,25 @@ export default function ManageAccountsAdd() {
         }
 
         if (!isAuthenticated) {
-            router.push('/login');
+            router.push("/login");
             return;
         }
 
-        if (!user || user.role !== 'admin') {
-            setError('You do not have permission to access this page.');
+        if (!user || user.role !== "admin") {
+            setError("You do not have permission to access this page.");
             return;
         }
     }, [isAuthenticated, loading, user, router]);
 
-
-
     let content = null;
 
     if (loading) {
-        content = (
-            <Loading/>
-        )
-
+        content = <Loading />;
     } else {
         content = (
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="email">
-                        Email
-                    </label>
+                    <label htmlFor="email">Email</label>
                     <input
                         type="email"
                         id="email"
@@ -106,9 +99,7 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div>
-                    <label htmlFor="first_name">
-                        First Name
-                    </label>
+                    <label htmlFor="first_name">First Name</label>
                     <input
                         type="text"
                         id="first_name"
@@ -118,9 +109,7 @@ export default function ManageAccountsAdd() {
                         required
                         placeholder="Your first name"
                     />
-                    <label htmlFor="last_name">
-                        Last Name
-                    </label>
+                    <label htmlFor="last_name">Last Name</label>
                     <input
                         type="text"
                         id="last_name"
@@ -133,9 +122,7 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div>
-                    <label htmlFor="password">
-                        Password
-                    </label>
+                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
                         id="password"
@@ -148,9 +135,7 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div>
-                    <label htmlFor="role">
-                        Role
-                    </label>
+                    <label htmlFor="role">Role</label>
                     <select
                         id="role"
                         name="role"
@@ -165,18 +150,16 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div>
-                    { formData.photo && (
+                    {formData.photo && (
                         <ImageUpload
                             onImageUploaded={handleImageUploaded}
-                            currentImage={"/default-user.jpg"}//formData.photo
+                            currentImage={"/default-user.jpg"} //formData.photo
                         />
                     )}
                 </div>
 
                 <div>
-                    <label htmlFor="description">
-                        Description
-                    </label>
+                    <label htmlFor="description">Description</label>
                     <input
                         type="text"
                         id="description"
@@ -188,9 +171,7 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div>
-                    <label htmlFor="day">
-                        Preferred day
-                    </label>
+                    <label htmlFor="day">Preferred day</label>
                     <select
                         id="day"
                         name="day"
@@ -206,9 +187,7 @@ export default function ManageAccountsAdd() {
                         <option value="Saturday">Saturday</option>
                         <option value="Sunday">Sunday</option>
                     </select>
-                    <label htmlFor="room">
-                        Preferred room
-                    </label>
+                    <label htmlFor="room">Preferred room</label>
                     <input
                         type="text"
                         id="room"
@@ -219,35 +198,22 @@ export default function ManageAccountsAdd() {
                     />
                 </div>
 
-                {error && (
-                    <div>
-                        {error}
-                    </div>
-                )}
+                {error && <div>{error}</div>}
 
-                <button
-                    type="submit"
-                    disabled={responseLoading}
-                >
-                    {responseLoading ? 'Adding...' : 'Add Account'}
+                <button type="submit" disabled={responseLoading}>
+                    {responseLoading ? "Adding..." : "Add Account"}
                 </button>
             </form>
         );
     }
 
-
-
     return (
         <main>
-            <h1 className="page-title">
-                Manage accounts - Add
-            </h1>
+            <h1 className="page-title">Manage accounts - Add</h1>
 
             {content}
 
-            <Link href="/manage-accounts">
-                ← Back to accounts
-            </Link>
+            <Link href="/manage-accounts">← Back to accounts</Link>
         </main>
-    )
+    );
 }

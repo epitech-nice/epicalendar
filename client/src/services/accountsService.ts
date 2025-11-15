@@ -1,8 +1,6 @@
 import api from "./api";
 import axios from "axios";
 
-
-
 export interface GuardTime {
     monday: number;
     tuesday: number;
@@ -21,11 +19,19 @@ export interface Account {
     created_at?: Date;
     first_name: string;
     last_name: string;
-    role: 'student' | 'aer' | 'admin';
+    role: "student" | "aer" | "admin";
     description?: string;
     photo?: string;
     guard_time?: GuardTime;
-    day?: '' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+    day?:
+        | ""
+        | "Monday"
+        | "Tuesday"
+        | "Wednesday"
+        | "Thursday"
+        | "Friday"
+        | "Saturday"
+        | "Sunday";
     room?: string;
 }
 
@@ -34,22 +40,29 @@ export interface AccountUpdate {
     password?: string;
     first_name?: string;
     last_name?: string;
-    role?: 'student' | 'aer' | 'admin';
+    role?: "student" | "aer" | "admin";
     description?: string;
     photo?: string;
-    day?: '' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+    day?:
+        | ""
+        | "Monday"
+        | "Tuesday"
+        | "Wednesday"
+        | "Thursday"
+        | "Friday"
+        | "Saturday"
+        | "Sunday";
     room?: string;
 }
-
-
 
 export const AccountsService = {
     async getAccounts(): Promise<Account[]> {
         try {
-            return (await api.get('/accounts')).data;
+            return (await api.get("/accounts")).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error fetching accounts";
+                const message =
+                    error.response?.data?.message || "Error fetching accounts";
                 throw new Error(message);
             } else {
                 throw new Error("Error fetching accounts");
@@ -57,13 +70,13 @@ export const AccountsService = {
         }
     },
 
-
     async getAccountById(id: string): Promise<Account> {
         try {
             return (await api.get(`/accounts/${id}`)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error fetching account";
+                const message =
+                    error.response?.data?.message || "Error fetching account";
                 throw new Error(message);
             } else {
                 throw new Error("Error fetching account");
@@ -71,13 +84,13 @@ export const AccountsService = {
         }
     },
 
-
     async getAers(): Promise<Account[]> {
         try {
-            return (await api.get('/accounts/aer')).data;
+            return (await api.get("/accounts/aer")).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error fetching AERs";
+                const message =
+                    error.response?.data?.message || "Error fetching AERs";
                 throw new Error(message);
             } else {
                 throw new Error("Error fetching AERs");
@@ -85,18 +98,18 @@ export const AccountsService = {
         }
     },
 
-
     async getAerById(id: string): Promise<Account> {
         try {
             const aers = this.getAers();
-            const aer = (await aers).find(aer => aer._id === id);
+            const aer = (await aers).find((aer) => aer._id === id);
             if (!aer) {
                 throw new Error("AER not found");
             }
             return aer;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error fetching AER";
+                const message =
+                    error.response?.data?.message || "Error fetching AER";
                 throw new Error(message);
             } else {
                 throw new Error("Error fetching AER");
@@ -104,13 +117,13 @@ export const AccountsService = {
         }
     },
 
-
     async addAccount(account: Account) {
         try {
-            return (await api.post('/accounts', account)).data;
+            return (await api.post("/accounts", account)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error adding account";
+                const message =
+                    error.response?.data?.message || "Error adding account";
                 throw new Error(message);
             } else {
                 throw new Error("Error adding account");
@@ -118,13 +131,16 @@ export const AccountsService = {
         }
     },
 
-
-    async updateAccount(id: string, dataToUpdate: AccountUpdate): Promise<Account> {
+    async updateAccount(
+        id: string,
+        dataToUpdate: AccountUpdate,
+    ): Promise<Account> {
         try {
             return (await api.put(`/accounts/${id}`, dataToUpdate)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error updating account";
+                const message =
+                    error.response?.data?.message || "Error updating account";
                 throw new Error(message);
             } else {
                 throw new Error("Error updating account");
@@ -132,17 +148,17 @@ export const AccountsService = {
         }
     },
 
-
     async deleteAccount(id: string): Promise<void> {
         try {
             await api.delete(`/accounts/${id}`);
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error deleting account";
+                const message =
+                    error.response?.data?.message || "Error deleting account";
                 throw new Error(message);
             } else {
                 throw new Error("Error deleting account");
             }
         }
-    }
-}
+    },
+};

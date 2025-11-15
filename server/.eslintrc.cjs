@@ -12,7 +12,6 @@ module.exports = {
       },
       plugins: ["@typescript-eslint"],
       rules: {
-        "no-unused-vars": "warn",
         "no-console": "off",
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/explicit-function-return-type": "off",

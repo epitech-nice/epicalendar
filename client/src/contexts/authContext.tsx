@@ -1,9 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { AuthService, User } from '@/services/authService';
-
-
+import React, {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    ReactNode,
+} from "react";
+import { AuthService, User } from "@/services/authService";
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -14,29 +18,28 @@ interface AuthContextType {
     loading: boolean;
     isAuthenticated: boolean;
     login: (data: { email: string; password: string }) => Promise<void>;
-    register: (data: { email: string; first_name: string; last_name: string; password: string }) => Promise<void>;
+    register: (data: {
+        email: string;
+        first_name: string;
+        last_name: string;
+        password: string;
+    }) => Promise<void>;
     logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-
-
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (context === undefined) {
-        throw new Error('useAuth must be used within an AuthProvider');
+        throw new Error("useAuth must be used within an AuthProvider");
     }
     return context;
 };
 
-
-
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
-
-
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -55,14 +58,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         checkAuth();
     }, []);
 
-
-
     const login = async (data: { email: string; password: string }) => {
         const response = await AuthService.login(data);
         setUser(response.user);
     };
 
-    const register = async (data: { email: string; first_name: string; last_name: string; password: string }) => {
+    const register = async (data: {
+        email: string;
+        first_name: string;
+        last_name: string;
+        password: string;
+    }) => {
         const response = await AuthService.register(data);
         setUser(response.user);
     };
@@ -72,8 +78,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(null);
     };
 
-
-
     const value = {
         user,
         loading,
@@ -81,11 +85,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         login,
         register,
         logout,
-    }
+    };
 
     return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
+        <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
     );
-}
+};

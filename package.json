@@ -1,28 +1,29 @@
 {
-  "name": "epicalendar",
-  "private": true,
-  "version": "0.0.0",
-  "packageManager": "pnpm@8.6.0",
-  "workspaces": [
-    "client",
-    "server",
-    "packages/*"
-  ],
-  "scripts": {
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "lint:fix": "turbo run lint:fix",
-    "full-build": "pnpm run format && pnpm run build && pnpm run lint",
-    "dev": "turbo run dev --parallel",
-    "start": "turbo run start --parallel",
-    "clean": "rimraf node_modules .turbo client/.next server/dist"
-  },
-  "devDependencies": {
-    "rimraf": "^5.0.0",
-    "turbo": "^2.6.1",
-    "typescript": "^5.8.3",
-    "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.6.14"
-  }
+    "name": "epicalendar",
+    "private": true,
+    "version": "0.0.0",
+    "packageManager": "pnpm@8.6.0",
+    "workspaces": [
+        "client",
+        "server",
+        "packages/*"
+    ],
+    "scripts": {
+        "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css}\"",
+        "build": "turbo run build",
+        "lint": "turbo run lint",
+        "lint:fix": "turbo run lint:fix",
+        "full-build": "pnpm run format && pnpm run build && pnpm run lint",
+        "dev": "turbo run dev --parallel",
+        "start": "turbo run start --parallel",
+        "clean": "rimraf node_modules .turbo client/.next server/dist",
+        "re": "pnpm run clean && pnpm install && pnpm run full-build"
+    },
+    "devDependencies": {
+        "rimraf": "^5.0.0",
+        "turbo": "^2.6.1",
+        "typescript": "^5.8.3",
+        "prettier": "^3.2.5",
+        "prettier-plugin-tailwindcss": "^0.6.14"
+    }
 }
