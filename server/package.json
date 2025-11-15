@@ -1,6 +1,8 @@
 {
-  "name": "server",
+  "name": "@epicalendar/server",
   "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@8.6.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

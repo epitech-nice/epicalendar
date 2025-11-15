@@ -1,0 +1,21 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "extends": "@turborepo/pack",
+  "globalDependencies": [],
+  "tasks": {
+    "build": {
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ],
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "dev": {
+      "cache": false
+    },
+    "lint": {},
+    "test": {}
+  }
+}

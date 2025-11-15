@@ -1,0 +1,24 @@
+{
+  "name": "epicalendar-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@8.6.0",
+  "workspaces": [
+    "client",
+    "server",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "start": "turbo run start --parallel",
+    "lint": "turbo run lint",
+    "clean": "rimraf node_modules .turbo client/.next server/dist"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.17",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.8.3"
+  }
+}
+
