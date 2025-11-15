@@ -1,0 +1,59 @@
+#!/bin/python3
+import os
+import re
+from sys import argv
+
+
+
+def load_keywords():
+    keywords_file = ".github/commit-keywords.txt"
+    keywords = []
+    try:
+        with open(keywords_file, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                # Ignorer les lignes vides et les commentaires
+                if line and not line.startswith('#'):
+                    keywords.append(line)
+    except Exception as e:
+        print(f"::error file={keywords_file}::Cannot read keywords file: {e}")
+        exit(1)
+    
+    return keywords
+
+
+
+def validate_commit_format(commit_message, keywords):
+    keywords_pattern = '|'.join(re.escape(keyword) for keyword in keywords)
+    pattern = f"^({keywords_pattern})(\\(.+\\))?: .+"
+    
+    return re.match(pattern, commit_message) is not None
+
+
+
+if __name__ == "__main__":
+    if len(argv) != 2:
+        print("::error::Usage: check_commit <commit_message>")
+        exit(1)
+    
+    commit_message = argv[1]
+    keywords = load_keywords()
+    
+    if not keywords:
+        print("::error::No keywords found in configuration")
+        exit(1)
+
+    if commit_message.startswith("Merge"):
+        print("::notice title=Commit format::Merge commit detected, skipping validation")
+        exit(0)
+    
+    if validate_commit_format(commit_message, keywords):
+        print("::notice title=Commit format::Commit message format is valid")
+        exit(0)
+    else:
+        keywords_str = ", ".join(keywords)
+        print(f"::error title=Invalid commit format::Commit message format is invalid")
+        print(f"::error title=Invalid commit format::Expected format: <type>(<scope>): <description>")
+        print(f"::error title=Invalid commit format::Allowed types: {keywords_str}")
+        print(f"::error title=Invalid commit format::Received: {commit_message}")
+        exit(1)
