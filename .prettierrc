@@ -2,5 +2,11 @@
     "singleQuote": false,
     "trailingComma": "all",
     "tabWidth": 4,
-    "useTabs": false
+    "useTabs": false,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "semi": true,
+  "printWidth": 80,
+  "quoteProps": "as-needed"
 }
