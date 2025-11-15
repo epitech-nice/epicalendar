@@ -16,9 +16,8 @@
     "clean": "rimraf node_modules .turbo client/.next server/dist"
   },
   "devDependencies": {
-    "turbo": "^1.10.17",
     "rimraf": "^5.0.0",
+    "turbo": "^2.6.1",
     "typescript": "^5.8.3"
   }
 }
-
