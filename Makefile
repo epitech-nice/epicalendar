@@ -10,7 +10,7 @@ PROD_COMPOSE	=	docker-compose.prod.yml
 
 ############################ RULES ############################################
 .PHONY: \
-	all init install launch \ # Local development
+	all init install build launch-dev launch-prod \ # Local development
 	dev-up dev-down dev-logs dev-restart \ # Development environment
 	prod-up prod-down prod-logs prod-restart \ # Production environment
 	clean fclean \ # Clean
@@ -20,7 +20,7 @@ PROD_COMPOSE	=	docker-compose.prod.yml
 
 
 ############################ LOCAL ############################################
-all: install launch
+all: install build
 
 init:
 	@rm -f client/.env
@@ -30,20 +30,20 @@ init:
 	@echo "Environment files linked successfully."
 
 install: init
-	@echo "Installing dependencies for server..."
-	@cd server && npm install
+	@echo "Installing dependencies"
+	@pnpm install
 
-	@cd ..
+build:
+	@echo "Building the project..."
+	@pnpm full-build
 
-	@echo "Installing dependencies for client..."
-	@cd client && npm install
+launch-dev:
+	@echo "Starting the development server..."
+	@pnpm dev
 
-launch:
+launch-prod:
 	@echo "Starting the server..."
-	@cd server && npm run build && npm run start &
-
-	@echo "Starting the client..."
-	@cd client && npm run build && npm run start
+	@pnpm start
 ###############################################################################
 
 
@@ -80,6 +80,7 @@ prod-restart: prod-down prod-up
 
 ############################ CLEAN ############################################
 clean: dev-down
+	@pnpm clean
 	@rm -f client/.env
 	@rm -f server/.env
 	@docker volume prune -f
