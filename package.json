@@ -10,10 +10,10 @@
     ],
     "scripts": {
         "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css}\"",
-        "build": "turbo run build",
         "lint": "turbo run lint",
         "lint:fix": "turbo run lint:fix",
-        "full-build": "pnpm run format && pnpm run build && pnpm run lint",
+        "build": "turbo run build",
+        "full-build": "pnpm run format && pnpm run lint:fix && pnpm run build",
         "dev": "turbo run dev --parallel",
         "start": "turbo run start --parallel",
         "clean": "rimraf node_modules .turbo client/.next server/dist",
