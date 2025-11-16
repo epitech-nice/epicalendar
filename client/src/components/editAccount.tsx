@@ -71,10 +71,9 @@ export default function EditAccount({
                 newValue !== "" &&
                 newValue !== originalValue
             ) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                finalFormData[key as keyof AccountUpdate] =
-                    newValue as AccountUpdate[typeof key];
+                // Use a controlled any cast here to satisfy TypeScript's indexed-access typing
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (finalFormData as any)[key as keyof AccountUpdate] = newValue;
             }
         }
         //console.log(formData);
