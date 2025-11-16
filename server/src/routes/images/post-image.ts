@@ -27,12 +27,10 @@ router.post(
                 "image/webp",
             ];
             if (!allowedTypes.includes(request.file.mimetype)) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "Invalid file type. Allowed types: jpeg, jpg, png, gif, webp.",
-                    });
+                response.status(400).json({
+                    message:
+                        "Invalid file type. Allowed types: jpeg, jpg, png, gif, webp.",
+                });
                 return;
             }
 

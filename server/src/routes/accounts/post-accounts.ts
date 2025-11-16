@@ -16,12 +16,10 @@ router.post(
                 !request.body.last_name ||
                 !request.body.password
             ) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "Fields are missing. Please provide email, first name, last name, password, and role.",
-                    });
+                response.status(400).json({
+                    message:
+                        "Fields are missing. Please provide email, first name, last name, password, and role.",
+                });
                 return;
             }
 
@@ -47,12 +45,10 @@ router.post(
 
             const newAccount = new Account(request.body);
             await newAccount.save();
-            response
-                .status(201)
-                .json({
-                    message: "Account created successfully.",
-                    account: newAccount,
-                });
+            response.status(201).json({
+                message: "Account created successfully.",
+                account: newAccount,
+            });
         } catch (error) {
             response.status(500).json({ message: `Server error: ${error}` });
             console.error("Error creating account:", error);

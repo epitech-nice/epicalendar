@@ -68,11 +68,9 @@ router.put(
                     date: request.body.date,
                 });
                 if (existingDate) {
-                    response
-                        .status(409)
-                        .json({
-                            message: "A day already exists for this date.",
-                        });
+                    response.status(409).json({
+                        message: "A day already exists for this date.",
+                    });
                     return;
                 }
 
@@ -147,11 +145,9 @@ router.put(
                     request.body.close &&
                     existingDay.start >= request.body.close)
             ) {
-                response
-                    .status(400)
-                    .json({
-                        message: "Guard start time must be before close time.",
-                    });
+                response.status(400).json({
+                    message: "Guard start time must be before close time.",
+                });
                 return;
             }
             if (
@@ -165,12 +161,10 @@ router.put(
                     request.body.start &&
                     existingDay.open > request.body.start)
             ) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "The guard start time must be between open and close time.",
-                    });
+                response.status(400).json({
+                    message:
+                        "The guard start time must be between open and close time.",
+                });
                 return;
             }
             if (
@@ -181,12 +175,10 @@ router.put(
                     !request.body.start &&
                     request.body.end < existingDay.start)
             ) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "The guard end time must be after the guard start time.",
-                    });
+                response.status(400).json({
+                    message:
+                        "The guard end time must be after the guard start time.",
+                });
                 return;
             }
 

@@ -53,11 +53,9 @@ router.get(
                 request.user.role === "student" &&
                 openingRequest.account !== request.user.email
             ) {
-                response
-                    .status(403)
-                    .json({
-                        message: "You can only view your own opening requests.",
-                    });
+                response.status(403).json({
+                    message: "You can only view your own opening requests.",
+                });
                 return;
             }
 

@@ -11,12 +11,10 @@ router.post(
         try {
             const { email, password } = request.body;
             if (!email || !password) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "Fields are missing. Please provide email and password.",
-                    });
+                response.status(400).json({
+                    message:
+                        "Fields are missing. Please provide email and password.",
+                });
                 return;
             }
 

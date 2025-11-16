@@ -16,12 +16,10 @@ router.post(
                 !request.body.start &&
                 !request.body.close
             ) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "Fields are missing. Please provide date, open, start, and close.",
-                    });
+                response.status(400).json({
+                    message:
+                        "Fields are missing. Please provide date, open, start, and close.",
+                });
                 return;
             }
 
@@ -77,29 +75,23 @@ router.post(
                 return;
             }
             if (request.body.start >= request.body.close) {
-                response
-                    .status(400)
-                    .json({
-                        message: "Guard start time must be before close time.",
-                    });
+                response.status(400).json({
+                    message: "Guard start time must be before close time.",
+                });
                 return;
             }
             if (request.body.open > request.body.start) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "The guard start time must be between open and close time.",
-                    });
+                response.status(400).json({
+                    message:
+                        "The guard start time must be between open and close time.",
+                });
                 return;
             }
             if (request.body.end && request.body.end < request.body.start) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "The guard end time must be after the guard start time.",
-                    });
+                response.status(400).json({
+                    message:
+                        "The guard end time must be after the guard start time.",
+                });
                 return;
             }
 

@@ -1,9 +1,6 @@
 import { Request, Response, Router } from "express";
 import { Account, addGuardTime } from "@/models/account";
-import {
-    authenticateToken,
-    authorizeAdmin,
-} from "@/middleware/auth";
+import { authenticateToken, authorizeAdmin } from "@/middleware/auth";
 
 const router = Router();
 

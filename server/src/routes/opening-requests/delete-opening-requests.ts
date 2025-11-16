@@ -32,12 +32,9 @@ router.delete(
                 request.user?.role === "student" &&
                 deletedOpeningRequest.account !== request.user.email
             ) {
-                response
-                    .status(403)
-                    .json({
-                        message:
-                            "You can only delete your own opening requests.",
-                    });
+                response.status(403).json({
+                    message: "You can only delete your own opening requests.",
+                });
                 return;
             }
 

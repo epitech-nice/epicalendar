@@ -18,12 +18,10 @@ router.post(
                 !request.body.close &&
                 !request.body.message
             ) {
-                response
-                    .status(400)
-                    .json({
-                        message:
-                            "Fields are missing. Please provide date, open, close, and message.",
-                    });
+                response.status(400).json({
+                    message:
+                        "Fields are missing. Please provide date, open, close, and message.",
+                });
                 return;
             }
 
@@ -60,12 +58,10 @@ router.post(
 
             const newOpeningRequest = new OpeningRequest(request.body);
             await newOpeningRequest.save();
-            response
-                .status(201)
-                .json({
-                    message: "Opening request created successfully.",
-                    opening_request: newOpeningRequest,
-                });
+            response.status(201).json({
+                message: "Opening request created successfully.",
+                opening_request: newOpeningRequest,
+            });
         } catch (error) {
             response.status(500).json({ message: `Server error: ${error}` });
             console.error("Error creating opening request:", error);
