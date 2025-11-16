@@ -170,25 +170,35 @@ export default function ManageDaysEditId() {
         setResponseLoading(true);
         setError("");
 
+        if (!formData) {
+            setError("No form data to submit.");
+            setResponseLoading(false);
+            return;
+        }
+
         const finalFormData: DayUpdate = {};
         for (const key in formData) {
-            const originalValue = day ? day[key as keyof Day] : undefined;
-            const newValue = formData[key as keyof DayUpdate];
+            const k = key as keyof DayUpdate;
+            // avoid using `any` to satisfy ESLint rule
+            const originalValue = day
+                ? (day as Day)[k as keyof Day]
+                : undefined;
+            const newValue = formData[k];
 
             const isDate =
                 newValue instanceof Date && originalValue instanceof Date;
             const areDatesEqual =
-                isDate && newValue.getTime() === originalValue.getTime();
+                isDate &&
+                newValue.getTime() === (originalValue as Date).getTime();
             if (
                 newValue !== undefined &&
                 newValue !== null &&
                 newValue !== "" &&
                 (!isDate ? newValue !== originalValue : !areDatesEqual)
             ) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                finalFormData[key as keyof DayUpdate] =
-                    newValue as DayUpdate[typeof key];
+                // Use a controlled any cast here to satisfy TypeScript's indexed-access typing
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (finalFormData as any)[k] = newValue;
             }
         }
 

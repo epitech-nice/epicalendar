@@ -99,10 +99,10 @@ export default function ManageOpeningRequestsEditId() {
                 newValue !== "" &&
                 (!isDate ? newValue !== originalValue : !areDatesEqual)
             ) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                finalFormData[key as keyof OpeningRequestUpdate] =
-                    newValue as OpeningRequestUpdate[typeof key];
+                // Use a controlled any cast here to satisfy TypeScript's indexed-access typing
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (finalFormData as any)[key as keyof OpeningRequestUpdate] =
+                    newValue;
             }
         }
 
