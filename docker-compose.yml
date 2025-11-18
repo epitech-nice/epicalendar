@@ -14,7 +14,7 @@ services:
       - ./mongo-init:/docker-entrypoint-initdb.d:ro
     networks:
       - app-network
-    restart: always
+    restart: unless-stopped
 
   # Service pour le serveur backend
   server:
@@ -24,19 +24,19 @@ services:
     depends_on:
       - db
     environment:
-      MONGODB_URI: mongodb://mongo:mongo@db:27017/epicalendar?authSource=admin
-      PORT: 5000
-      CLIENT_URL: http://localhost:3000
-      JWT_SECRET: "epitech"
-      JWT_EXPIRATION: "7d"
-      TZ: Europe/Paris
+      MONGODB_URI: "${MONGODB_URI:-mongodb://mongo:mongo@db:27017/epicalendar?authSource=admin}"
+      PORT: "${PORT:-5000}"
+      CLIENT_URL: "${CLIENT_URL:-http://localhost:3000}"
+      JWT_SECRET: "${JWT_SECRET:-epitech}"
+      JWT_EXPIRATION: "${JWT_EXPIRATION:-7d}"
+      TZ: "${TZ:-Europe/Paris}"
     ports:
       - "5000:5000"
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - app-network
-    restart: always
+    restart: unless-stopped
 
   # Service pour le client frontend
   client:
@@ -46,12 +46,12 @@ services:
     depends_on:
       - server
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:5000/api
+      NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL:-http://localhost:5000/api}"
     ports:
-      - "3002:3000"
+      - "3000:3000"
     networks:
       - app-network
-    restart: always
+    restart: unless-stopped
 
 # Volumes pour persister les données
 volumes:
