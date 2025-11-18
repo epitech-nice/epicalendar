@@ -1,13 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import {
     OpeningRequest,
     OpeningRequestsService,
     OpeningRequestUpdate,
 } from "@/services/openingRequestsService";
-import { useAuth } from "@/contexts/authContext";
+
 import Link from "next/link";
 import DatePicker from "react-datepicker";
 import Loading from "@/components/loading";

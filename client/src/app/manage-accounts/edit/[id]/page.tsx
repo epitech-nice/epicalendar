@@ -1,9 +1,5 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { AccountsService, Account } from "@/services/accountsService";
-import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import Loading from "@/components/loading";
 import { useAuth } from "@/contexts/authContext";
