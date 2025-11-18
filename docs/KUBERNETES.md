@@ -170,7 +170,22 @@ kubectl describe pvc mongodb-pvc -n epicalendar
 
 **Solutions:**
 
-1. **Use the default storage class** (if available)
+1. **Delete and recreate the PVC** (⚠️ This will delete MongoDB data!)
+   ```bash
+   # Scale down MongoDB to 0 replicas first
+   kubectl scale deployment mongodb --replicas=0 -n epicalendar
+
+   # Delete the PVC
+   kubectl delete pvc mongodb-pvc -n epicalendar
+
+   # Reapply with the new storage class
+   kubectl apply -f kubernetes/mongodb-pvc.yaml
+
+   # Scale MongoDB back up
+   kubectl scale deployment mongodb --replicas=1 -n epicalendar
+   ```
+
+2. **Use the default storage class** (if available)
    ```bash
    # Check which storage class is default
    kubectl get storageclass

@@ -14,6 +14,7 @@ resources:
     - client-deployment.yaml
     - ingress.yaml
 
-commonLabels:
-    app.kubernetes.io/name: epicalendar
-    app.kubernetes.io/version: "1.0.0"
+labels:
+    - pairs:
+          app.kubernetes.io/name: epicalendar
+          app.kubernetes.io/version: "1.0.0"
