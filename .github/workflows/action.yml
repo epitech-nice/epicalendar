@@ -104,7 +104,7 @@ jobs:
                 pnpm install
 
             - name: Format code and check compilation (build, lint and debug)
-              run: | 
+              run: |
                 pnpm run full-build
                 echo "::notice title=Compilation:: Compilation completed successfully."
 

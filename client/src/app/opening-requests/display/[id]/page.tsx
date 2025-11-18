@@ -1,12 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import {
     OpeningRequestsService,
     OpeningRequest,
 } from "@/services/openingRequestsService";
-import { useAuth } from "@/contexts/authContext";
+
 import Link from "next/link";
 import Loading from "@/components/loading";
 import { useAuth } from "@/contexts/authContext";

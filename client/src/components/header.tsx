@@ -1,10 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-import { useAuth } from "@/contexts/authContext";
-
 import "./header.css";
 import Link from "next/link";
 import Image from "next/image";
