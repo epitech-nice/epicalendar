@@ -155,6 +155,17 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
+          # Delete PVC if it exists and needs to be recreated (only if storage class changed)
+          if kubectl get pvc mongodb-pvc -n epicalendar &>/dev/null; then
+            CURRENT_SC=$(kubectl get pvc mongodb-pvc -n epicalendar -o jsonpath='{.spec.storageClassName}')
+            if [ "$CURRENT_SC" = "standard" ]; then
+              echo "Deleting PVC with old storage class..."
+              kubectl delete deployment mongodb -n epicalendar --ignore-not-found=true
+              kubectl delete pvc mongodb-pvc -n epicalendar --ignore-not-found=true
+              sleep 5
+            fi
+          fi
+
           kubectl apply -k kubernetes/
 
       - name: Restart deployments to pull latest images
