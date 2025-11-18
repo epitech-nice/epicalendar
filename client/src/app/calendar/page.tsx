@@ -40,7 +40,7 @@ export default function CalendarPage() {
         dayRangeHeaderFormat: ({ start, end }: { start: Date; end: Date }) =>
             `${formatDate(start, "dd/MM/yyyy")} - ${formatDate(
                 end,
-                "dd/MM/yyyy"
+                "dd/MM/yyyy",
             )}`,
     };
 
@@ -72,10 +72,10 @@ export default function CalendarPage() {
                     endGuard = new Date(day.end ?? day.close);
                     if (endGuard < startGuard) {
                         endGuard = new Date(
-                            endGuard.getTime() + 24 * 60 * 60 * 1000
+                            endGuard.getTime() + 24 * 60 * 60 * 1000,
                         );
                         startGuard = new Date(
-                            startGuard.getTime() + 24 * 60 * 60 * 1000
+                            startGuard.getTime() + 24 * 60 * 60 * 1000,
                         );
                         startGuard.setHours(0, 0, 0, 0);
                         formattedEvents.push({
@@ -92,7 +92,7 @@ export default function CalendarPage() {
                 setError(
                     error instanceof Error
                         ? error.message
-                        : "An error occurred while fetching days."
+                        : "An error occurred while fetching days.",
                 );
             }
         };

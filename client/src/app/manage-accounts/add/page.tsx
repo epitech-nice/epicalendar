@@ -28,7 +28,7 @@ export default function ManageAccountsAdd() {
     const [error, setError] = useState("");
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         setFormData({
             ...formData,
@@ -55,7 +55,7 @@ export default function ManageAccountsAdd() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while adding the account."
+                    : "An error occurred while adding the account.",
             );
         } finally {
             setResponseLoading(false);

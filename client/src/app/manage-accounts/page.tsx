@@ -1,9 +1,9 @@
 "use client";
 
-import {useState, useEffect, useCallback} from 'react';
-import { useAuth } from '@/contexts/authContext';
-import { useRouter } from 'next/navigation';
-import { Account, AccountsService } from '@/services/accountsService';
+import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "@/contexts/authContext";
+import { useRouter } from "next/navigation";
+import { Account, AccountsService } from "@/services/accountsService";
 import Loading from "@/components/loading";
 import Link from "next/link";
 import Loading from "@/components/loading";
@@ -27,7 +27,7 @@ export default function ManageAccounts() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching accounts."
+                    : "An error occurred while fetching accounts.",
             );
         }
     }, []);
@@ -37,7 +37,7 @@ export default function ManageAccounts() {
 
         if (
             !confirm(
-                "Are you sure you want to delete this account? This action cannot be undone."
+                "Are you sure you want to delete this account? This action cannot be undone.",
             )
         ) {
             return;
@@ -50,7 +50,7 @@ export default function ManageAccounts() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while deleting the account."
+                    : "An error occurred while deleting the account.",
             );
         }
     };
@@ -103,7 +103,7 @@ export default function ManageAccounts() {
                                 key={account._id}
                                 onClick={() =>
                                     router.push(
-                                        `/manage-accounts/display/${account._id}`
+                                        `/manage-accounts/display/${account._id}`,
                                     )
                                 }
                                 style={{ cursor: "pointer" }}
@@ -117,7 +117,7 @@ export default function ManageAccounts() {
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             router.push(
-                                                `/manage-accounts/edit/${account._id}`
+                                                `/manage-accounts/edit/${account._id}`,
                                             );
                                         }}
                                     >
