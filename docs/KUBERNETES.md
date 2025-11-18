@@ -153,10 +153,57 @@ kubectl rollout restart deployment/client -n epicalendar
 
 ## Troubleshooting
 
+### ImagePullBackOff Error
+
+If you see `ImagePullBackOff` or `ErrImagePull` errors:
+
+```bash
+# Check pod events
+kubectl describe pod <pod-name> -n epicalendar
+```
+
+**Common causes:**
+1. **Missing image pull secret for private registry (ghcr.io)**
+   - The CI/CD pipeline automatically creates `ghcr-secret` 
+   - Manually create if needed:
+   ```bash
+   kubectl create secret docker-registry ghcr-secret \
+     --docker-server=ghcr.io \
+     --docker-username=<github-username> \
+     --docker-password=<github-token> \
+     --docker-email=<email> \
+     --namespace=epicalendar
+   ```
+
+2. **Image doesn't exist or wrong tag**
+   - Verify image exists: `docker pull ghcr.io/epitech-nice/epicalendar-server:latest`
+   - Check available tags on GitHub Container Registry
+
+3. **Registry authentication issues**
+   - Ensure GitHub token has `read:packages` permission
+   - For GitHub Actions, `GITHUB_TOKEN` is provided automatically
+
 ### Check pod logs
 ```bash
 kubectl logs <pod-name> -n epicalendar
 kubectl logs <pod-name> -n epicalendar --previous  # Previous container logs
+```
+
+### Rollout timeout
+
+If deployment rollout times out:
+
+```bash
+# Check rollout status
+kubectl rollout status deployment/server -n epicalendar
+kubectl rollout status deployment/client -n epicalendar
+
+# Check why pods are failing
+kubectl get pods -n epicalendar
+kubectl describe pod <failing-pod> -n epicalendar
+
+# Rollback if needed
+kubectl rollout undo deployment/server -n epicalendar
 ```
 
 ### Describe resources
