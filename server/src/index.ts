@@ -66,6 +66,11 @@ app.get("/", (request: Request, response: Response) => {
     response.send("Server is running.");
 });
 
+/* Health check endpoint */
+app.get("/api/health", (request: Request, response: Response) => {
+    response.status(200).json({ status: "healthy", timestamp: new Date().toISOString() });
+});
+
 /* Set up routes */
 
 /* Account routes */
