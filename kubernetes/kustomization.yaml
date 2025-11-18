@@ -13,7 +13,6 @@ resources:
     - server-deployment.yaml
     - client-deployment.yaml
     - ingress.yaml
-
 # Note: commonLabels/labels are removed because they modify immutable selector fields
 # Labels are already defined in individual deployment manifests
 
