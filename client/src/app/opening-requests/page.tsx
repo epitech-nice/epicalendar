@@ -1,11 +1,12 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "@/contexts/authContext";
+import { useRouter } from "next/navigation";
 import {
     OpeningRequest,
     OpeningRequestsService,
 } from "@/services/openingRequestsService";
-
-import Link from "next/link";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/authContext";
@@ -17,7 +18,7 @@ export default function ManageOpeningRequests() {
     const { user, loading, isAuthenticated } = useAuth();
 
     const [openingRequests, setOpeningRequests] = useState<OpeningRequest[]>(
-        []
+        [],
     );
     const [error, setError] = useState<string | null>("");
 
@@ -30,7 +31,7 @@ export default function ManageOpeningRequests() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching opening requests."
+                    : "An error occurred while fetching opening requests.",
             );
         }
     }, []);
@@ -38,12 +39,12 @@ export default function ManageOpeningRequests() {
     const handleDeleteOpeningRequests = async (openingRequestsId: string) => {
         console.log(
             "Attempting to delete opening requests with ID:",
-            openingRequestsId
+            openingRequestsId,
         );
 
         if (
             !confirm(
-                "Are you sure you want to delete this opening request? This action cannot be undone."
+                "Are you sure you want to delete this opening request? This action cannot be undone.",
             )
         ) {
             return;
@@ -51,14 +52,14 @@ export default function ManageOpeningRequests() {
 
         try {
             await OpeningRequestsService.deleteOpeningRequest(
-                openingRequestsId
+                openingRequestsId,
             );
             await fetchOpeningRequests();
         } catch (err) {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while deleting the opening request."
+                    : "An error occurred while deleting the opening request.",
             );
         }
     };
@@ -112,14 +113,14 @@ export default function ManageOpeningRequests() {
                                 key={openingRequest._id}
                                 onClick={() =>
                                     router.push(
-                                        `/opening-requests/display/${openingRequest._id}`
+                                        `/opening-requests/display/${openingRequest._id}`,
                                     )
                                 }
                                 style={{ cursor: "pointer" }}
                             >
                                 <td>
                                     {new Date(
-                                        openingRequest.date
+                                        openingRequest.date,
                                     ).toLocaleDateString("fr-FR", {
                                         year: "numeric",
                                         month: "2-digit",
@@ -133,7 +134,7 @@ export default function ManageOpeningRequests() {
 
                                 <td>
                                     {new Date(
-                                        openingRequest.open
+                                        openingRequest.open,
                                     ).toLocaleTimeString("fr-FR", {
                                         hour: "2-digit",
                                         minute: "2-digit",
@@ -142,7 +143,7 @@ export default function ManageOpeningRequests() {
 
                                 <td>
                                     {new Date(
-                                        openingRequest.close
+                                        openingRequest.close,
                                     ).toLocaleTimeString("fr-FR", {
                                         hour: "2-digit",
                                         minute: "2-digit",
@@ -156,7 +157,7 @@ export default function ManageOpeningRequests() {
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             router.push(
-                                                `/opening-requests/edit/${openingRequest._id}`
+                                                `/opening-requests/edit/${openingRequest._id}`,
                                             );
                                         }}
                                     >
@@ -166,7 +167,7 @@ export default function ManageOpeningRequests() {
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleDeleteOpeningRequests(
-                                                openingRequest._id!
+                                                openingRequest._id!,
                                             );
                                         }}
                                     >

@@ -133,7 +133,7 @@ export const AccountsService = {
 
     async updateAccount(
         id: string,
-        dataToUpdate: AccountUpdate
+        dataToUpdate: AccountUpdate,
     ): Promise<Account> {
         try {
             return (await api.put(`/accounts/${id}`, dataToUpdate)).data;

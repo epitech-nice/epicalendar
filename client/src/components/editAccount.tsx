@@ -1,13 +1,12 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
     AccountsService,
     Account,
     AccountUpdate,
 } from "@/services/accountsService";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/authContext";
 import ImageUpload from "@/components/imageUpload";
 import { ProfileService } from "@/services/profileService";
@@ -40,7 +39,7 @@ export default function EditAccount({
     const [error, setError] = useState("");
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         setFormData({
             ...formData,
@@ -72,10 +71,9 @@ export default function EditAccount({
                 newValue !== "" &&
                 newValue !== originalValue
             ) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                finalFormData[key as keyof AccountUpdate] =
-                    newValue as AccountUpdate[typeof key];
+                // Use a controlled any cast here to satisfy TypeScript's indexed-access typing
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (finalFormData as any)[key as keyof AccountUpdate] = newValue;
             }
         }
         //console.log(formData);
@@ -92,7 +90,7 @@ export default function EditAccount({
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while updating the account."
+                    : "An error occurred while updating the account.",
             );
         } finally {
             setResponseLoading(false);

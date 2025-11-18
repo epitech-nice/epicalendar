@@ -1,5 +1,7 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
@@ -8,6 +10,8 @@ import { Account } from "@/services/accountsService";
 import { useCallback, useEffect, useState } from "react";
 import DisplayAccount from "@/components/displayAccount";
 import { ProfileService } from "@/services/profileService";
+import { useRouter } from "next/navigation";
+import { Account } from "@/services/accountsService";
 
 export default function Profile() {
     const router = useRouter();
@@ -25,7 +29,7 @@ export default function Profile() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the account."
+                    : "An error occurred while fetching the account.",
             );
         }
     }, []);

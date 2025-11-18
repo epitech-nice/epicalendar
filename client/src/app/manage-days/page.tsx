@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import Loading from "@/components/loading";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext";
 import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "@/contexts/authContext";
+import { useRouter } from "next/navigation";
 import { Day, DaysService } from "@/services/daysService";
+import Loading from "@/components/loading";
+import Link from "next/link";
 import { AccountsService } from "@/services/accountsService";
 
 export default function ManageDays() {
@@ -26,7 +26,7 @@ export default function ManageDays() {
                         const account = await AccountsService.getAerById(aerId);
                         if (account) {
                             aers.push(
-                                `${account.first_name} ${account.last_name}`
+                                `${account.first_name} ${account.last_name}`,
                             );
                         } else {
                             console.warn(`AER with ID ${aerId} not found.`);
@@ -34,7 +34,7 @@ export default function ManageDays() {
                     } catch (err) {
                         console.error(
                             `Error fetching AER with ID ${aerId}:`,
-                            err
+                            err,
                         );
                     }
                 }
@@ -45,7 +45,7 @@ export default function ManageDays() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching days."
+                    : "An error occurred while fetching days.",
             );
         }
     }, []);
@@ -55,7 +55,7 @@ export default function ManageDays() {
 
         if (
             !confirm(
-                "Are you sure you want to delete this day? This action cannot be undone."
+                "Are you sure you want to delete this day? This action cannot be undone.",
             )
         ) {
             return;
@@ -68,7 +68,7 @@ export default function ManageDays() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while deleting the day."
+                    : "An error occurred while deleting the day.",
             );
         }
     };
@@ -123,7 +123,7 @@ export default function ManageDays() {
                                 key={day._id}
                                 onClick={() =>
                                     router.push(
-                                        `/manage-days/display/${day._id}`
+                                        `/manage-days/display/${day._id}`,
                                     )
                                 }
                                 style={{ cursor: "pointer" }}
@@ -135,7 +135,7 @@ export default function ManageDays() {
                                             year: "numeric",
                                             month: "2-digit",
                                             day: "2-digit",
-                                        }
+                                        },
                                     )}
                                 </td>
 
@@ -151,7 +151,7 @@ export default function ManageDays() {
                                         {
                                             hour: "2-digit",
                                             minute: "2-digit",
-                                        }
+                                        },
                                     )}
                                 </td>
 
@@ -161,7 +161,7 @@ export default function ManageDays() {
                                         {
                                             hour: "2-digit",
                                             minute: "2-digit",
-                                        }
+                                        },
                                     )}
                                 </td>
 
@@ -171,7 +171,7 @@ export default function ManageDays() {
                                         {
                                             hour: "2-digit",
                                             minute: "2-digit",
-                                        }
+                                        },
                                     )}
                                 </td>
 
@@ -182,7 +182,7 @@ export default function ManageDays() {
                                               {
                                                   hour: "2-digit",
                                                   minute: "2-digit",
-                                              }
+                                              },
                                           )
                                         : "N/A"}
                                 </td>
@@ -192,7 +192,7 @@ export default function ManageDays() {
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             router.push(
-                                                `/manage-days/edit/${day._id}`
+                                                `/manage-days/edit/${day._id}`,
                                             );
                                         }}
                                     >

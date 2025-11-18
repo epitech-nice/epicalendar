@@ -1,9 +1,12 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import Loading from "@/components/loading";
+import { ProfileService } from "@/services/profileService";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext";
+import { Account } from "@/services/accountsService";
 import EditAccount from "@/components/editAccount";
 import { Account } from "@/services/accountsService";
 import { useCallback, useEffect, useState } from "react";
@@ -25,7 +28,7 @@ export default function ProfileEdit() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the account."
+                    : "An error occurred while fetching the account.",
             );
         }
     }, []);

@@ -1,11 +1,11 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { DaysService, Day } from "@/services/daysService";
+import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import Loading from "@/components/loading";
-import { useAuth } from "@/contexts/authContext";
-import { useParams, useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { DaysService, Day } from "@/services/daysService";
 import { AccountsService } from "@/services/accountsService";
 
 export default function ManageDaysDisplayId() {
@@ -40,7 +40,7 @@ export default function ManageDaysDisplayId() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the day."
+                    : "An error occurred while fetching the day.",
             );
         }
     }, [id]);
@@ -50,7 +50,7 @@ export default function ManageDaysDisplayId() {
 
         if (
             !confirm(
-                "Are you sure you want to delete this day? This action cannot be undone."
+                "Are you sure you want to delete this day? This action cannot be undone.",
             )
         ) {
             return;
@@ -63,7 +63,7 @@ export default function ManageDaysDisplayId() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while deleting the day."
+                    : "An error occurred while deleting the day.",
             );
         }
     };

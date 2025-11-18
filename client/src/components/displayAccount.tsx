@@ -23,7 +23,7 @@ export default function DisplayAccount({
 
         if (
             !confirm(
-                "Are you sure you want to delete this account? This action cannot be undone."
+                "Are you sure you want to delete this account? This action cannot be undone.",
             )
         ) {
             return;
@@ -36,7 +36,7 @@ export default function DisplayAccount({
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while deleting the account."
+                    : "An error occurred while deleting the account.",
             );
         }
     };
@@ -98,7 +98,7 @@ export default function DisplayAccount({
                                       year: "numeric",
                                       month: "long",
                                       day: "numeric",
-                                  }
+                                  },
                               )
                             : "unknown date"}
                     </em>

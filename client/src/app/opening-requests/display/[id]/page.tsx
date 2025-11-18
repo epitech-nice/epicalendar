@@ -1,10 +1,12 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import {
     OpeningRequestsService,
     OpeningRequest,
 } from "@/services/openingRequestsService";
-
+import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import Loading from "@/components/loading";
 import { useAuth } from "@/contexts/authContext";
@@ -19,7 +21,7 @@ export default function ManageOpeningRequestsDisplayId() {
     const { user, loading, isAuthenticated } = useAuth();
 
     const [openingRequest, setOpeningRequest] = useState<OpeningRequest | null>(
-        null
+        null,
     );
     const [error, setError] = useState("");
 
@@ -32,7 +34,7 @@ export default function ManageOpeningRequestsDisplayId() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the opening request."
+                    : "An error occurred while fetching the opening request.",
             );
         }
     }, [id]);
@@ -40,12 +42,12 @@ export default function ManageOpeningRequestsDisplayId() {
     const handleDeleteOpeningRequest = async (openingRequestId: string) => {
         console.log(
             "Attempting to delete opening request with ID:",
-            openingRequestId
+            openingRequestId,
         );
 
         if (
             !confirm(
-                "Are you sure you want to delete this opening request? This action cannot be undone."
+                "Are you sure you want to delete this opening request? This action cannot be undone.",
             )
         ) {
             return;
@@ -58,7 +60,7 @@ export default function ManageOpeningRequestsDisplayId() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while deleting the opening request."
+                    : "An error occurred while deleting the opening request.",
             );
         }
     };
@@ -123,7 +125,7 @@ export default function ManageOpeningRequestsDisplayId() {
                             <b>Created at:</b>
                             {openingRequest.created_at
                                 ? new Date(
-                                      openingRequest.created_at
+                                      openingRequest.created_at,
                                   ).toLocaleDateString("fr-FR", {
                                       year: "numeric",
                                       month: "long",
@@ -157,7 +159,7 @@ export default function ManageOpeningRequestsDisplayId() {
                         <button
                             onClick={() =>
                                 router.push(
-                                    `/opening-requests/edit/${openingRequest?._id}`
+                                    `/opening-requests/edit/${openingRequest?._id}`,
                                 )
                             }
                         >
@@ -182,7 +184,7 @@ export default function ManageOpeningRequestsDisplayId() {
                               {
                                   hour: "2-digit",
                                   minute: "2-digit",
-                              }
+                              },
                           )
                         : "Not set"}
                     <b>Campus closes at:</b>
@@ -192,7 +194,7 @@ export default function ManageOpeningRequestsDisplayId() {
                               {
                                   hour: "2-digit",
                                   minute: "2-digit",
-                              }
+                              },
                           )
                         : "Not set"}
                 </div>

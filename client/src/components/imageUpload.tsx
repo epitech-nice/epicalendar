@@ -31,14 +31,14 @@ export default function ImageUpload({
                 setPreview(response.imageUrl);
             } else {
                 throw new Error(
-                    response.message || "An error occurred during upload."
+                    response.message || "An error occurred during upload.",
                 );
             }
         } catch (err) {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred during upload."
+                    : "An error occurred during upload.",
             );
             setPreview(currentImage);
         }

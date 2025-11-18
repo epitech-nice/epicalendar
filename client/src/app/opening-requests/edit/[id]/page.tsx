@@ -1,11 +1,13 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import {
     OpeningRequest,
     OpeningRequestsService,
     OpeningRequestUpdate,
 } from "@/services/openingRequestsService";
-
+import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import DatePicker from "react-datepicker";
 import Loading from "@/components/loading";
@@ -22,7 +24,7 @@ export default function ManageOpeningRequestsEditId() {
     const { user, loading, isAuthenticated } = useAuth();
 
     const [openingRequest, setOpeningRequest] = useState<OpeningRequest | null>(
-        null
+        null,
     );
     const [formData, setFormData] = useState<OpeningRequestUpdate | null>(null);
     const [responseLoading, setResponseLoading] = useState(false);
@@ -50,13 +52,13 @@ export default function ManageOpeningRequestsEditId() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the opening request."
+                    : "An error occurred while fetching the opening request.",
             );
         }
     }, [formData, id]);
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const { name, value } = e.target;
 
@@ -68,7 +70,7 @@ export default function ManageOpeningRequestsEditId() {
 
     const handleDateChange = (
         name: keyof OpeningRequest,
-        value: Date | null
+        value: Date | null,
     ) => {
         if (!value) return;
 
@@ -100,10 +102,10 @@ export default function ManageOpeningRequestsEditId() {
                 newValue !== "" &&
                 (!isDate ? newValue !== originalValue : !areDatesEqual)
             ) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                finalFormData[key as keyof OpeningRequestUpdate] =
-                    newValue as OpeningRequestUpdate[typeof key];
+                // Use a controlled any cast here to satisfy TypeScript's indexed-access typing
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (finalFormData as any)[key as keyof OpeningRequestUpdate] =
+                    newValue;
             }
         }
 
@@ -111,14 +113,14 @@ export default function ManageOpeningRequestsEditId() {
             //console.log(finalFormData);
             await OpeningRequestsService.updateOpeningRequest(
                 id,
-                finalFormData
+                finalFormData,
             );
             router.push("/opening-requests");
         } catch (err: unknown) {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while updating the opening request."
+                    : "An error occurred while updating the opening request.",
             );
         } finally {
             setResponseLoading(false);
@@ -165,7 +167,7 @@ export default function ManageOpeningRequestsEditId() {
                         <b>Created at:</b>
                         {openingRequest.created_at
                             ? new Date(
-                                  openingRequest.created_at
+                                  openingRequest.created_at,
                               ).toLocaleDateString("fr-FR", {
                                   year: "numeric",
                                   month: "long",

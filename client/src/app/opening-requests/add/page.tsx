@@ -1,11 +1,14 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext";
 import {
     OpeningRequest,
     OpeningRequestsService,
 } from "@/services/openingRequestsService";
-
-import Link from "next/link";
+import Loading from "@/components/loading";
 import DatePicker from "react-datepicker";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
@@ -31,7 +34,7 @@ export default function ManageOpeningRequestsAdd() {
     const [error, setError] = useState("");
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const { name, value } = e.target;
 
@@ -43,7 +46,7 @@ export default function ManageOpeningRequestsAdd() {
 
     const handleDateChange = (
         name: keyof OpeningRequest,
-        value: Date | null
+        value: Date | null,
     ) => {
         if (!value) return;
 
@@ -65,7 +68,7 @@ export default function ManageOpeningRequestsAdd() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while adding the opening request."
+                    : "An error occurred while adding the opening request.",
             );
         } finally {
             setResponseLoading(false);

@@ -1,11 +1,9 @@
 @font-face {
-    font-family: 'Nasalization';
-    src: url('/nasalization.otf') format('opentype');
+    font-family: "Nasalization";
+    src: url("/nasalization.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
 }
-
-
 
 /* Header */
 
@@ -38,8 +36,6 @@ header {
     }
 }
 
-
-
 /* Title and logo */
 
 .home-link {
@@ -58,12 +54,11 @@ header {
 .title {
     margin-left: 0.25rem;
 
-    font-family: 'Nasalization', sans-serif;
+    font-family: "Nasalization", sans-serif;
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--color-epitech);
 }
-
 
 /* Navigation (desktop) */
 
@@ -105,8 +100,6 @@ nav > * + * {
     justify-content: flex-end;
 }
 
-
-
 /* Navigation (mobile) */
 
 @media (max-width: 1200px) {
@@ -130,21 +123,25 @@ nav > * + * {
         opacity: 0;
         transform: translateY(0);
         pointer-events: none;
-        transition: none
+        transition: none;
     }
 
     .menu-container.open {
         opacity: 1;
         transform: translateY(0.5rem);
         pointer-events: auto;
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transition:
+            opacity 0.3s ease,
+            transform 0.3s ease;
     }
 
     .menu-container.closing {
         opacity: 0;
         transform: translateY(0);
         pointer-events: none;
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transition:
+            opacity 0.3s ease,
+            transform 0.3s ease;
     }
 
     .menu-section {
@@ -163,8 +160,6 @@ nav > * + * {
         margin-left: 0;
     }
 }
-
-
 
 /* Clickable */
 
@@ -186,7 +181,7 @@ nav > * + * {
     transition-property: color;
     transition-duration: 500ms;
 
-    border-radius: 1.0rem;
+    border-radius: 1rem;
     border: none;
 
     font-size: medium;

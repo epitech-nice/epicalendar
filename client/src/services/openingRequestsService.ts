@@ -70,7 +70,7 @@ export const OpeningRequestsService = {
 
     async updateOpeningRequest(
         id: string,
-        dataToUpdate: OpeningRequestUpdate
+        dataToUpdate: OpeningRequestUpdate,
     ): Promise<OpeningRequest> {
         try {
             return (await api.put(`/opening-requests/${id}`, dataToUpdate))

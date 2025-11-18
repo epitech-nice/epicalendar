@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/authContext";
 
@@ -44,7 +44,7 @@ export default function Register() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred during registration."
+                    : "An error occurred during registration.",
             );
         } finally {
             setResponseLoading(false);

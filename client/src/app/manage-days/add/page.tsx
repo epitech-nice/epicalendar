@@ -1,12 +1,12 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import DatePicker from "react-datepicker";
-import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/authContext";
-import { useCallback, useEffect, useState } from "react";
 import { Day, DaysService } from "@/services/daysService";
+import Loading from "@/components/loading";
+import DatePicker from "react-datepicker";
 import { Account, AccountsService } from "@/services/accountsService";
 
 export default function ManageDaysAdd() {
@@ -35,7 +35,7 @@ export default function ManageDaysAdd() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the aers."
+                    : "An error occurred while fetching the aers.",
             );
         }
     }, []);
@@ -47,7 +47,7 @@ export default function ManageDaysAdd() {
     }
 
     const handlePreset = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const selected = e.target.value;
         setPreset(selected);
@@ -84,7 +84,7 @@ export default function ManageDaysAdd() {
     };
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const { name, value } = e.target;
 
@@ -104,7 +104,7 @@ export default function ManageDaysAdd() {
     };
 
     const handleAerChange = (
-        e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -149,7 +149,7 @@ export default function ManageDaysAdd() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while adding the day."
+                    : "An error occurred while adding the day.",
             );
         } finally {
             setResponseLoading(false);

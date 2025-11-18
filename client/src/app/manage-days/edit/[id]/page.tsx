@@ -1,12 +1,11 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { DaysService, Day, DayUpdate } from "@/services/daysService";
+import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import DatePicker from "react-datepicker";
-import Loading from "@/components/loading";
-import { useAuth } from "@/contexts/authContext";
-import { useParams, useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { DaysService, Day, DayUpdate } from "@/services/daysService";
 import { Account, AccountsService } from "@/services/accountsService";
 
 export default function ManageDaysEditId() {
@@ -31,7 +30,7 @@ export default function ManageDaysEditId() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the aers."
+                    : "An error occurred while fetching the aers.",
             );
         }
     }, []);
@@ -63,7 +62,7 @@ export default function ManageDaysEditId() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the day."
+                    : "An error occurred while fetching the day.",
             );
         }
     }, [formData, id]);
@@ -75,7 +74,7 @@ export default function ManageDaysEditId() {
     }
 
     const handlePreset = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const selected = e.target.value;
         setPreset(selected);
@@ -112,7 +111,7 @@ export default function ManageDaysEditId() {
     };
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const { name, value } = e.target;
 
@@ -132,7 +131,7 @@ export default function ManageDaysEditId() {
     };
 
     const handleAerChange = (
-        e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -170,25 +169,35 @@ export default function ManageDaysEditId() {
         setResponseLoading(true);
         setError("");
 
+        if (!formData) {
+            setError("No form data to submit.");
+            setResponseLoading(false);
+            return;
+        }
+
         const finalFormData: DayUpdate = {};
         for (const key in formData) {
-            const originalValue = day ? day[key as keyof Day] : undefined;
-            const newValue = formData[key as keyof DayUpdate];
+            const k = key as keyof DayUpdate;
+            // avoid using `any` to satisfy ESLint rule
+            const originalValue = day
+                ? (day as Day)[k as keyof Day]
+                : undefined;
+            const newValue = formData[k];
 
             const isDate =
                 newValue instanceof Date && originalValue instanceof Date;
             const areDatesEqual =
-                isDate && newValue.getTime() === originalValue.getTime();
+                isDate &&
+                newValue.getTime() === (originalValue as Date).getTime();
             if (
                 newValue !== undefined &&
                 newValue !== null &&
                 newValue !== "" &&
                 (!isDate ? newValue !== originalValue : !areDatesEqual)
             ) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                finalFormData[key as keyof DayUpdate] =
-                    newValue as DayUpdate[typeof key];
+                // Use a controlled any cast here to satisfy TypeScript's indexed-access typing
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (finalFormData as any)[k] = newValue;
             }
         }
 
@@ -200,7 +209,7 @@ export default function ManageDaysEditId() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while updating the day."
+                    : "An error occurred while updating the day.",
             );
         } finally {
             setResponseLoading(false);

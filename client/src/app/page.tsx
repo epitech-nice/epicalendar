@@ -1,14 +1,14 @@
 "use client";
 
-import { fr } from "date-fns/locale/fr";
-import { parse } from "date-fns/parse";
-import { getDay } from "date-fns/getDay";
-import { startOfWeek } from "date-fns/startOfWeek";
-import { useCallback, useEffect, useState } from "react";
 import { Day, DaysService } from "@/services/daysService";
-import { format as formatDate, format } from "date-fns/format";
-import { Account, AccountsService } from "@/services/accountsService";
+import { fr } from "date-fns/locale/fr";
 import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
+import { format as formatDate, format } from "date-fns/format";
+import { parse } from "date-fns/parse";
+import { startOfWeek } from "date-fns/startOfWeek";
+import { getDay } from "date-fns/getDay";
+import { useCallback, useEffect, useState } from "react";
+import { Account, AccountsService } from "@/services/accountsService";
 
 interface Event {
     title: string;
@@ -40,10 +40,7 @@ export default function Home() {
         eventTimeRangeFormat: ({ start, end }: { start: Date; end: Date }) =>
             `${formatDate(start, "HH:mm")} – ${formatDate(end, "HH:mm")}`,
         dayRangeHeaderFormat: ({ start, end }: { start: Date; end: Date }) =>
-            `${formatDate(start, "dd/MM/yyyy")} - ${formatDate(
-                end,
-                "dd/MM/yyyy"
-            )}`,
+            `${formatDate(start, "dd/MM/yyyy")} - ${formatDate(end, "dd/MM/yyyy")}`,
     };
 
     const fetchAers = useCallback(async () => {
@@ -54,7 +51,7 @@ export default function Home() {
             setError(
                 err instanceof Error
                     ? err.message
-                    : "An error occurred while fetching the aers."
+                    : "An error occurred while fetching the aers.",
             );
         }
     }, []);
@@ -96,7 +93,7 @@ export default function Home() {
                 setError(
                     error instanceof Error
                         ? error.message
-                        : "An error occurred while fetching day."
+                        : "An error occurred while fetching day.",
                 );
             }
         };
@@ -198,7 +195,7 @@ export default function Home() {
                                         {aer.room || "Not specified"}
                                     </div>
                                 </div>
-                            )
+                            ),
                     )
                 ) : (
                     <p>No AERs assigned.</p>
