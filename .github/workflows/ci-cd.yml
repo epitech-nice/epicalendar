@@ -166,6 +166,15 @@ jobs:
             fi
           fi
 
+          # Delete deployments if they have immutable label issues (one-time fix)
+          if kubectl get deployment server -n epicalendar &>/dev/null; then
+            if kubectl get deployment server -n epicalendar -o jsonpath='{.spec.selector.matchLabels.app\.kubernetes\.io/name}' 2>/dev/null | grep -q "epicalendar"; then
+              echo "Removing deployments with old label selectors..."
+              kubectl delete deployment server client -n epicalendar --ignore-not-found=true
+              sleep 5
+            fi
+          fi
+
           kubectl apply -k kubernetes/
 
       - name: Restart deployments to pull latest images

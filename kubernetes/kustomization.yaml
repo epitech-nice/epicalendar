@@ -14,7 +14,6 @@ resources:
     - client-deployment.yaml
     - ingress.yaml
 
-labels:
-    - pairs:
-          app.kubernetes.io/name: epicalendar
-          app.kubernetes.io/version: "1.0.0"
+# Note: commonLabels/labels are removed because they modify immutable selector fields
+# Labels are already defined in individual deployment manifests
+
