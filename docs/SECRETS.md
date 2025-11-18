@@ -54,7 +54,9 @@ This document explains how to configure all required secrets for the CI/CD pipel
 ### GITHUB_TOKEN
 
 - **Already provided** by GitHub Actions automatically
-- **Used for:** Authenticating to GitHub Container Registry (ghcr.io)
+- **Used for:** 
+  - Authenticating to GitHub Container Registry (ghcr.io) to push images
+  - Creating Kubernetes imagePullSecret to pull private images from ghcr.io
 - No action required
 
 ## Quick Setup Commands
