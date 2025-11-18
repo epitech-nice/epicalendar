@@ -1,8 +1,6 @@
 import api from "./api";
 import axios from "axios";
 
-
-
 export interface Day {
     _id?: string;
     date: Date;
@@ -26,15 +24,14 @@ export interface DayUpdate {
     observations?: string;
 }
 
-
-
 export const DaysService = {
     async getDays(): Promise<Day[]> {
         try {
-            return (await api.get('/days')).data;
+            return (await api.get("/days")).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error fetching days";
+                const message =
+                    error.response?.data?.message || "Error fetching days";
                 throw new Error(message);
             } else {
                 throw new Error("Error fetching days");
@@ -42,13 +39,13 @@ export const DaysService = {
         }
     },
 
-
     async getDayById(id: string): Promise<Day> {
         try {
             return (await api.get(`/days/${id}`)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error fetching day";
+                const message =
+                    error.response?.data?.message || "Error fetching day";
                 throw new Error(message);
             } else {
                 throw new Error("Error fetching day");
@@ -58,10 +55,12 @@ export const DaysService = {
 
     async getCurrentDay(): Promise<Day> {
         try {
-            return (await api.get('/days/current')).data;
+            return (await api.get("/days/current")).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error fetching current day";
+                const message =
+                    error.response?.data?.message ||
+                    "Error fetching current day";
                 throw new Error(message);
             } else {
                 throw new Error("Error fetching current day");
@@ -69,13 +68,13 @@ export const DaysService = {
         }
     },
 
-
     async addDay(day: Day) {
         try {
-            return (await api.post('/days', day)).data;
+            return (await api.post("/days", day)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error adding day";
+                const message =
+                    error.response?.data?.message || "Error adding day";
                 throw new Error(message);
             } else {
                 throw new Error("Error adding day");
@@ -83,13 +82,13 @@ export const DaysService = {
         }
     },
 
-
     async updateDay(id: string, dataToUpdate: DayUpdate): Promise<Day> {
         try {
             return (await api.put(`/days/${id}`, dataToUpdate)).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error updating day";
+                const message =
+                    error.response?.data?.message || "Error updating day";
                 throw new Error(message);
             } else {
                 throw new Error("Error updating day");
@@ -97,17 +96,17 @@ export const DaysService = {
         }
     },
 
-
     async deleteDay(id: string): Promise<void> {
         try {
             await api.delete(`/days/${id}`);
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                const message = error.response?.data?.message || "Error deleting day";
+                const message =
+                    error.response?.data?.message || "Error deleting day";
                 throw new Error(message);
             } else {
                 throw new Error("Error deleting day");
             }
         }
-    }
-}
+    },
+};

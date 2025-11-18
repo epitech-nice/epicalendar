@@ -1,19 +1,24 @@
 "use client";
 
-import {useEffect, useState} from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/authContext';
-import {OpeningRequest, OpeningRequestsService} from '@/services/openingRequestsService';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext";
+import {
+    OpeningRequest,
+    OpeningRequestsService,
+} from "@/services/openingRequestsService";
 import Loading from "@/components/loading";
 import DatePicker from "react-datepicker";
-
-
+import Loading from "@/components/loading";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/authContext";
 
 export default function ManageOpeningRequestsAdd() {
     const router = useRouter();
 
-    const { user, loading, isAuthenticated } = useAuth()
+    const { user, loading, isAuthenticated } = useAuth();
 
     const defaultOpen = new Date(Date.now());
     defaultOpen.setHours(10, 0, 0, 0);
@@ -23,26 +28,29 @@ export default function ManageOpeningRequestsAdd() {
         date: new Date(Date.now()),
         open: defaultOpen,
         close: defaultClose,
-        message: '',
+        message: "",
     });
     const [responseLoading, setResponseLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
-
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    ) => {
         const { name, value } = e.target;
 
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
     };
 
-    const handleDateChange = (name: keyof OpeningRequest, value: Date | null) => {
+    const handleDateChange = (
+        name: keyof OpeningRequest,
+        value: Date | null,
+    ) => {
         if (!value) return;
 
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
@@ -51,19 +59,21 @@ export default function ManageOpeningRequestsAdd() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setResponseLoading(true);
-        setError('');
+        setError("");
 
         try {
             await OpeningRequestsService.addOpeningRequest(formData);
-            router.push('/opening-requests');
+            router.push("/opening-requests");
         } catch (err: unknown) {
-            setError(err instanceof Error ? err.message : 'An error occurred while adding the opening request.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred while adding the opening request.",
+            );
         } finally {
             setResponseLoading(false);
         }
     };
-
-
 
     useEffect(() => {
         if (loading) {
@@ -71,33 +81,26 @@ export default function ManageOpeningRequestsAdd() {
         }
 
         if (!isAuthenticated) {
-            router.push('/login');
+            router.push("/login");
             return;
         }
 
         if (!user) {
-            setError('You do not have permission to access this page.');
+            setError("You do not have permission to access this page.");
             return;
         }
     }, [isAuthenticated, loading, user, router]);
 
-
-
     let content = null;
 
     if (loading) {
-        content = (
-            <Loading/>
-        )
-
+        content = <Loading />;
     } else {
         content = (
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="date">
-                        Date
-                    </label><
-                    DatePicker
+                    <label htmlFor="date">Date</label>
+                    <DatePicker
                         selected={formData.date}
                         onChange={(date) => handleDateChange("date", date)}
                         dateFormat="dd-MM-yyyy"
@@ -106,9 +109,7 @@ export default function ManageOpeningRequestsAdd() {
                 </div>
 
                 <div>
-                    <label htmlFor="open">
-                        Campus opens at
-                    </label>
+                    <label htmlFor="open">Campus opens at</label>
                     <DatePicker
                         selected={formData.open}
                         onChange={(date) => handleDateChange("open", date)}
@@ -120,9 +121,7 @@ export default function ManageOpeningRequestsAdd() {
                         timeFormat="HH:mm"
                         required
                     />
-                    <label htmlFor="close">
-                        Campus closes at
-                    </label>
+                    <label htmlFor="close">Campus closes at</label>
                     <DatePicker
                         selected={formData.close}
                         onChange={(date) => handleDateChange("close", date)}
@@ -137,9 +136,7 @@ export default function ManageOpeningRequestsAdd() {
                 </div>
 
                 <div>
-                    <label htmlFor="message">
-                        Message
-                    </label>
+                    <label htmlFor="message">Message</label>
                     <input
                         type="text"
                         id="message"
@@ -151,40 +148,28 @@ export default function ManageOpeningRequestsAdd() {
                     />
                 </div>
 
-                {error && (
-                    <div>
-                        {error}
-                    </div>
-                )}
+                {error && <div>{error}</div>}
 
-                <button
-                    type="submit"
-                    disabled={responseLoading}
-                >
-                    {responseLoading ? 'Adding...' : 'Add opening request'}
+                <button type="submit" disabled={responseLoading}>
+                    {responseLoading ? "Adding..." : "Add opening request"}
                 </button>
             </form>
         );
     }
 
-
-
     return (
         <main>
-            <h1 className="page-title">
-                Opening requests - Add
-            </h1>
+            <h1 className="page-title">Opening requests - Add</h1>
 
             <div>
                 WARNING: only EPITECH student can formulate an opening request.
-                An opening request must be send 24h before the day to open the campus.
+                An opening request must be send 24h before the day to open the
+                campus.
             </div>
 
             {content}
 
-            <Link href="/opening-requests">
-                ← Back to opening requests
-            </Link>
+            <Link href="/opening-requests">← Back to opening requests</Link>
         </main>
-    )
+    );
 }

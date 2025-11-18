@@ -1,13 +1,16 @@
 "use client";
 
-import {useState, useEffect, useCallback} from 'react';
-import { useAuth } from '@/contexts/authContext';
-import { useRouter } from 'next/navigation';
-import { Account, AccountsService } from '@/services/accountsService';
+import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "@/contexts/authContext";
+import { useRouter } from "next/navigation";
+import { Account, AccountsService } from "@/services/accountsService";
 import Loading from "@/components/loading";
 import Link from "next/link";
-
-
+import Loading from "@/components/loading";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext";
+import { useState, useEffect, useCallback } from "react";
+import { Account, AccountsService } from "@/services/accountsService";
 
 export default function ManageAccounts() {
     const router = useRouter();
@@ -15,22 +18,28 @@ export default function ManageAccounts() {
     const { user, loading, isAuthenticated } = useAuth();
 
     const [accounts, setAccounts] = useState<Account[]>([]);
-    const [error, setError] = useState('');
-
-
+    const [error, setError] = useState("");
 
     const fetchAccounts = useCallback(async () => {
         try {
             setAccounts(await AccountsService.getAccounts());
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred while fetching accounts.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred while fetching accounts.",
+            );
         }
     }, []);
 
     const handleDeleteAccount = async (accountId: string) => {
-        console.log('Attempting to delete account with ID:', accountId);
+        console.log("Attempting to delete account with ID:", accountId);
 
-        if (!confirm('Are you sure you want to delete this account? This action cannot be undone.')) {
+        if (
+            !confirm(
+                "Are you sure you want to delete this account? This action cannot be undone.",
+            )
+        ) {
             return;
         }
 
@@ -38,11 +47,13 @@ export default function ManageAccounts() {
             await AccountsService.deleteAccount(accountId);
             await fetchAccounts();
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred while deleting the account.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred while deleting the account.",
+            );
         }
     };
-
-
 
     useEffect(() => {
         if (loading) {
@@ -50,34 +61,24 @@ export default function ManageAccounts() {
         }
 
         if (!isAuthenticated) {
-            router.push('/login');
+            router.push("/login");
             return;
         }
 
-        if (!user || user.role !== 'admin') {
-            setError('You do not have permission to access this page.');
+        if (!user || user.role !== "admin") {
+            setError("You do not have permission to access this page.");
             return;
         }
 
         fetchAccounts();
     }, [isAuthenticated, loading, user, router, fetchAccounts]);
 
-
-
     let content = null;
 
     if (loading) {
-        content = (
-            <Loading/>
-        )
-
+        content = <Loading />;
     } else if (error) {
-        content = (
-            <div className="error">
-                {error}
-            </div>
-        )
-
+        content = <div className="error">{error}</div>;
     } else {
         content = (
             <div>
@@ -97,25 +98,27 @@ export default function ManageAccounts() {
                     </thead>
 
                     <tbody>
-                        {accounts.map(account => (
-                            <tr key={account._id} onClick={() => router.push(`/manage-accounts/display/${account._id}`)} style={{ cursor: 'pointer' }}>
-                                <td>
-                                    {account.email}
-                                </td>
-                                <td>
-                                    {account.first_name}
-                                </td>
-                                <td>
-                                    {account.last_name}
-                                </td>
-                                <td>
-                                    {account.role.toUpperCase()}
-                                </td>
+                        {accounts.map((account) => (
+                            <tr
+                                key={account._id}
+                                onClick={() =>
+                                    router.push(
+                                        `/manage-accounts/display/${account._id}`,
+                                    )
+                                }
+                                style={{ cursor: "pointer" }}
+                            >
+                                <td>{account.email}</td>
+                                <td>{account.first_name}</td>
+                                <td>{account.last_name}</td>
+                                <td>{account.role.toUpperCase()}</td>
                                 <td>
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            router.push(`/manage-accounts/edit/${account._id}`);
+                                            router.push(
+                                                `/manage-accounts/edit/${account._id}`,
+                                            );
                                         }}
                                     >
                                         Edit
@@ -134,22 +137,16 @@ export default function ManageAccounts() {
                     </tbody>
                 </table>
             </div>
-        )
+        );
     }
-
-
 
     return (
         <main>
-            <h1 className="page-title">
-                Manage accounts
-            </h1>
+            <h1 className="page-title">Manage accounts</h1>
 
             {content}
 
-            <Link href="/">
-                ← Back to home
-            </Link>
+            <Link href="/">← Back to home</Link>
         </main>
     );
 }

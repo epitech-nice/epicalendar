@@ -1,19 +1,20 @@
 "use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import {useState} from "react";
-import { useAuth } from '@/contexts/authContext';
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import { useAuth } from "@/contexts/authContext";
 
 import "./header.css";
-
-
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import { useAuth } from "@/contexts/authContext";
 
 export default function Header() {
     const { isAuthenticated, logout, user } = useAuth();
 
     const [menuState, setMenuState] = useState("closed");
-
 
     const toggleMenu = () => {
         if (menuState === "open") {
@@ -23,7 +24,6 @@ export default function Header() {
             setMenuState("open");
         }
     };
-
 
     return (
         <header>
@@ -51,9 +51,11 @@ export default function Header() {
             {/* Navigation */}
             <div
                 className={`menu-container ${
-                    menuState === "open" ?
-                        "open" : menuState === "closing" ?
-                            "closing" : ""
+                    menuState === "open"
+                        ? "open"
+                        : menuState === "closing"
+                          ? "closing"
+                          : ""
                 }`}
             >
                 {/* Other pages */}
@@ -69,15 +71,21 @@ export default function Header() {
                     </Link>
                     {isAuthenticated && user && (
                         <>
-                            {['aer', 'admin'].includes(user.role) && (
+                            {["aer", "admin"].includes(user.role) && (
                                 <>
-                                    <Link className={"nav-link"} href="/manage-days">
+                                    <Link
+                                        className={"nav-link"}
+                                        href="/manage-days"
+                                    >
                                         Manage days
                                     </Link>
                                 </>
                             )}
-                            {user.role === 'admin' && (
-                                <Link className={"nav-link"} href="/manage-accounts">
+                            {user.role === "admin" && (
+                                <Link
+                                    className={"nav-link"}
+                                    href="/manage-accounts"
+                                >
                                     Manage accounts
                                 </Link>
                             )}
@@ -94,7 +102,12 @@ export default function Header() {
                             <Link className={"nav-link"} href="/login">
                                 Sign In
                             </Link>
-                            <button className={"nav-button"} onClick={() => window.location.href = "/register"}>
+                            <button
+                                className={"nav-button"}
+                                onClick={() =>
+                                    (window.location.href = "/register")
+                                }
+                            >
                                 Sign Up
                             </button>
                         </>
@@ -102,7 +115,9 @@ export default function Header() {
                         <>
                             {user && user.role !== "student" && (
                                 <Link className={"nav-link"} href="/profile">
-                                    {user.first_name} {user.last_name} ({user.role}) {/* TODO: enlever l'affichage du role */}
+                                    {user.first_name} {user.last_name} (
+                                    {user.role}){" "}
+                                    {/* TODO: enlever l'affichage du role */}
                                 </Link>
                             )}
                             {user && user.role === "student" && (

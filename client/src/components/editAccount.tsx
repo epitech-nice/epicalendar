@@ -1,62 +1,79 @@
 "use client";
 
-import {useState} from 'react'
-import { useRouter } from 'next/navigation'
-import { AccountsService, Account, AccountUpdate } from '@/services/accountsService'
-import { useAuth } from '@/contexts/authContext'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+    AccountsService,
+    Account,
+    AccountUpdate,
+} from "@/services/accountsService";
+import { useAuth } from "@/contexts/authContext";
 import ImageUpload from "@/components/imageUpload";
 import { ProfileService } from "@/services/profileService";
 
+export default function EditAccount({
+    account,
+    id,
+    profile,
+}: {
+    account: Account;
+    id?: string;
+    profile?: boolean;
+}) {
+    const router = useRouter();
 
-
-export default function EditAccount({ account, id, profile } : { account: Account, id?: string, profile?: boolean }) {
-    const router = useRouter()
-
-    const { user, loading } = useAuth()
+    const { user, loading } = useAuth();
 
     const [formData, setFormData] = useState<AccountUpdate | null>({
         email: account.email,
         first_name: account.first_name,
         last_name: account.last_name,
-        password: '',
+        password: "",
         role: account.role,
-        description: account.description || '',
-        photo: account.photo || '/default-user.jpg',
-        day: account.day || '',
-        room: account.room || '',
-    })
-    const [responseLoading, setResponseLoading] = useState(false)
-    const [error, setError] = useState('')
+        description: account.description || "",
+        photo: account.photo || "/default-user.jpg",
+        day: account.day || "",
+        room: account.room || "",
+    });
+    const [responseLoading, setResponseLoading] = useState(false);
+    const [error, setError] = useState("");
 
-
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    ) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
     const handleImageUploaded = (imageUrl: string) => {
         setFormData({
             ...formData,
-            photo: imageUrl
+            photo: imageUrl,
         });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setResponseLoading(true);
-        setError('');
+        setError("");
 
         const finalFormData: AccountUpdate = {};
         for (const key in formData) {
-            const originalValue = account ? account[key as keyof Account] : undefined;
+            const originalValue = account
+                ? account[key as keyof Account]
+                : undefined;
             const newValue = formData[key as keyof AccountUpdate];
-            if (newValue !== undefined && newValue !== null && newValue !== '' && newValue !== originalValue) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                finalFormData[key as keyof AccountUpdate] = newValue as AccountUpdate[typeof key];
+            if (
+                newValue !== undefined &&
+                newValue !== null &&
+                newValue !== "" &&
+                newValue !== originalValue
+            ) {
+                // Use a controlled any cast here to satisfy TypeScript's indexed-access typing
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (finalFormData as any)[key as keyof AccountUpdate] = newValue;
             }
         }
         //console.log(formData);
@@ -64,33 +81,30 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
         try {
             if (profile) {
                 await ProfileService.updateProfile(finalFormData);
-                router.push('/profile');
+                router.push("/profile");
             } else if (id) {
                 await AccountsService.updateAccount(id, finalFormData);
-                router.push('/manage-accounts');
+                router.push("/manage-accounts");
             }
-
         } catch (err: unknown) {
-            setError(err instanceof Error ? err.message : 'An error occurred while updating the account.');
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "An error occurred while updating the account.",
+            );
         } finally {
             setResponseLoading(false);
         }
     };
 
-
-
     if (loading) {
         return;
     }
 
-
-
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="email">
-                    Email
-                </label>
+                <label htmlFor="email">Email</label>
                 <input
                     type="email"
                     id="email"
@@ -103,9 +117,7 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
             </div>
 
             <div>
-                <label htmlFor="first_name">
-                    First Name
-                </label>
+                <label htmlFor="first_name">First Name</label>
                 <input
                     type="text"
                     id="first_name"
@@ -115,9 +127,7 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
                     required
                     placeholder="Your first name"
                 />
-                <label htmlFor="last_name">
-                    Last Name
-                </label>
+                <label htmlFor="last_name">Last Name</label>
                 <input
                     type="text"
                     id="last_name"
@@ -130,9 +140,7 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
             </div>
 
             <div>
-                <label htmlFor="password">
-                    Password
-                </label>
+                <label htmlFor="password">Password</label>
                 <input
                     type="password"
                     id="password"
@@ -143,11 +151,9 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
                 />
             </div>
 
-            { user?.role === 'admin' && (
+            {user?.role === "admin" && (
                 <div>
-                    <label htmlFor="role">
-                        Role
-                    </label>
+                    <label htmlFor="role">Role</label>
                     <select
                         id="role"
                         name="role"
@@ -163,18 +169,16 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
             )}
 
             <div>
-                { account?.photo && (
+                {account?.photo && (
                     <ImageUpload
                         onImageUploaded={handleImageUploaded}
-                        currentImage={account?.photo}//formData.photo
+                        currentImage={account?.photo} //formData.photo
                     />
                 )}
             </div>
 
             <div>
-                <label htmlFor="description">
-                    Description
-                </label>
+                <label htmlFor="description">Description</label>
                 <input
                     type="text"
                     id="description"
@@ -186,9 +190,7 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
             </div>
 
             <div>
-                <label htmlFor="day">
-                    Preferred day
-                </label>
+                <label htmlFor="day">Preferred day</label>
                 <select
                     id="day"
                     name="day"
@@ -204,9 +206,7 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
                     <option value="Saturday">Saturday</option>
                     <option value="Sunday">Sunday</option>
                 </select>
-                <label htmlFor="room">
-                    Preferred room
-                </label>
+                <label htmlFor="room">Preferred room</label>
                 <input
                     type="text"
                     id="room"
@@ -217,18 +217,11 @@ export default function EditAccount({ account, id, profile } : { account: Accoun
                 />
             </div>
 
-            {error && (
-                <div>
-                    {error}
-                </div>
-            )}
+            {error && <div>{error}</div>}
 
-            <button
-                type="submit"
-                disabled={responseLoading}
-            >
-                {responseLoading ? 'Updating...' : 'Update account'}
+            <button type="submit" disabled={responseLoading}>
+                {responseLoading ? "Updating..." : "Update account"}
             </button>
         </form>
-    )
+    );
 }
