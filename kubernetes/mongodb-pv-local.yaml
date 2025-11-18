@@ -1,0 +1,19 @@
+# Local PersistentVolume for development/testing
+# WARNING: Only use this for local development or single-node clusters
+# For production, use cloud provider storage classes or a proper storage solution
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: mongodb-pv-local
+spec:
+    capacity:
+        storage: 10Gi
+    accessModes:
+        - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Retain
+    hostPath:
+        path: /data/mongodb
+        type: DirectoryOrCreate
+    # If using local-path-provisioner, comment out hostPath above and use:
+    # storageClassName: local-path

@@ -153,6 +153,63 @@ kubectl rollout restart deployment/client -n epicalendar
 
 ## Troubleshooting
 
+### PersistentVolumeClaim (PVC) Unbound
+
+If you see `pod has unbound immediate PersistentVolumeClaims`:
+
+```bash
+# Check PVC status
+kubectl get pvc -n epicalendar
+
+# Check available storage classes
+kubectl get storageclass
+
+# Describe the PVC to see why it's not binding
+kubectl describe pvc mongodb-pvc -n epicalendar
+```
+
+**Solutions:**
+
+1. **Use the default storage class** (if available)
+   ```bash
+   # Check which storage class is default
+   kubectl get storageclass
+   ```
+   - Remove `storageClassName` from `mongodb-pvc.yaml` to use the default
+   - Or update it to match an available storage class name
+
+2. **For local development/testing (hostPath)**
+   Create a simple PersistentVolume manually:
+   ```yaml
+   apiVersion: v1
+   kind: PersistentVolume
+   metadata:
+     name: mongodb-pv
+   spec:
+     capacity:
+       storage: 10Gi
+     accessModes:
+       - ReadWriteOnce
+     hostPath:
+       path: /data/mongodb
+       type: DirectoryOrCreate
+   ```
+   Apply: `kubectl apply -f mongodb-pv.yaml`
+
+3. **For cloud providers:**
+   - **GKE**: Use `storageClassName: standard-rw` or `premium-rw`
+   - **EKS**: Use `storageClassName: gp2` or `gp3`
+   - **AKS**: Use `storageClassName: managed` or `managed-premium`
+   - **DigitalOcean**: Use `storageClassName: do-block-storage`
+
+4. **Install a storage provisioner** (for bare-metal/self-hosted)
+   ```bash
+   # Example: Local Path Provisioner
+   kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+   
+   # Then update mongodb-pvc.yaml to use 'local-path'
+   ```
+
 ### ImagePullBackOff Error
 
 If you see `ImagePullBackOff` or `ErrImagePull` errors:
@@ -238,7 +295,11 @@ kubectl delete -k kubernetes/
 
 ## Notes
 
-- PersistentVolume storage class is set to `standard`. Adjust based on your cluster.
+- **Storage Requirements**: 
+  - PersistentVolume storage class needs to be configured for your cluster
+  - Default `storageClassName` is commented out in `mongodb-pvc.yaml`
+  - Update based on your cluster provider (see Troubleshooting section)
+  - For testing: consider using hostPath PV or local-path-provisioner
 - Resource limits are conservative. Adjust based on your workload.
 - Health checks are configured for server and client with appropriate delays.
 - TLS is managed by cert-manager with Let's Encrypt.
