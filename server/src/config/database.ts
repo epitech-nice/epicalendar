@@ -13,11 +13,14 @@ export async function connect(): Promise<void> {
         try {
             // Hide credentials when printing the URI for logs
             const safeUri = db_uri.replace(/\/\/(.*@)/, "//***@");
-            console.log(`[Attempt ${attempt}/${maxRetries}] Connecting to MongoDB:`, safeUri);
+            console.log(
+                `[Attempt ${attempt}/${maxRetries}] Connecting to MongoDB:`,
+                safeUri,
+            );
 
-            await mongoose.connect(db_uri, { 
+            await mongoose.connect(db_uri, {
                 dbName: "epicalendar",
-                serverSelectionTimeoutMS: 5000
+                serverSelectionTimeoutMS: 5000,
             });
 
             const actualDb = mongoose.connection?.db?.databaseName;
@@ -25,15 +28,22 @@ export async function connect(): Promise<void> {
             console.log("✅ Connected to MongoDB successfully!");
             return;
         } catch (err) {
-            console.error(`❌ MongoDB connection attempt ${attempt}/${maxRetries} failed:`, err);
+            console.error(
+                `❌ MongoDB connection attempt ${attempt}/${maxRetries} failed:`,
+                err,
+            );
 
             if (attempt === maxRetries) {
-                console.error("Failed to connect to MongoDB after", maxRetries, "attempts");
+                console.error(
+                    "Failed to connect to MongoDB after",
+                    maxRetries,
+                    "attempts",
+                );
                 process.exit(1);
             }
 
-            console.log(`Retrying in ${retryDelay/1000} seconds...`);
-            await new Promise(resolve => setTimeout(resolve, retryDelay));
+            console.log(`Retrying in ${retryDelay / 1000} seconds...`);
+            await new Promise((resolve) => setTimeout(resolve, retryDelay));
         }
     }
 }
