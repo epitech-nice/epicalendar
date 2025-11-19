@@ -39,7 +39,7 @@ export async function connect(): Promise<void> {
                     maxRetries,
                     "attempts",
                 );
-                process.exit(1);
+                throw new Error("MongoDB connection failed after all retries");
             }
 
             console.log(`Retrying in ${retryDelay / 1000} seconds...`);
