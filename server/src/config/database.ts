@@ -6,19 +6,34 @@ dotenv.config();
 const db_uri: string = process.env.MONGODB_URI as string;
 
 export async function connect(): Promise<void> {
-    try {
-        // Hide credentials when printing the URI for logs
-        const safeUri = db_uri.replace(/\/\/(.*@)/, "//***@");
-        console.log("Using MongoDB URI:", safeUri);
+    const maxRetries = 10;
+    const retryDelay = 5000; // 5 seconds
 
-        await mongoose.connect(db_uri, { dbName: "epicalendar" });
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            // Hide credentials when printing the URI for logs
+            const safeUri = db_uri.replace(/\/\/(.*@)/, "//***@");
+            console.log(`[Attempt ${attempt}/${maxRetries}] Connecting to MongoDB:`, safeUri);
 
-        const actualDb = mongoose.connection?.db?.databaseName;
-        console.log("Mongoose connected to database:", actualDb);
+            await mongoose.connect(db_uri, { 
+                dbName: "epicalendar",
+                serverSelectionTimeoutMS: 5000
+            });
 
-        console.log("Connected to MongoDB successfully!");
-    } catch (err) {
-        console.error("Error connecting to MongoDB:", err);
-        process.exit(1);
+            const actualDb = mongoose.connection?.db?.databaseName;
+            console.log("Mongoose connected to database:", actualDb);
+            console.log("✅ Connected to MongoDB successfully!");
+            return;
+        } catch (err) {
+            console.error(`❌ MongoDB connection attempt ${attempt}/${maxRetries} failed:`, err);
+
+            if (attempt === maxRetries) {
+                console.error("Failed to connect to MongoDB after", maxRetries, "attempts");
+                process.exit(1);
+            }
+
+            console.log(`Retrying in ${retryDelay/1000} seconds...`);
+            await new Promise(resolve => setTimeout(resolve, retryDelay));
+        }
     }
 }
