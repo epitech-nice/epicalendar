@@ -111,14 +111,25 @@ app.use((request: Request, response: Response) => {
     response.status(404).json({ message: "Not found." });
 });
 
-/* Start the server */
-database
-    .connect()
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`✅ Server listening on http://localhost:${PORT}/api`);
-        });
-    })
-    .catch((err) => {
+/* Start the server first, then connect to database */
+const server = app.listen(PORT, () => {
+    console.log(`✅ Server listening on http://localhost:${PORT}/api`);
+    console.log("⏳ Connecting to database...");
+
+    // Connect to database after server is up
+    database.connect().catch((err) => {
         console.error("❌ Failed to connect to database:", err);
+        console.error(
+            "⚠️  Server will continue running but database operations will fail",
+        );
     });
+});
+
+// Handle graceful shutdown
+process.on("SIGTERM", () => {
+    console.log("SIGTERM signal received: closing HTTP server");
+    server.close(() => {
+        console.log("HTTP server closed");
+        process.exit(0);
+    });
+});
