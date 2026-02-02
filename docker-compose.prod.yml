@@ -3,10 +3,10 @@ services:
     image: mongo:latest
     container_name: epicalendar-db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo
-      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-mongo}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-mongo}
       MONGO_INITDB_DATABASE: epicalendar_db
-      MONGODB_URI: mongodb://mongo:mongo@localhost:27017/epicalendar?authSource=admin
+      MONGODB_URI: mongodb://${MONGO_ROOT_USERNAME:-mongo}:${MONGO_ROOT_PASSWORD:-mongo}@localhost:27017/epicalendar?authSource=admin
     ports:
       - "27017:27017"
     volumes:
@@ -15,6 +15,12 @@ services:
     networks:
       - app-network
     restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   # Service pour le serveur backend
   server:
@@ -23,7 +29,8 @@ services:
       dockerfile: Dockerfile.prod
     container_name: epicalendar-server
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file: .env.prod
     environment:
       PORT: 5000
