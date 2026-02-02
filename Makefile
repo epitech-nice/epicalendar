@@ -91,7 +91,8 @@ fclean: clean
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
 		@$(DC) -f $(DEV_COMPOSE) down -v; \
 		@$(DC) -f $(PROD_COMPOSE) down -v; \
+		@echo "All volumes removed."; \
 	else \
-		echo "Aborted."; \
+		@echo "Aborted."; \
 	fi
 ###############################################################################
