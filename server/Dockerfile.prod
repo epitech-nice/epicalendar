@@ -1,19 +1,34 @@
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@8.6.0 --activate
+
+# Copy dependency files
+COPY package.json pnpm-lock.yaml* ./
+
+RUN pnpm install --frozen-lockfile
+
+# Copy source and build
+COPY . .
+RUN pnpm run build
+
+# Production stage
 FROM node:22-alpine
 
 WORKDIR /app
 
-# Copy package files first for better layer caching
-COPY package*.json ./
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@8.6.0 --activate
 
-# Install dependencies
-RUN npm install
+# Copy package files and install prod dependencies only
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --prod --frozen-lockfile
 
-# Copy source code
-COPY . .
-
-# Build the application (transpile only, skip type checking)
-RUN npx tsc --noCheck --skipLibCheck && npx tsc-alias
+# Copy built files from builder
+COPY --from=builder /app/dist ./dist
 
 EXPOSE 5000
 
-CMD ["npm", "run", "start"]
+CMD ["pnpm", "run", "start"]
