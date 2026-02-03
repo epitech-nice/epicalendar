@@ -11,8 +11,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
-import Loading from "@/components/loading.components";
-import DisplayAccount from "@/components/display-account.components";
+import Loading from "@/components/loading.component";
+import DisplayAccount from "@/components/display-account.component";
 import { ProfileService } from "@/services/profile.service";
 import { useRouter } from "next/navigation";
 import { Account } from "@/services/accounts.service";

@@ -15,7 +15,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import type { Metadata } from "next";
 import { AuthProvider } from "@/contexts/auth.context";
 import { ThemeProvider } from "@/contexts/theme.context";
-import ClientLayout from "@/components/client-layout.components";
+import ClientLayout from "@/components/client-layout.component";
 
 
 export const metadata: Metadata = {

@@ -9,7 +9,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Header from "@/components/header.components";
+import Header from "@/components/header.component";
 
 export default function ClientLayout({
     children,

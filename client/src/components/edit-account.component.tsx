@@ -17,7 +17,7 @@ import {
     AccountUpdate,
 } from "@/services/accounts.service";
 import { useAuth } from "@/contexts/auth.context";
-import ImageUpload from "@/components/image-upload.components";
+import ImageUpload from "@/components/image-upload.component";
 import { ProfileService } from "@/services/profile.service";
 
 export default function EditAccount({

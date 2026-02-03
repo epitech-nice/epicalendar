@@ -15,7 +15,7 @@ import {
 } from "@/services/opening-requests.service";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
-import Loading from "@/components/loading.components";
+import Loading from "@/components/loading.component";
 import DatePicker from "react-datepicker";
 import Loading from "@/components/loading";
 import { useAuth } from "@/contexts/authContext";

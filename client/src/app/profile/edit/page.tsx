@@ -11,11 +11,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
-import Loading from "@/components/loading.components";
+import Loading from "@/components/loading.component";
 import { ProfileService } from "@/services/profile.service";
 import { useRouter } from "next/navigation";
 import { Account } from "@/services/accounts.service";
-import EditAccount from "@/components/edit-account.components";
+import EditAccount from "@/components/edit-account.component";
 
 export default function ProfileEdit() {
     const router = useRouter();

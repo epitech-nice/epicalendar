@@ -14,7 +14,7 @@ import {
 } from "@/services/opening-requests.service";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
-import Loading from "@/components/loading.components";
+import Loading from "@/components/loading.component";
 
 export default function ManageOpeningRequestsDisplayId() {
     const router = useRouter();

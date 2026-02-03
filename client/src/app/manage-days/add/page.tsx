@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth.context";
 import { Day, DaysService } from "@/services/days.service";
-import Loading from "@/components/loading.components";
+import Loading from "@/components/loading.component";
 import DatePicker from "react-datepicker";
 import { Account, AccountsService } from "@/services/accounts.service";
 
