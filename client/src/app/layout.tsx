@@ -5,19 +5,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/contexts/authContext";
+import { ThemeProvider } from "@/contexts/themeContext";
 import ClientLayout from "@/components/clientLayout";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
     title: "EpiCalendar",
@@ -29,12 +20,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-                <AuthProvider>
-                    <ClientLayout>{children}</ClientLayout>
-                </AuthProvider>
+            <body className={`antialiased`}>
+                <ThemeProvider>
+                    <AuthProvider>
+                        <ClientLayout>{children}</ClientLayout>
+                    </AuthProvider>
+                </ThemeProvider>
             </body>
         </html>
     );
