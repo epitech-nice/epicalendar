@@ -1,11 +1,22 @@
+/**
+ * @file page.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth.context";
 import {
     OpeningRequest,
     OpeningRequestsService,
-} from "@/services/openingRequestsService";
-
-import Link from "next/link";
+} from "@/services/opening-requests.service";
+import Loading from "@/components/loading.components";
 import DatePicker from "react-datepicker";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";

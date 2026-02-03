@@ -1,9 +1,18 @@
+/**
+ * @file page.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/auth.context";
+import { Button, Input, Card, Alert, Container } from "@/components/ui";
 
 export default function Register() {
     const router = useRouter();
@@ -58,81 +67,83 @@ export default function Register() {
     }, [isAuthenticated, router]);
 
     return (
-        <main>
-            <div>
-                <h1 className="page-title">Sign Up</h1>
+        <main className="min-h-screen flex items-center justify-center py-12">
+            <Container maxWidth="sm">
+                <div className="mb-8">
+                    <h1 className="page-title">Sign Up</h1>
+                </div>
 
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="email">Email</label>
-                        <input
+                <Card>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <Input
                             type="email"
-                            id="email"
+                            label="Email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
                             required
                             placeholder="your.email@example.com"
                         />
-                    </div>
 
-                    <div>
-                        <label htmlFor="first_name">First Name</label>
-                        <input
+                        <Input
                             type="text"
-                            id="first_name"
+                            label="First Name"
                             name="first_name"
                             value={formData.first_name}
                             onChange={handleChange}
                             required
                             placeholder="Your first name"
                         />
-                    </div>
 
-                    <div>
-                        <label htmlFor="last_name">Last Name</label>
-                        <input
+                        <Input
                             type="text"
-                            id="last_name"
+                            label="Last Name"
                             name="last_name"
                             value={formData.last_name}
                             onChange={handleChange}
                             required
                             placeholder="Your last name"
                         />
-                    </div>
 
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input
+                        <Input
                             type="password"
-                            id="password"
+                            label="Password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
                             required
                             placeholder="Your password"
                         />
+
+                        {error && (
+                            <Alert type="error">{error}</Alert>
+                        )}
+
+                        <Button
+                            type="submit"
+                            disabled={responseLoading}
+                            className="w-full"
+                        >
+                            {responseLoading ? "Creating..." : "Create account"}
+                        </Button>
+                    </form>
+
+                    <div className="mt-6 text-center text-text-secondary">
+                        <p>
+                            Already have an account?{" "}
+                            <Link href="/login" className="text-primary hover:text-primary-dark font-medium">
+                                Sign in
+                            </Link>
+                        </p>
                     </div>
 
-                    {error && <div>{error}</div>}
-
-                    <button type="submit" disabled={responseLoading}>
-                        {responseLoading ? "Creating..." : "Create account"}
-                    </button>
-                </form>
-
-                <div>
-                    <p>
-                        Already have an account?{" "}
-                        <Link href="/login">Sign in</Link>
-                    </p>
-                </div>
-
-                <div>
-                    <Link href="/">← Back to home</Link>
-                </div>
-            </div>
+                    <div className="mt-4 text-center">
+                        <Link href="/" className="text-text-tertiary hover:text-primary text-sm">
+                            ← Back to home
+                        </Link>
+                    </div>
+                </Card>
+            </Container>
         </main>
     );
 }

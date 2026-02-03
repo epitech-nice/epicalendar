@@ -1,4 +1,12 @@
-import api from "./api";
+/**
+ * @file accounts.service.ts
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
+import api from "./api.service";
 import axios from "axios";
 
 export interface GuardTime {

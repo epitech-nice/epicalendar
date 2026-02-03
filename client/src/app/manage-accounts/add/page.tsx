@@ -1,12 +1,20 @@
+/**
+ * @file page.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
 import Link from "next/link";
-import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth.context";
+import { Account, AccountsService } from "@/services/accounts.service";
+import ImageUpload from "@/components/image-upload.components";
+import Loading from "@/components/loading.component";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/contexts/authContext";
-import ImageUpload from "@/components/imageUpload";
-import { Account, AccountsService } from "@/services/accountsService";
 
 export default function ManageAccountsAdd() {
     const router = useRouter();

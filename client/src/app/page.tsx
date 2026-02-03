@@ -1,6 +1,14 @@
+/**
+ * @file page.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
-import { Day, DaysService } from "@/services/daysService";
+import { Day, DaysService } from "@/services/days.service";
 import { fr } from "date-fns/locale/fr";
 import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
 import { format as formatDate, format } from "date-fns/format";
@@ -8,7 +16,7 @@ import { parse } from "date-fns/parse";
 import { startOfWeek } from "date-fns/startOfWeek";
 import { getDay } from "date-fns/getDay";
 import { useCallback, useEffect, useState } from "react";
-import { Account, AccountsService } from "@/services/accountsService";
+import { Account, AccountsService } from "@/services/accounts.service";
 
 interface Event {
     title: string;

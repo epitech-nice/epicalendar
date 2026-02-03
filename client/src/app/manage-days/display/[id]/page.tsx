@@ -1,12 +1,20 @@
+/**
+ * @file page.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { DaysService, Day } from "@/services/daysService";
-import { useAuth } from "@/contexts/authContext";
+import { DaysService, Day } from "@/services/days.service";
+import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
-import Loading from "@/components/loading";
-import { AccountsService } from "@/services/accountsService";
+import Loading from "@/components/loading.components";
+import { AccountsService } from "@/services/accounts.service";
 
 export default function ManageDaysDisplayId() {
     const router = useRouter();

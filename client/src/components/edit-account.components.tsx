@@ -1,15 +1,24 @@
+/**
+ * @file edit-account.components.tsx
+ * @brief
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import {
     AccountsService,
     Account,
     AccountUpdate,
-} from "@/services/accountsService";
-import { useAuth } from "@/contexts/authContext";
-import ImageUpload from "@/components/imageUpload";
-import { ProfileService } from "@/services/profileService";
+} from "@/services/accounts.service";
+import { useAuth } from "@/contexts/auth.context";
+import ImageUpload from "@/components/image-upload.components";
+import { ProfileService } from "@/services/profile.service";
 
 export default function EditAccount({
     account,

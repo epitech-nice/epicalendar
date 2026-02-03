@@ -1,3 +1,11 @@
+/**
+ * @file page.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
 import { parse } from "date-fns/parse";
@@ -7,7 +15,7 @@ import { format } from "date-fns/format";
 import { useEffect, useState } from "react";
 import { format as formatDate } from "date-fns";
 import { startOfWeek } from "date-fns/startOfWeek";
-import { Day, DaysService } from "@/services/daysService";
+import { Day, DaysService } from "@/services/days.service";
 import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
 
 interface Event {

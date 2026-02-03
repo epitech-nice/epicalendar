@@ -1,3 +1,11 @@
+/**
+ * @file tailwind.config.js
+ * @brief Tailwind CSS configuration file
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     // Use class-based dark mode so we can toggle it at runtime

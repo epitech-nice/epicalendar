@@ -1,3 +1,11 @@
+/**
+ * @file auth.context.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
 import React, {
@@ -7,7 +15,7 @@ import React, {
     useEffect,
     ReactNode,
 } from "react";
-import { AuthService, User } from "@/services/authService";
+import { AuthService, User } from "@/services/auth.service";
 
 interface AuthProviderProps {
     children: ReactNode;

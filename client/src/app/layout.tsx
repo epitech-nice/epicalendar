@@ -1,3 +1,11 @@
+/**
+ * @file layout.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 import "react-datepicker/dist/react-datepicker.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./styles.css";
@@ -5,9 +13,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import type { Metadata } from "next";
-import { AuthProvider } from "@/contexts/authContext";
-import { ThemeProvider } from "@/contexts/themeContext";
-import ClientLayout from "@/components/clientLayout";
+import { AuthProvider } from "@/contexts/auth.context";
+import { ThemeProvider } from "@/contexts/theme.context";
+import ClientLayout from "@/components/client-layout.components";
 
 
 export const metadata: Metadata = {

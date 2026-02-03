@@ -1,5 +1,18 @@
+/**
+ * @file page.tsx
+ * @brief 
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "@/contexts/auth.context";
+import { useRouter } from "next/navigation";
+import { Account, AccountsService } from "@/services/accounts.service";
+import Loading from "@/components/loading.components";
 import Link from "next/link";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
