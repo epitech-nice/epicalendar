@@ -1,7 +1,7 @@
 import { Schema, model, Types } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Day } from "./day";
+import { Day } from "./day.model";
 
 const AccountSchema = new Schema(
     {
