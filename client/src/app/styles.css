@@ -144,7 +144,7 @@
      * PAGE LAYOUT
      * ===================================================== */
     .page-wrapper {
-        @apply min-h-screen bg-background;
+        @apply bg-background;
         padding: 2rem 1rem;
     }
 
@@ -681,6 +681,54 @@
     }
 
     /* =====================================================
+     * HOME PAGE — 2-column layout
+     * ===================================================== */
+    .home-main-grid {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    @media (max-width: 900px) {
+        .home-main-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .home-calendar-col {
+        min-width: 0; /* prevent grid blowout */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .home-calendar-card {
+        padding: 0 !important;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        /* Height is set dynamically via JS as a CSS variable */
+        height: var(--calendar-height, 500px);
+    }
+
+    /* Let rbc fill the flex container fully */
+    .home-calendar-card .rbc-calendar {
+        flex: 1 1 0;
+        height: 100% !important;
+        min-height: 0;
+    }
+
+    .home-calendar-card .rbc-time-view {
+        flex: 1 1 0;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .home-aers-col {
+        min-width: 0;
+    }
+
+    /* =====================================================
      * AER CARDS (home page)
      * ===================================================== */
     .aer-grid {
@@ -688,6 +736,30 @@
         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: 1.25rem;
         margin-top: 1.5rem;
+    }
+
+    /* Vertical stack for sidebar layout */
+    .aer-grid-vertical {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .aer-card-row {
+        @apply card card-hover;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+    }
+
+    .aer-card-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        min-width: 0;
     }
 
     .aer-card {
@@ -900,118 +972,169 @@
     }
 }
 
-/* Calendar Styles - React Big Calendar */
+/* =============================================================
+ * REACT BIG CALENDAR OVERRIDES
+ * Must be outside @layer so they beat the library's unlayered CSS
+ * ============================================================= */
 
-@layer components {
-    /* Line for current time indicator */
-    .rbc-current-time-indicator {
-        background-color: #900000;
-        height: 0.25rem;
-        box-shadow: 0 0 0.5rem #900000;
-        animation: pulse 1.5s infinite ease-in-out;
+/* Hide all-day row */
+.rbc-allday-cell { display: none !important; }
+.rbc-row.rbc-allday { display: none !important; }
+
+/* Whole calendar widget — fill the flex card */
+.rbc-calendar {
+    margin: 0;
+    background-color: rgb(var(--color-surface));
+    color: rgb(var(--color-text-primary));
+    height: 100%;
+    min-height: 0;
+}
+
+/* All major layout panels */
+.rbc-time-view,
+.rbc-time-content,
+.rbc-time-header,
+.rbc-time-header-content,
+.rbc-time-header-gutter,
+.rbc-day-bg,
+.rbc-month-view,
+.rbc-agenda-view {
+    background-color: rgb(var(--color-surface));
+}
+
+/* Every individual time slot cell */
+.rbc-time-slot {
+    background-color: rgb(var(--color-surface));
+    /* Compact slot height so more hours fit */
+    min-height: 20px;
+}
+
+.rbc-timeslot-group {
+    background-color: rgb(var(--color-surface));
+    /* 2 slots per group × 20px */
+    min-height: 40px;
+    border-bottom: 1px solid rgb(var(--color-border));
+}
+
+/* Day column */
+.rbc-day-slot,
+.rbc-day-slot .rbc-time-slot {
+    background-color: rgb(var(--color-surface));
+}
+
+/* Time gutter — slightly different background */
+.rbc-time-gutter {
+    background-color: rgb(var(--color-background-secondary));
+}
+.rbc-time-gutter .rbc-timeslot-group,
+.rbc-time-gutter .rbc-time-slot {
+    background-color: rgb(var(--color-background-secondary));
+}
+.rbc-label {
+    background-color: rgb(var(--color-background-secondary));
+    color: rgb(var(--color-text-tertiary));
+    font-size: 0.7rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    padding: 0 0.4rem;
+    line-height: 1;
+}
+
+/* Today column */
+.rbc-today {
+    background-color: rgb(var(--color-surface));
+}
+
+/* Header row */
+.rbc-header {
+    background-color: rgb(var(--color-background-secondary));
+    border-bottom: 1px solid rgb(var(--color-border));
+    color: rgb(var(--color-text-secondary));
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.4rem 0;
+}
+.rbc-time-header-gutter {
+    background-color: rgb(var(--color-background-secondary));
+    border-bottom: 1px solid rgb(var(--color-border));
+}
+.rbc-time-header-content { border-left: none; }
+.rbc-time-view { border: none; }
+
+/* Borders */
+.rbc-time-content {
+    border-top: 1px solid rgb(var(--color-border));
+}
+.rbc-day-slot .rbc-time-slot {
+    border-top: 1px solid rgb(var(--color-border));
+}
+.rbc-time-content > * + * > * {
+    border-left: 1px solid rgb(var(--color-border));
+}
+
+/* Events */
+.rbc-event:focus { outline: none; box-shadow: none; }
+
+/* Toolbar */
+.rbc-toolbar-label {
+    font-weight: bold;
+    color: rgb(var(--color-text-primary));
+}
+.rbc-btn-group button {
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0.5rem;
+    color: rgb(var(--color-text-primary));
+    background-color: rgb(var(--color-surface));
+}
+.rbc-toolbar button.rbc-active,
+.rbc-toolbar button.rbc-active:focus,
+.rbc-toolbar button.rbc-active:hover,
+.rbc-toolbar button:focus,
+.rbc-toolbar button:hover,
+.rbc-toolbar button:active:focus,
+.rbc-toolbar button:active:hover {
+    background-color: rgb(var(--color-background-secondary));
+    border: 1px solid rgb(var(--color-border));
+    color: rgb(var(--color-text-primary));
+    box-shadow: none;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
     }
-
-    @keyframes pulse {
-        0%,
-        100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.6;
-        }
-    }
-
-    /* Hide all-day events */
-    .rbc-allday-cell {
-        display: none;
-    }
-
-    .rbc-row.rbc-allday {
-        display: none;
-    }
-
-    /* Toolbar styles */
-    .rbc-btn-group button {
-        border: 1px solid var(--foreground);
-        border-radius: 0.5rem;
-    }
-
-    .rbc-toolbar button.rbc-active {
-        background-color: var(--background-item);
-        border: 1px solid var(--foreground);
-    }
-
-    .rbc-toolbar button.rbc-active:focus,
-    .rbc-toolbar button.rbc-active:hover,
-    .rbc-toolbar button:focus,
-    .rbc-toolbar button:hover,
-    .rbc-toolbar button:active:focus,
-    .rbc-toolbar button:active:hover {
-        background-color: var(--background-item);
-        border: 1px solid var(--foreground);
-    }
-
-    .rbc-toolbar-label {
-        font-weight: bold;
-    }
-
-    /* Margin around the calendar */
-    .rbc-calendar {
-        margin: 1rem;
-    }
-
-    /* Events styles */
-    .rbc-event:focus {
-        outline: none;
-        box-shadow: none;
-    }
-
-    /* Current day highlight */
-    .rbc-today {
-        background-color: var(--background-item);
-    }
-
-    .rbc-header.rbc-today {
-        border-top-left-radius: 0.5rem;
-        border-top-right-radius: 0.5rem;
-    }
-
-    /* Borders and lines */
-    .rbc-timeslot-group {
-        border: none;
-    }
-
-    .rbc-time-content {
-        border: none;
-    }
-
-    .rbc-header {
-        border: none;
-    }
-
-    .rbc-time-header-content {
-        border: none;
-    }
-
-    .rbc-time-view {
-        border: none;
-    }
-
-    .rbc-day-slot .rbc-time-slot {
-        border-top: 1px solid var(--foreground);
-    }
-
-    .rbc-time-content > * + * > * {
-        border-left: 1px solid var(--foreground);
-    }
-
-    .rbc-day-slot:last-child {
-        /* Dernière colonne horizontale */
-        border-right: 1px solid var(--foreground);
-    }
-
-    .rbc-day-slot {
-        /* Dernière ligne verticale */
-        border-bottom: 1px solid var(--foreground);
+    50% {
+        opacity: 0.6;
     }
 }
+
+/* Current time indicator */
+.rbc-current-time-indicator {
+    background-color: rgb(var(--color-error));
+    height: 2px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.rbc-timeslot-group {
+    min-height: 1.7rem;
+}
+
+.rbc-btn-group button {
+    border-radius: 0%;
+}
+
+.rbc-header + .rbc-header {
+    border-left: 1px solid rgb(var(--color-border));
+}
+
+.rbc-time-header.rbc-overflowing {
+    border-right: 1px solid rgb(var(--color-border));
+    border-top: 1px solid rgb(var(--color-border))
+}
+
+.rbc-time-header-gutter {
+    border-right: 1px solid rgb(var(--color-border));
+}
+
+/* Calendar Styles - React Big Calendar — moved into main @layer block above */
