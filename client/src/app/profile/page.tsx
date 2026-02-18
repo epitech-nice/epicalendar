@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -73,9 +73,13 @@ export default function Profile() {
                 <div className="page-header">
                     <div className="page-header-left">
                         <h1 className="page-title">My Profile</h1>
-                        <p className="page-subtitle">Your account information</p>
+                        <p className="page-subtitle">
+                            Your account information
+                        </p>
                     </div>
-                    <a href="/" className="back-link">← Back to home</a>
+                    <a href="/" className="back-link">
+                        ← Back to home
+                    </a>
                 </div>
 
                 {content}

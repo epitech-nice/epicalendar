@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { Account, addGuardTime, formatAccountFields } from "@/models/account.model";
+import {
+    Account,
+    addGuardTime,
+    formatAccountFields,
+} from "@/models/account.model";
 
 /**
  * AccountsController - Handles all account-related operations

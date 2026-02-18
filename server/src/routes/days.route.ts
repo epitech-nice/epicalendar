@@ -5,14 +5,8 @@ import { DaysController } from "@/controllers/days.controller";
 const router = Router();
 
 // GET routes
-router.get(
-    "/days",
-    DaysController.getAllDays
-);
-router.get(
-    "/days/current",
-    DaysController.getCurrentDay
-);
+router.get("/days", DaysController.getAllDays);
+router.get("/days/current", DaysController.getCurrentDay);
 router.get(
     "/days/:id",
     authenticateToken,
@@ -21,19 +15,10 @@ router.get(
 );
 
 // POST routes
-router.post(
-    "/days",
-    authenticateToken,
-    authorizeAer,
-    DaysController.createDay,
-);
+router.post("/days", authenticateToken, authorizeAer, DaysController.createDay);
 
 // PUT routes
-router.put(
-    "/days/:id",
-    authenticateToken,
-    DaysController.updateDay
-);
+router.put("/days/:id", authenticateToken, DaysController.updateDay);
 
 // DELETE routes
 router.delete(

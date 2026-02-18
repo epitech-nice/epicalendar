@@ -16,7 +16,7 @@ export function Card({
     const paddings = {
         none: "",
         sm: "p-3",
-        md: "",      /* padding defined in .card CSS class */
+        md: "" /* padding defined in .card CSS class */,
         lg: "p-8",
     };
 

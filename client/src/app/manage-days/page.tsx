@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -107,7 +107,7 @@ export default function ManageDays() {
     } else {
         content = (
             <div>
-                <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ marginBottom: "1.5rem" }}>
                     <button
                         className="btn btn-primary"
                         onClick={() => router.push(`/manage-days/add`)}
@@ -133,62 +133,119 @@ export default function ManageDays() {
                             {days.length === 0 ? (
                                 <tr>
                                     <td colSpan={7}>
-                                        <div className="empty-state">No days found.</div>
-                                    </td>
-                                </tr>
-                            ) : days.map((day) => (
-                                <tr
-                                    key={day._id}
-                                    onClick={() => router.push(`/manage-days/display/${day._id}`)}
-                                >
-                                    <td>
-                                        {new Date(day.date).toLocaleDateString("fr-FR", {
-                                            year: "numeric", month: "2-digit", day: "2-digit",
-                                        })}
-                                    </td>
-                                    <td>
-                                        {day.aers && day.aers.length > 0
-                                            ? day.aers.join(", ")
-                                            : <span style={{ color: 'rgb(var(--color-text-tertiary))' }}>N/A</span>}
-                                    </td>
-                                    <td>
-                                        {new Date(day.open).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
-                                    </td>
-                                    <td>
-                                        {new Date(day.start).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
-                                    </td>
-                                    <td>
-                                        {new Date(day.close).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
-                                    </td>
-                                    <td>
-                                        {day.end
-                                            ? new Date(day.end).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
-                                            : <span style={{ color: 'rgb(var(--color-text-tertiary))' }}>N/A</span>}
-                                    </td>
-                                    <td>
-                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                            <button
-                                                className="btn btn-secondary btn-sm"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    router.push(`/manage-days/edit/${day._id}`);
-                                                }}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleDeleteDay(day._id!);
-                                                }}
-                                            >
-                                                Delete
-                                            </button>
+                                        <div className="empty-state">
+                                            No days found.
                                         </div>
                                     </td>
                                 </tr>
-                            ))}
+                            ) : (
+                                days.map((day) => (
+                                    <tr
+                                        key={day._id}
+                                        onClick={() =>
+                                            router.push(
+                                                `/manage-days/display/${day._id}`,
+                                            )
+                                        }
+                                    >
+                                        <td>
+                                            {new Date(
+                                                day.date,
+                                            ).toLocaleDateString("fr-FR", {
+                                                year: "numeric",
+                                                month: "2-digit",
+                                                day: "2-digit",
+                                            })}
+                                        </td>
+                                        <td>
+                                            {day.aers && day.aers.length > 0 ? (
+                                                day.aers.join(", ")
+                                            ) : (
+                                                <span
+                                                    style={{
+                                                        color: "rgb(var(--color-text-tertiary))",
+                                                    }}
+                                                >
+                                                    N/A
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td>
+                                            {new Date(
+                                                day.open,
+                                            ).toLocaleTimeString("fr-FR", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                        </td>
+                                        <td>
+                                            {new Date(
+                                                day.start,
+                                            ).toLocaleTimeString("fr-FR", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                        </td>
+                                        <td>
+                                            {new Date(
+                                                day.close,
+                                            ).toLocaleTimeString("fr-FR", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                        </td>
+                                        <td>
+                                            {day.end ? (
+                                                new Date(
+                                                    day.end,
+                                                ).toLocaleTimeString("fr-FR", {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                })
+                                            ) : (
+                                                <span
+                                                    style={{
+                                                        color: "rgb(var(--color-text-tertiary))",
+                                                    }}
+                                                >
+                                                    N/A
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    gap: "0.5rem",
+                                                }}
+                                            >
+                                                <button
+                                                    className="btn btn-secondary btn-sm"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        router.push(
+                                                            `/manage-days/edit/${day._id}`,
+                                                        );
+                                                    }}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className="btn btn-danger btn-sm"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleDeleteDay(
+                                                            day._id!,
+                                                        );
+                                                    }}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -202,9 +259,13 @@ export default function ManageDays() {
                 <div className="page-header">
                     <div className="page-header-left">
                         <h1 className="page-title">Manage Days</h1>
-                        <p className="page-subtitle">Campus opening schedule management</p>
+                        <p className="page-subtitle">
+                            Campus opening schedule management
+                        </p>
                     </div>
-                    <a href="/" className="back-link">← Back to home</a>
+                    <a href="/" className="back-link">
+                        ← Back to home
+                    </a>
                 </div>
 
                 {content}

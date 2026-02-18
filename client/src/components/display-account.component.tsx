@@ -58,9 +58,19 @@ export default function DisplayAccount({
     }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div
+            style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+        >
             {/* Top card: avatar + actions */}
-            <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
+            <div
+                className="card"
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1.5rem",
+                    flexWrap: "wrap",
+                }}
+            >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     src={account?.photo || "/default-user.jpg"}
@@ -68,11 +78,17 @@ export default function DisplayAccount({
                     className="profile-avatar-lg"
                 />
                 <div style={{ flex: 1 }}>
-                    <div className="page-title" style={{ fontSize: '1.5rem', marginBottom: '0.25rem' }}>
+                    <div
+                        className="page-title"
+                        style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}
+                    >
                         {account?.first_name} {account?.last_name}
                     </div>
-                    <div style={{ marginBottom: '0.75rem' }}>
-                        <a href={`mailto:${account?.email}`} className="auth-link">
+                    <div style={{ marginBottom: "0.75rem" }}>
+                        <a
+                            href={`mailto:${account?.email}`}
+                            className="auth-link"
+                        >
                             {account?.email}
                         </a>
                     </div>
@@ -80,15 +96,24 @@ export default function DisplayAccount({
                         {account?.role?.toUpperCase() || "NO ROLE"}
                     </span>
                 </div>
-                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <div
+                    style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}
+                >
                     {profile ? (
-                        <button className="btn btn-secondary btn-sm" onClick={() => router.push("/profile/edit")}>
+                        <button
+                            className="btn btn-secondary btn-sm"
+                            onClick={() => router.push("/profile/edit")}
+                        >
                             Edit Profile
                         </button>
                     ) : (
                         <button
                             className="btn btn-secondary btn-sm"
-                            onClick={() => router.push(`/manage-accounts/edit/${account?._id}`)}
+                            onClick={() =>
+                                router.push(
+                                    `/manage-accounts/edit/${account?._id}`,
+                                )
+                            }
                         >
                             Edit
                         </button>
@@ -106,20 +131,37 @@ export default function DisplayAccount({
 
             {/* Info card */}
             <div className="card">
-                <h3 className="section-title" style={{ fontSize: '1rem', marginBottom: '1rem' }}>Account Details</h3>
+                <h3
+                    className="section-title"
+                    style={{ fontSize: "1rem", marginBottom: "1rem" }}
+                >
+                    Account Details
+                </h3>
 
                 {user?.role === "admin" && (
                     <>
                         <div className="info-row">
                             <span className="info-label">ID</span>
-                            <span className="info-value" style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>{account?._id}</span>
+                            <span
+                                className="info-value"
+                                style={{
+                                    fontFamily: "monospace",
+                                    fontSize: "0.8rem",
+                                }}
+                            >
+                                {account?._id}
+                            </span>
                         </div>
                         <div className="info-row">
                             <span className="info-label">Created</span>
                             <span className="info-value">
                                 {account?.created_at
-                                    ? new Date(account.created_at).toLocaleDateString("fr-FR", {
-                                          year: "numeric", month: "long", day: "numeric",
+                                    ? new Date(
+                                          account.created_at,
+                                      ).toLocaleDateString("fr-FR", {
+                                          year: "numeric",
+                                          month: "long",
+                                          day: "numeric",
                                       })
                                     : "Unknown"}
                             </span>
@@ -129,25 +171,36 @@ export default function DisplayAccount({
 
                 <div className="info-row">
                     <span className="info-label">Description</span>
-                    <span className="info-value">{account?.description || "No description provided."}</span>
+                    <span className="info-value">
+                        {account?.description || "No description provided."}
+                    </span>
                 </div>
 
                 <div className="info-row">
                     <span className="info-label">Preferred Day</span>
-                    <span className="info-value">{account?.day || "Not set"}</span>
+                    <span className="info-value">
+                        {account?.day || "Not set"}
+                    </span>
                 </div>
 
                 <div className="info-row">
                     <span className="info-label">Preferred Room</span>
-                    <span className="info-value">{account?.room || "Not set"}</span>
+                    <span className="info-value">
+                        {account?.room || "Not set"}
+                    </span>
                 </div>
             </div>
 
             {/* Guard time */}
             {account?.guard_time && (
                 <div className="card">
-                    <h3 className="section-title" style={{ fontSize: '1rem', marginBottom: '1rem' }}>Guard Time</h3>
-                    <div style={{ overflowX: 'auto' }}>
+                    <h3
+                        className="section-title"
+                        style={{ fontSize: "1rem", marginBottom: "1rem" }}
+                    >
+                        Guard Time
+                    </h3>
+                    <div style={{ overflowX: "auto" }}>
                         <table className="data-table">
                             <thead>
                                 <tr>
@@ -164,13 +217,25 @@ export default function DisplayAccount({
                             <tbody>
                                 <tr>
                                     <td>{account.guard_time.monday || "0h"}</td>
-                                    <td>{account.guard_time.tuesday || "0h"}</td>
-                                    <td>{account.guard_time.wednesday || "0h"}</td>
-                                    <td>{account.guard_time.thursday || "0h"}</td>
+                                    <td>
+                                        {account.guard_time.tuesday || "0h"}
+                                    </td>
+                                    <td>
+                                        {account.guard_time.wednesday || "0h"}
+                                    </td>
+                                    <td>
+                                        {account.guard_time.thursday || "0h"}
+                                    </td>
                                     <td>{account.guard_time.friday || "0h"}</td>
-                                    <td>{account.guard_time.saturday || "0h"}</td>
+                                    <td>
+                                        {account.guard_time.saturday || "0h"}
+                                    </td>
                                     <td>{account.guard_time.sunday || "0h"}</td>
-                                    <td><strong>{account.guard_time.total || "0h"}</strong></td>
+                                    <td>
+                                        <strong>
+                                            {account.guard_time.total || "0h"}
+                                        </strong>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

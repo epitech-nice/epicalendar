@@ -7,7 +7,11 @@
  */
 
 import { Response } from "express";
-import { Account, addGuardTime, formatAccountFields } from "@/models/account.model";
+import {
+    Account,
+    addGuardTime,
+    formatAccountFields,
+} from "@/models/account.model";
 import { AuthenticatedRequest } from "@/middlewares/auth.middleware";
 
 /**
@@ -77,7 +81,9 @@ export class ProfileController {
                 });
 
                 if (existingAccount) {
-                    response.status(409).json({ message: "Email already in use." });
+                    response
+                        .status(409)
+                        .json({ message: "Email already in use." });
                     return;
                 }
             }

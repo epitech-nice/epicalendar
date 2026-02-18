@@ -1,6 +1,6 @@
 /**
  * @file image-upload.components.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -108,7 +108,11 @@ export default function ImageUpload({
                     {uploading ? "Uploading..." : "Choose Image"}
                 </button>
 
-                <button type="button" className="btn btn-ghost btn-sm" onClick={handleReset}>
+                <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={handleReset}
+                >
                     Reset
                 </button>
             </div>

@@ -66,9 +66,11 @@ export default function Login() {
         <main className="auth-page">
             <div className="auth-card">
                 {/* Header */}
-                <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                <div style={{ marginBottom: "2rem", textAlign: "center" }}>
                     <h1 className="auth-title">Sign In</h1>
-                    <p className="auth-subtitle">Access your EpiCalendar account</p>
+                    <p className="auth-subtitle">
+                        Access your EpiCalendar account
+                    </p>
                 </div>
 
                 <form onSubmit={handleSubmit}>
@@ -93,14 +95,16 @@ export default function Login() {
                     />
 
                     {error && (
-                        <Alert type="error" className="mb-4">{error}</Alert>
+                        <Alert type="error" className="mb-4">
+                            {error}
+                        </Alert>
                     )}
 
                     <Button
                         type="submit"
                         disabled={responseLoading}
                         className="btn-full btn-lg"
-                        style={{ marginTop: '0.5rem' }}
+                        style={{ marginTop: "0.5rem" }}
                     >
                         {responseLoading ? "Signing in..." : "Sign In"}
                     </Button>
@@ -114,7 +118,7 @@ export default function Login() {
                         Sign up
                     </Link>
                 </p>
-                <p className="auth-footer-text" style={{ marginTop: '0.5rem' }}>
+                <p className="auth-footer-text" style={{ marginTop: "0.5rem" }}>
                     <Link href="/" className="back-link">
                         ← Back to home
                     </Link>

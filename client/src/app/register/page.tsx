@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -70,9 +70,11 @@ export default function Register() {
         <main className="auth-page">
             <div className="auth-card">
                 {/* Header */}
-                <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                <div style={{ marginBottom: "2rem", textAlign: "center" }}>
                     <h1 className="auth-title">Sign Up</h1>
-                    <p className="auth-subtitle">Create your EpiCalendar account</p>
+                    <p className="auth-subtitle">
+                        Create your EpiCalendar account
+                    </p>
                 </div>
 
                 <form onSubmit={handleSubmit}>
@@ -117,14 +119,16 @@ export default function Register() {
                     />
 
                     {error && (
-                        <Alert type="error" className="mb-4">{error}</Alert>
+                        <Alert type="error" className="mb-4">
+                            {error}
+                        </Alert>
                     )}
 
                     <Button
                         type="submit"
                         disabled={responseLoading}
                         className="btn-full btn-lg"
-                        style={{ marginTop: '0.5rem' }}
+                        style={{ marginTop: "0.5rem" }}
                     >
                         {responseLoading ? "Creating..." : "Create Account"}
                     </Button>
@@ -138,7 +142,7 @@ export default function Register() {
                         Sign in
                     </Link>
                 </p>
-                <p className="auth-footer-text" style={{ marginTop: '0.5rem' }}>
+                <p className="auth-footer-text" style={{ marginTop: "0.5rem" }}>
                     <Link href="/" className="back-link">
                         ← Back to home
                     </Link>

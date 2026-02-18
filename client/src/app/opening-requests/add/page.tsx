@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -107,8 +107,9 @@ export default function ManageOpeningRequestsAdd() {
         content = (
             <form onSubmit={handleSubmit} className="card">
                 <div className="alert-info" style={{ marginBottom: "1.5rem" }}>
-                    <strong>Note:</strong> Only EPITECH students can submit an opening request.
-                    Requests must be sent at least 24h in advance.
+                    <strong>Note:</strong> Only EPITECH students can submit an
+                    opening request. Requests must be sent at least 24h in
+                    advance.
                 </div>
 
                 <div className="form-group">
@@ -153,7 +154,9 @@ export default function ManageOpeningRequestsAdd() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="message" className="form-label">Reason for request</label>
+                    <label htmlFor="message" className="form-label">
+                        Reason for request
+                    </label>
                     <input
                         type="text"
                         id="message"
@@ -169,7 +172,11 @@ export default function ManageOpeningRequestsAdd() {
                 {error && <div className="error-message">{error}</div>}
 
                 <div className="form-actions">
-                    <button type="submit" className="btn btn-primary" disabled={responseLoading}>
+                    <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={responseLoading}
+                    >
                         {responseLoading ? "Submitting..." : "Submit Request"}
                     </button>
                 </div>
@@ -182,7 +189,9 @@ export default function ManageOpeningRequestsAdd() {
             <div className="page-container-md">
                 <div className="page-header">
                     <div className="page-header-left">
-                        <Link href="/opening-requests" className="back-link">← Back to opening requests</Link>
+                        <Link href="/opening-requests" className="back-link">
+                            ← Back to opening requests
+                        </Link>
                         <h1 className="page-title">New Opening Request</h1>
                     </div>
                 </div>

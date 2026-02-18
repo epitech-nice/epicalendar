@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -94,7 +94,9 @@ export default function ManageAccountsAdd() {
             <form onSubmit={handleSubmit} className="card">
                 <div className="form-row-2">
                     <div className="form-group">
-                        <label htmlFor="first_name" className="form-label">First Name</label>
+                        <label htmlFor="first_name" className="form-label">
+                            First Name
+                        </label>
                         <input
                             type="text"
                             id="first_name"
@@ -107,7 +109,9 @@ export default function ManageAccountsAdd() {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="last_name" className="form-label">Last Name</label>
+                        <label htmlFor="last_name" className="form-label">
+                            Last Name
+                        </label>
                         <input
                             type="text"
                             id="last_name"
@@ -122,7 +126,9 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="email" className="form-label">Email</label>
+                    <label htmlFor="email" className="form-label">
+                        Email
+                    </label>
                     <input
                         type="email"
                         id="email"
@@ -136,7 +142,9 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="password" className="form-label">Password</label>
+                    <label htmlFor="password" className="form-label">
+                        Password
+                    </label>
                     <input
                         type="password"
                         id="password"
@@ -150,7 +158,9 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="role" className="form-label">Role</label>
+                    <label htmlFor="role" className="form-label">
+                        Role
+                    </label>
                     <select
                         id="role"
                         name="role"
@@ -175,7 +185,9 @@ export default function ManageAccountsAdd() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="description" className="form-label">Description</label>
+                    <label htmlFor="description" className="form-label">
+                        Description
+                    </label>
                     <input
                         type="text"
                         id="description"
@@ -189,7 +201,9 @@ export default function ManageAccountsAdd() {
 
                 <div className="form-row-2">
                     <div className="form-group">
-                        <label htmlFor="day" className="form-label">Preferred Day</label>
+                        <label htmlFor="day" className="form-label">
+                            Preferred Day
+                        </label>
                         <select
                             id="day"
                             name="day"
@@ -208,7 +222,9 @@ export default function ManageAccountsAdd() {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="room" className="form-label">Preferred Room</label>
+                        <label htmlFor="room" className="form-label">
+                            Preferred Room
+                        </label>
                         <input
                             type="text"
                             id="room"
@@ -224,7 +240,11 @@ export default function ManageAccountsAdd() {
                 {error && <div className="error-message">{error}</div>}
 
                 <div className="form-actions">
-                    <button type="submit" className="btn btn-primary" disabled={responseLoading}>
+                    <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={responseLoading}
+                    >
                         {responseLoading ? "Adding..." : "Add Account"}
                     </button>
                 </div>
@@ -237,7 +257,9 @@ export default function ManageAccountsAdd() {
             <div className="page-container">
                 <div className="page-header">
                     <div className="page-header-left">
-                        <Link href="/manage-accounts" className="back-link">← Back to accounts</Link>
+                        <Link href="/manage-accounts" className="back-link">
+                            ← Back to accounts
+                        </Link>
                         <h1 className="page-title">Add Account</h1>
                     </div>
                 </div>

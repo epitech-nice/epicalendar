@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -164,22 +164,45 @@ export default function ManageOpeningRequestsEditId() {
     } else {
         content = openingRequest ? (
             <form onSubmit={handleSubmit} className="card">
-                <div style={{ marginBottom: "1.25rem", padding: "0.75rem", background: "rgb(var(--color-background-secondary))", borderLeft: "3px solid rgb(var(--color-primary))" }}>
+                <div
+                    style={{
+                        marginBottom: "1.25rem",
+                        padding: "0.75rem",
+                        background: "rgb(var(--color-background-secondary))",
+                        borderLeft: "3px solid rgb(var(--color-primary))",
+                    }}
+                >
                     <div className="info-row">
                         <span className="info-label">ID</span>
-                        <span className="info-value" style={{ fontFamily: "monospace", fontSize: "0.85rem" }}>{openingRequest._id}</span>
+                        <span
+                            className="info-value"
+                            style={{
+                                fontFamily: "monospace",
+                                fontSize: "0.85rem",
+                            }}
+                        >
+                            {openingRequest._id}
+                        </span>
                     </div>
                     <div className="info-row">
                         <span className="info-label">Created at</span>
                         <span className="info-value">
                             {openingRequest.created_at
-                                ? new Date(openingRequest.created_at).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" })
+                                ? new Date(
+                                      openingRequest.created_at,
+                                  ).toLocaleDateString("fr-FR", {
+                                      year: "numeric",
+                                      month: "long",
+                                      day: "numeric",
+                                  })
                                 : "Unknown date"}
                         </span>
                     </div>
                     <div className="info-row">
                         <span className="info-label">Submitted by</span>
-                        <span className="info-value">{openingRequest.account}</span>
+                        <span className="info-value">
+                            {openingRequest.account}
+                        </span>
                     </div>
                 </div>
 
@@ -225,7 +248,9 @@ export default function ManageOpeningRequestsEditId() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="message" className="form-label">Message</label>
+                    <label htmlFor="message" className="form-label">
+                        Message
+                    </label>
                     <input
                         type="text"
                         id="message"
@@ -239,7 +264,9 @@ export default function ManageOpeningRequestsEditId() {
 
                 <div className="form-row-2">
                     <div className="form-group">
-                        <label htmlFor="status" className="form-label">Status</label>
+                        <label htmlFor="status" className="form-label">
+                            Status
+                        </label>
                         <select
                             id="status"
                             name="status"
@@ -254,7 +281,9 @@ export default function ManageOpeningRequestsEditId() {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="response" className="form-label">Response</label>
+                        <label htmlFor="response" className="form-label">
+                            Response
+                        </label>
                         <input
                             type="text"
                             id="response"
@@ -270,7 +299,11 @@ export default function ManageOpeningRequestsEditId() {
                 {error && <div className="error-message">{error}</div>}
 
                 <div className="form-actions">
-                    <button type="submit" className="btn btn-primary" disabled={responseLoading}>
+                    <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={responseLoading}
+                    >
                         {responseLoading ? "Updating..." : "Update Request"}
                     </button>
                 </div>
@@ -283,7 +316,9 @@ export default function ManageOpeningRequestsEditId() {
             <div className="page-container-md">
                 <div className="page-header">
                     <div className="page-header-left">
-                        <Link href="/opening-requests" className="back-link">← Back to opening requests</Link>
+                        <Link href="/opening-requests" className="back-link">
+                            ← Back to opening requests
+                        </Link>
                         <h1 className="page-title">Edit Opening Request</h1>
                     </div>
                 </div>

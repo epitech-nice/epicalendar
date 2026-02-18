@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -84,7 +84,7 @@ export default function ManageAccounts() {
     } else {
         content = (
             <div>
-                <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ marginBottom: "1.5rem" }}>
                     <button
                         className="btn btn-primary"
                         onClick={() => router.push(`/manage-accounts/add`)}
@@ -108,46 +108,63 @@ export default function ManageAccounts() {
                             {accounts.length === 0 ? (
                                 <tr>
                                     <td colSpan={5}>
-                                        <div className="empty-state">No accounts found.</div>
-                                    </td>
-                                </tr>
-                            ) : accounts.map((account) => (
-                                <tr
-                                    key={account._id}
-                                    onClick={() => router.push(`/manage-accounts/display/${account._id}`)}
-                                >
-                                    <td>{account.email}</td>
-                                    <td>{account.first_name}</td>
-                                    <td>{account.last_name}</td>
-                                    <td>
-                                        <span className="badge badge-primary">
-                                            {account.role.toUpperCase()}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                            <button
-                                                className="btn btn-secondary btn-sm"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    router.push(`/manage-accounts/edit/${account._id}`);
-                                                }}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleDeleteAccount(account._id!);
-                                                }}
-                                            >
-                                                Delete
-                                            </button>
+                                        <div className="empty-state">
+                                            No accounts found.
                                         </div>
                                     </td>
                                 </tr>
-                            ))}
+                            ) : (
+                                accounts.map((account) => (
+                                    <tr
+                                        key={account._id}
+                                        onClick={() =>
+                                            router.push(
+                                                `/manage-accounts/display/${account._id}`,
+                                            )
+                                        }
+                                    >
+                                        <td>{account.email}</td>
+                                        <td>{account.first_name}</td>
+                                        <td>{account.last_name}</td>
+                                        <td>
+                                            <span className="badge badge-primary">
+                                                {account.role.toUpperCase()}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    gap: "0.5rem",
+                                                }}
+                                            >
+                                                <button
+                                                    className="btn btn-secondary btn-sm"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        router.push(
+                                                            `/manage-accounts/edit/${account._id}`,
+                                                        );
+                                                    }}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className="btn btn-danger btn-sm"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleDeleteAccount(
+                                                            account._id!,
+                                                        );
+                                                    }}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -161,9 +178,13 @@ export default function ManageAccounts() {
                 <div className="page-header">
                     <div className="page-header-left">
                         <h1 className="page-title">Manage Accounts</h1>
-                        <p className="page-subtitle">Admin — all registered users</p>
+                        <p className="page-subtitle">
+                            Admin — all registered users
+                        </p>
                     </div>
-                    <a href="/" className="back-link">← Back to home</a>
+                    <a href="/" className="back-link">
+                        ← Back to home
+                    </a>
                 </div>
 
                 {content}

@@ -19,9 +19,5 @@ export function Container({
         full: "w-full",
     }[maxWidth];
 
-    return (
-        <div className={`${containerClass} ${className}`}>
-            {children}
-        </div>
-    );
+    return <div className={`${containerClass} ${className}`}>{children}</div>;
 }

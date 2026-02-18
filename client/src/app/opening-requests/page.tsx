@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -104,7 +104,7 @@ export default function ManageOpeningRequests() {
     } else {
         content = (
             <div>
-                <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ marginBottom: "1.5rem" }}>
                     <button
                         className="btn btn-primary"
                         onClick={() => router.push(`/opening-requests/add`)}
@@ -128,66 +128,104 @@ export default function ManageOpeningRequests() {
                         <tbody>
                             {openingRequests.length === 0 ? (
                                 <tr>
-                                    <td colSpan={user?.role !== "student" ? 6 : 5}>
-                                        <div className="empty-state">No opening requests found.</div>
-                                    </td>
-                                </tr>
-                            ) : openingRequests.map((openingRequest) => (
-                                <tr
-                                    key={openingRequest._id}
-                                    onClick={() => router.push(`/opening-requests/display/${openingRequest._id}`)}
-                                >
-                                    <td>
-                                        {new Date(openingRequest.date).toLocaleDateString("fr-FR", {
-                                            year: "numeric", month: "2-digit", day: "2-digit",
-                                        })}
-                                    </td>
-                                    {user?.role !== "student" && (
-                                        <td>{openingRequest.account}</td>
-                                    )}
-                                    <td>
-                                        {new Date(openingRequest.open).toLocaleTimeString("fr-FR", {
-                                            hour: "2-digit", minute: "2-digit",
-                                        })}
-                                    </td>
-                                    <td>
-                                        {new Date(openingRequest.close).toLocaleTimeString("fr-FR", {
-                                            hour: "2-digit", minute: "2-digit",
-                                        })}
-                                    </td>
-                                    <td>
-                                        <span className={`badge ${
-                                            openingRequest.status === "approved" ? "badge-success" :
-                                            openingRequest.status === "rejected" ? "badge-error" :
-                                            "badge-neutral"
-                                        }`}>
-                                            {openingRequest.status?.toUpperCase() || "PENDING"}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                            <button
-                                                className="btn btn-secondary btn-sm"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    router.push(`/opening-requests/edit/${openingRequest._id}`);
-                                                }}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleDeleteOpeningRequests(openingRequest._id!);
-                                                }}
-                                            >
-                                                Delete
-                                            </button>
+                                    <td
+                                        colSpan={
+                                            user?.role !== "student" ? 6 : 5
+                                        }
+                                    >
+                                        <div className="empty-state">
+                                            No opening requests found.
                                         </div>
                                     </td>
                                 </tr>
-                            ))}
+                            ) : (
+                                openingRequests.map((openingRequest) => (
+                                    <tr
+                                        key={openingRequest._id}
+                                        onClick={() =>
+                                            router.push(
+                                                `/opening-requests/display/${openingRequest._id}`,
+                                            )
+                                        }
+                                    >
+                                        <td>
+                                            {new Date(
+                                                openingRequest.date,
+                                            ).toLocaleDateString("fr-FR", {
+                                                year: "numeric",
+                                                month: "2-digit",
+                                                day: "2-digit",
+                                            })}
+                                        </td>
+                                        {user?.role !== "student" && (
+                                            <td>{openingRequest.account}</td>
+                                        )}
+                                        <td>
+                                            {new Date(
+                                                openingRequest.open,
+                                            ).toLocaleTimeString("fr-FR", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                        </td>
+                                        <td>
+                                            {new Date(
+                                                openingRequest.close,
+                                            ).toLocaleTimeString("fr-FR", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                        </td>
+                                        <td>
+                                            <span
+                                                className={`badge ${
+                                                    openingRequest.status ===
+                                                    "approved"
+                                                        ? "badge-success"
+                                                        : openingRequest.status ===
+                                                            "rejected"
+                                                          ? "badge-error"
+                                                          : "badge-neutral"
+                                                }`}
+                                            >
+                                                {openingRequest.status?.toUpperCase() ||
+                                                    "PENDING"}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    gap: "0.5rem",
+                                                }}
+                                            >
+                                                <button
+                                                    className="btn btn-secondary btn-sm"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        router.push(
+                                                            `/opening-requests/edit/${openingRequest._id}`,
+                                                        );
+                                                    }}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className="btn btn-danger btn-sm"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleDeleteOpeningRequests(
+                                                            openingRequest._id!,
+                                                        );
+                                                    }}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -201,9 +239,13 @@ export default function ManageOpeningRequests() {
                 <div className="page-header">
                     <div className="page-header-left">
                         <h1 className="page-title">Opening Requests</h1>
-                        <p className="page-subtitle">Request and manage campus opening hours</p>
+                        <p className="page-subtitle">
+                            Request and manage campus opening hours
+                        </p>
                     </div>
-                    <a href="/" className="back-link">← Back to home</a>
+                    <a href="/" className="back-link">
+                        ← Back to home
+                    </a>
                 </div>
 
                 {content}

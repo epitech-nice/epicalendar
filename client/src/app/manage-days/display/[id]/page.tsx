@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -109,7 +109,14 @@ export default function ManageDaysDisplayId() {
         content = day ? (
             <div>
                 <div className="card" style={{ marginBottom: "1.5rem" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginBottom: "1.25rem",
+                        }}
+                    >
                         <h2 className="section-title" style={{ margin: 0 }}>
                             {new Date(day.date).toLocaleDateString("fr-FR", {
                                 year: "numeric",
@@ -120,11 +127,16 @@ export default function ManageDaysDisplayId() {
                         <div style={{ display: "flex", gap: "0.5rem" }}>
                             <button
                                 className="btn btn-secondary btn-sm"
-                                onClick={() => router.push(`/manage-days/edit/${day?._id}`)}
+                                onClick={() =>
+                                    router.push(`/manage-days/edit/${day?._id}`)
+                                }
                             >
                                 Edit
                             </button>
-                            <button className="btn btn-danger btn-sm" onClick={() => handleDeleteDay(day._id!)}>
+                            <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => handleDeleteDay(day._id!)}
+                            >
                                 Delete
                             </button>
                         </div>
@@ -133,29 +145,67 @@ export default function ManageDaysDisplayId() {
                     <div className="form-row-2">
                         <div>
                             <div className="info-row">
-                                <span className="info-label">Campus opens at</span>
+                                <span className="info-label">
+                                    Campus opens at
+                                </span>
                                 <span className="info-value">
-                                    {day.open ? new Date(day.open).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "Not set"}
+                                    {day.open
+                                        ? new Date(day.open).toLocaleTimeString(
+                                              "fr-FR",
+                                              {
+                                                  hour: "2-digit",
+                                                  minute: "2-digit",
+                                              },
+                                          )
+                                        : "Not set"}
                                 </span>
                             </div>
                             <div className="info-row">
-                                <span className="info-label">Guard starts at</span>
+                                <span className="info-label">
+                                    Guard starts at
+                                </span>
                                 <span className="info-value">
-                                    {day.start ? new Date(day.start).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "Not set"}
+                                    {day.start
+                                        ? new Date(
+                                              day.start,
+                                          ).toLocaleTimeString("fr-FR", {
+                                              hour: "2-digit",
+                                              minute: "2-digit",
+                                          })
+                                        : "Not set"}
                                 </span>
                             </div>
                         </div>
                         <div>
                             <div className="info-row">
-                                <span className="info-label">Campus closes at</span>
+                                <span className="info-label">
+                                    Campus closes at
+                                </span>
                                 <span className="info-value">
-                                    {day.close ? new Date(day.close).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "Not set"}
+                                    {day.close
+                                        ? new Date(
+                                              day.close,
+                                          ).toLocaleTimeString("fr-FR", {
+                                              hour: "2-digit",
+                                              minute: "2-digit",
+                                          })
+                                        : "Not set"}
                                 </span>
                             </div>
                             <div className="info-row">
-                                <span className="info-label">Guard ends at</span>
+                                <span className="info-label">
+                                    Guard ends at
+                                </span>
                                 <span className="info-value">
-                                    {day.end ? new Date(day.end).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "Not set"}
+                                    {day.end
+                                        ? new Date(day.end).toLocaleTimeString(
+                                              "fr-FR",
+                                              {
+                                                  hour: "2-digit",
+                                                  minute: "2-digit",
+                                              },
+                                          )
+                                        : "Not set"}
                                 </span>
                             </div>
                         </div>
@@ -164,7 +214,9 @@ export default function ManageDaysDisplayId() {
                     <div className="info-row" style={{ marginTop: "1rem" }}>
                         <span className="info-label">AERs assigned</span>
                         <span className="info-value">
-                            {day.aers && day.aers.length > 0 ? day.aers.join(", ") : "No AER assigned"}
+                            {day.aers && day.aers.length > 0
+                                ? day.aers.join(", ")
+                                : "No AER assigned"}
                         </span>
                     </div>
 
@@ -178,7 +230,9 @@ export default function ManageDaysDisplayId() {
                     {day.observations && (
                         <div className="info-row">
                             <span className="info-label">Observations</span>
-                            <span className="info-value">{day.observations}</span>
+                            <span className="info-value">
+                                {day.observations}
+                            </span>
                         </div>
                     )}
                 </div>
@@ -191,7 +245,9 @@ export default function ManageDaysDisplayId() {
             <div className="page-container">
                 <div className="page-header">
                     <div className="page-header-left">
-                        <Link href="/manage-days" className="back-link">← Back to days</Link>
+                        <Link href="/manage-days" className="back-link">
+                            ← Back to days
+                        </Link>
                         <h1 className="page-title">Day Details</h1>
                     </div>
                 </div>

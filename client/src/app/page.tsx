@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -125,16 +125,23 @@ export default function Home() {
             <div className="page-container">
                 {/* Campus Status Banner */}
                 {day ? (
-                    <div className={`campus-status-banner ${day.end && new Date(day.end) < new Date(Date.now()) ? "status-closed" : "status-open"}`}>
+                    <div
+                        className={`campus-status-banner ${day.end && new Date(day.end) < new Date(Date.now()) ? "status-closed" : "status-open"}`}
+                    >
                         <div>
-                            <div className="campus-status-label">Campus Status</div>
-                            {day.end && new Date(day.end) < new Date(Date.now()) ? (
+                            <div className="campus-status-label">
+                                Campus Status
+                            </div>
+                            {day.end &&
+                            new Date(day.end) < new Date(Date.now()) ? (
                                 <div className="campus-status-time">
-                                    Closed at {formatDate(new Date(day.end), "HH:mm")}
+                                    Closed at{" "}
+                                    {formatDate(new Date(day.end), "HH:mm")}
                                 </div>
                             ) : (
                                 <div className="campus-status-time">
-                                    Open until {formatDate(new Date(day.close), "HH:mm")}
+                                    Open until{" "}
+                                    {formatDate(new Date(day.close), "HH:mm")}
                                 </div>
                             )}
                         </div>
@@ -142,15 +149,18 @@ export default function Home() {
                 ) : null}
 
                 {day?.message && (
-                    <div className="alert-info" style={{ marginBottom: '1.5rem' }}>
+                    <div
+                        className="alert-info"
+                        style={{ marginBottom: "1.5rem" }}
+                    >
                         {day.message}
                     </div>
                 )}
 
                 {/* Calendar Section */}
-                <div style={{ marginBottom: '2rem' }}>
+                <div style={{ marginBottom: "2rem" }}>
                     <h2 className="section-title">Today&#39;s Schedule</h2>
-                    <div className="card" style={{ padding: '0' }}>
+                    <div className="card" style={{ padding: "0" }}>
                         <Calendar
                             localizer={localizer}
                             events={events}
@@ -175,7 +185,8 @@ export default function Home() {
                                         color: "#ffffff",
                                         border: "none",
                                         padding: "0.5rem 0.75rem",
-                                        fontFamily: "'IBM Plex Sans', sans-serif",
+                                        fontFamily:
+                                            "'IBM Plex Sans', sans-serif",
                                         fontSize: "0.85rem",
                                         fontWeight: 500,
                                     },
@@ -196,22 +207,33 @@ export default function Home() {
                                         <div key={aer._id} className="aer-card">
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img
-                                                src={aer.photo || "/default-user.jpg"}
+                                                src={
+                                                    aer.photo ||
+                                                    "/default-user.jpg"
+                                                }
                                                 alt={`${aer.first_name} ${aer.last_name}`}
                                                 className="profile-avatar"
                                             />
                                             <div>
                                                 <div className="aer-name">
-                                                    {aer.first_name} {aer.last_name}
+                                                    {aer.first_name}{" "}
+                                                    {aer.last_name}
                                                 </div>
-                                                <a href={`mailto:${aer.email}`} className="aer-email">
+                                                <a
+                                                    href={`mailto:${aer.email}`}
+                                                    className="aer-email"
+                                                >
                                                     {aer.email}
                                                 </a>
                                                 {aer.room && (
-                                                    <div className="aer-detail">📍 {aer.room}</div>
+                                                    <div className="aer-detail">
+                                                        📍 {aer.room}
+                                                    </div>
                                                 )}
                                                 {aer.description && (
-                                                    <div className="aer-detail">{aer.description}</div>
+                                                    <div className="aer-detail">
+                                                        {aer.description}
+                                                    </div>
                                                 )}
                                             </div>
                                         </div>

@@ -1,4 +1,3 @@
-
 interface TextareaProps
     extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     label?: string;
@@ -26,9 +25,7 @@ export function Textarea({
                 className={`form-textarea ${error ? "form-input-error" : ""} ${className}`}
                 {...props}
             />
-            {error && (
-                <p className="form-error">{error}</p>
-            )}
+            {error && <p className="form-error">{error}</p>}
         </div>
     );
 }

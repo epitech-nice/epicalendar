@@ -32,9 +32,7 @@ export function Select({
                     </option>
                 ))}
             </select>
-            {error && (
-                <p className="form-error">{error}</p>
-            )}
+            {error && <p className="form-error">{error}</p>}
         </div>
     );
 }

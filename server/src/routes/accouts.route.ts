@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { authenticateToken, authorizeAdmin } from "@/middlewares/auth.middleware";
+import {
+    authenticateToken,
+    authorizeAdmin,
+} from "@/middlewares/auth.middleware";
 import { AccountsController } from "@/controllers/accounts.controller";
 
 const router = Router();
@@ -11,10 +14,7 @@ router.get(
     authorizeAdmin,
     AccountsController.getAllAccounts,
 );
-router.get(
-    "/accounts/aer",
-    AccountsController.getAerAccounts
-);
+router.get("/accounts/aer", AccountsController.getAerAccounts);
 router.get(
     "/accounts/:id",
     authenticateToken,

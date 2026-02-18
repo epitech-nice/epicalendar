@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { Account, formatAccountFields, generateToken } from "@/models/account.model";
+import {
+    Account,
+    formatAccountFields,
+    generateToken,
+} from "@/models/account.model";
 import { AuthenticatedRequest } from "@/middlewares/auth.middleware";
 import bcrypt from "bcrypt";
 
@@ -72,10 +76,7 @@ export class AuthController {
      * @param request - Express request object with user registration data
      * @param response - Express response object
      */
-    static async register(
-        request: Request,
-        response: Response,
-    ): Promise<void> {
+    static async register(request: Request, response: Response): Promise<void> {
         try {
             const { email, first_name, last_name, password } = request.body;
 

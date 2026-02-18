@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -77,7 +77,9 @@ export default function ManageAccountsDisplayId() {
             <div className="page-container">
                 <div className="page-header">
                     <div className="page-header-left">
-                        <Link href="/manage-accounts" className="back-link">← Back to accounts</Link>
+                        <Link href="/manage-accounts" className="back-link">
+                            ← Back to accounts
+                        </Link>
                         <h1 className="page-title">Account Details</h1>
                     </div>
                 </div>

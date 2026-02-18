@@ -1,6 +1,6 @@
 /**
  * @file header.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -79,7 +79,10 @@ export default function Header() {
                                 </Link>
                             )}
                             {user.role === "admin" && (
-                                <Link className="nav-link" href="/manage-accounts">
+                                <Link
+                                    className="nav-link"
+                                    href="/manage-accounts"
+                                >
                                     Manage Accounts
                                 </Link>
                             )}
@@ -95,7 +98,11 @@ export default function Header() {
                         className="theme-toggle"
                         onClick={toggleTheme}
                         aria-label="Toggle theme"
-                        title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                        title={
+                            isDark
+                                ? "Switch to light mode"
+                                : "Switch to dark mode"
+                        }
                     >
                         {isDark ? "☀" : "☾"}
                     </button>
@@ -105,7 +112,10 @@ export default function Header() {
                             <Link className="nav-link" href="/login">
                                 Sign In
                             </Link>
-                            <Link className="nav-button nav-button-primary" href="/register">
+                            <Link
+                                className="nav-button nav-button-primary"
+                                href="/register"
+                            >
                                 Sign Up
                             </Link>
                         </>

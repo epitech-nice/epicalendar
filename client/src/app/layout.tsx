@@ -1,6 +1,6 @@
 /**
  * @file layout.tsx
- * @brief 
+ * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
  * @copyright (c) 2025-2026 EPITECH Nice
@@ -16,7 +16,6 @@ import type { Metadata } from "next";
 import { AuthProvider } from "@/contexts/auth.context";
 import { ThemeProvider } from "@/contexts/theme.context";
 import ClientLayout from "@/components/client-layout.component";
-
 
 export const metadata: Metadata = {
     title: "EpiCalendar",
