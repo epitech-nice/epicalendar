@@ -13,6 +13,7 @@ import { useAuth } from "@/contexts/auth.context";
 import { useRouter } from "next/navigation";
 import { Account, AccountsService } from "@/services/accounts.service";
 import Loading from "@/components/ui/loading.component";
+import Link from "next/link";
 
 export default function ManageAccounts() {
     const router = useRouter();
@@ -182,9 +183,9 @@ export default function ManageAccounts() {
                             Admin — all registered users
                         </p>
                     </div>
-                    <a href="/" className="back-link">
+                    <Link href="/" className="back-link">
                         ← Back to home
-                    </a>
+                    </Link>
                 </div>
 
                 {content}

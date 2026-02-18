@@ -15,6 +15,7 @@ import DisplayAccount from "@/components/display-account.component";
 import { ProfileService } from "@/services/profile.service";
 import { useRouter } from "next/navigation";
 import { Account } from "@/services/accounts.service";
+import Link from "next/link";
 
 export default function Profile() {
     const router = useRouter();
@@ -77,9 +78,9 @@ export default function Profile() {
                             Your account information
                         </p>
                     </div>
-                    <a href="/" className="back-link">
+                    <Link href="/" className="back-link">
                         ← Back to home
-                    </a>
+                    </Link>
                 </div>
 
                 {content}

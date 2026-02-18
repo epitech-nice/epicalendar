@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { Day, DaysService } from "@/services/days.service";
 import Loading from "@/components/ui/loading.component";
 import { AccountsService } from "@/services/accounts.service";
+import Link from "next/link";
 
 export default function ManageDays() {
     const router = useRouter();
@@ -263,9 +264,9 @@ export default function ManageDays() {
                             Campus opening schedule management
                         </p>
                     </div>
-                    <a href="/" className="back-link">
+                    <Link href="/" className="back-link">
                         ← Back to home
-                    </a>
+                    </Link>
                 </div>
 
                 {content}

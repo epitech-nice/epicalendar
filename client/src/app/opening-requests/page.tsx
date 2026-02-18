@@ -16,14 +16,11 @@ import {
     OpeningRequestsService,
 } from "@/services/opening-requests.service";
 import Loading from "@/components/ui/loading.component";
-<<<<<<< HEAD
 import Link from "next/link";
 import Loading from "@/components/loading";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/authContext";
 import { useState, useEffect, useCallback } from "react";
-=======
->>>>>>> d703b80 (REFACTOR: Refactor UI components for improved styling and consistency)
 
 export default function ManageOpeningRequests() {
     const router = useRouter();
@@ -180,7 +177,7 @@ export default function ManageOpeningRequests() {
                                             <span
                                                 className={`badge ${
                                                     openingRequest.status ===
-                                                    "approved"
+                                                    "accepted"
                                                         ? "badge-success"
                                                         : openingRequest.status ===
                                                             "rejected"
@@ -243,9 +240,9 @@ export default function ManageOpeningRequests() {
                             Request and manage campus opening hours
                         </p>
                     </div>
-                    <a href="/" className="back-link">
+                    <Link href="/" className="back-link">
                         ← Back to home
-                    </a>
+                    </Link>
                 </div>
 
                 {content}
