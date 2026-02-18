@@ -12,7 +12,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/contexts/auth.context";
 import { useRouter } from "next/navigation";
 import { Day, DaysService } from "@/services/days.service";
-import Loading from "@/components/loading.component";
+import Loading from "@/components/ui/loading.component";
 import Link from "next/link";
 import { AccountsService } from "@/services/accounts.service";
 

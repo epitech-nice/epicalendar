@@ -13,8 +13,8 @@ import { useParams, useRouter } from "next/navigation";
 import { AccountsService, Account } from "@/services/accounts.service";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
-import Loading from "@/components/loading.component";
-import DisplayAccount from "@/components/display-account.components";
+import Loading from "@/components/ui/loading.component";
+import DisplayAccount from "@/components/display-account.component";
 
 export default function ManageAccountsDisplayId() {
     const router = useRouter();

@@ -13,7 +13,7 @@ import { useParams, useRouter } from "next/navigation";
 import { AccountsService, Account } from "@/services/accounts.service";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
-import Loading from "@/components/loading.component";
+import Loading from "@/components/ui/loading.component";
 import EditAccount from "@/components/edit-account.component";
 
 export default function ManageAccountsEditId() {

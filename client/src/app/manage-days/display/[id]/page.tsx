@@ -13,7 +13,7 @@ import { useParams, useRouter } from "next/navigation";
 import { DaysService, Day } from "@/services/days.service";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
-import Loading from "@/components/loading.component";
+import Loading from "@/components/ui/loading.component";
 import { AccountsService } from "@/services/accounts.service";
 
 export default function ManageDaysDisplayId() {
