@@ -7,12 +7,12 @@ const router = express.Router();
 
 // GET routes
 router.get(
-  "/images",
-  ImagesController.getImages
+    "/images",
+    ImagesController.getImages
 );
 router.get(
-  "/image/:filename",
-  ImagesController.getImageByFilename
+    "/image/:filename",
+    ImagesController.getImageByFilename
 );
 
 // POST routes
