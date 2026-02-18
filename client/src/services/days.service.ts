@@ -61,6 +61,23 @@ export const DaysService = {
         }
     },
 
+    async getAllDays(): Promise<Day[]> {
+        try {
+            const response = (
+                await api.get("/days", { params: { page: 1, limit: 10000 } })
+            ).data as DaysPaginatedResponse;
+            return response.days;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const message =
+                    error.response?.data?.message || "Error fetching days";
+                throw new Error(message);
+            } else {
+                throw new Error("Error fetching days");
+            }
+        }
+    },
+
     async getDayById(id: string): Promise<Day> {
         try {
             return (await api.get(`/days/${id}`)).data;

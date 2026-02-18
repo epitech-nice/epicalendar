@@ -55,7 +55,7 @@ export default function CalendarPage() {
     useEffect(() => {
         const fetchDays = async () => {
             try {
-                const days = await DaysService.getDays();
+                const days = await DaysService.getAllDays();
                 const formattedEvents: Event[] = [];
 
                 for (const day of days) {
@@ -137,6 +137,28 @@ export default function CalendarPage() {
                         startAccessor="start"
                         endAccessor="end"
                         formats={formats}
+                        scrollToTime={(() => {
+                            if (events.length === 0)
+                                return new Date(
+                                    new Date().setHours(7, 0, 0, 0),
+                                );
+                            const earliest = events.reduce(
+                                (min, e) => (e.start < min ? e.start : min),
+                                events[0].start,
+                            );
+                            const scroll = new Date(earliest);
+                            scroll.setHours(
+                                Math.max(0, earliest.getHours() - 1),
+                                0,
+                                0,
+                                0,
+                            );
+                            // Never scroll before 07:00
+                            const floor = new Date(
+                                new Date().setHours(7, 0, 0, 0),
+                            );
+                            return scroll < floor ? floor : scroll;
+                        })()}
                         style={{ height: 600 }}
                         eventPropGetter={(event) => {
                             const backgroundColor =
