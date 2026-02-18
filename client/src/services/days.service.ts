@@ -8,6 +8,7 @@
 
 import api from "./api.service";
 import axios from "axios";
+import { Account } from "./accounts.service";
 
 export interface Day {
     _id?: string;
@@ -16,7 +17,7 @@ export interface Day {
     start: Date;
     close: Date;
     end?: Date;
-    aers?: string[];
+    aers?: (string | Account)[];
     message?: string;
     observations?: string;
 }
@@ -32,10 +33,20 @@ export interface DayUpdate {
     observations?: string;
 }
 
+export interface DaysPaginatedResponse {
+    days: Day[];
+    pagination: {
+        total: number;
+        page: number;
+        limit: number;
+        pages: number;
+    };
+}
+
 export const DaysService = {
-    async getDays(): Promise<Day[]> {
+    async getDays(page: number = 1, limit: number = 20): Promise<DaysPaginatedResponse> {
         try {
-            return (await api.get("/days")).data;
+            return (await api.get("/days", { params: { page, limit } })).data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message =

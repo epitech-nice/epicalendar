@@ -13,7 +13,7 @@ import { useAuth } from "@/contexts/auth.context";
 import { useRouter } from "next/navigation";
 import { Day, DaysService } from "@/services/days.service";
 import Loading from "@/components/ui/loading.component";
-import { AccountsService } from "@/services/accounts.service";
+import { Account } from "@/services/accounts.service";
 import Link from "next/link";
 
 export default function ManageDays() {
@@ -23,38 +23,25 @@ export default function ManageDays() {
 
     const [days, setDays] = useState<Day[]>([]);
     const [error, setError] = useState<string | null>("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [isLoadingDays, setIsLoadingDays] = useState(false);
 
-    const fetchDays = useCallback(async () => {
+    const fetchDays = useCallback(async (page: number = 1) => {
+        setIsLoadingDays(true);
         try {
-            const fetchedDays = await DaysService.getDays();
-            for (const day of fetchedDays) {
-                const aers: string[] = [];
-                for (const aerId of day.aers || []) {
-                    try {
-                        const account = await AccountsService.getAerById(aerId);
-                        if (account) {
-                            aers.push(
-                                `${account.first_name} ${account.last_name}`,
-                            );
-                        } else {
-                            console.warn(`AER with ID ${aerId} not found.`);
-                        }
-                    } catch (err) {
-                        console.error(
-                            `Error fetching AER with ID ${aerId}:`,
-                            err,
-                        );
-                    }
-                }
-                day.aers = aers;
-            }
-            setDays(fetchedDays);
+            const response = await DaysService.getDays(page, 20);
+            setDays(response.days);
+            setCurrentPage(response.pagination.page);
+            setTotalPages(response.pagination.pages);
         } catch (err) {
             setError(
                 err instanceof Error
                     ? err.message
                     : "An error occurred while fetching days.",
             );
+        } finally {
+            setIsLoadingDays(false);
         }
     }, []);
 
@@ -71,7 +58,7 @@ export default function ManageDays() {
 
         try {
             await DaysService.deleteDay(dayId);
-            await fetchDays();
+            await fetchDays(currentPage);
         } catch (err) {
             setError(
                 err instanceof Error
@@ -79,6 +66,16 @@ export default function ManageDays() {
                     : "An error occurred while deleting the day.",
             );
         }
+    };
+
+    const formatAerNames = (aers: (string | Account)[] | undefined): string => {
+        if (!aers || aers.length === 0) return "N/A";
+        return aers
+            .map((aer) => {
+                if (typeof aer === "string") return aer;
+                return `${aer.first_name} ${aer.last_name}`;
+            })
+            .join(", ");
     };
 
     useEffect(() => {
@@ -101,7 +98,7 @@ export default function ManageDays() {
 
     let content = null;
 
-    if (loading) {
+    if (loading || isLoadingDays) {
         content = <Loading />;
     } else if (error) {
         content = <div className="error-message">{error}</div>;
@@ -160,7 +157,7 @@ export default function ManageDays() {
                                         </td>
                                         <td>
                                             {day.aers && day.aers.length > 0 ? (
-                                                day.aers.join(", ")
+                                                formatAerNames(day.aers)
                                             ) : (
                                                 <span
                                                     style={{
@@ -250,6 +247,37 @@ export default function ManageDays() {
                         </tbody>
                     </table>
                 </div>
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            gap: "1rem",
+                            marginTop: "1.5rem",
+                        }}
+                    >
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => fetchDays(currentPage - 1)}
+                            disabled={currentPage === 1 || isLoadingDays}
+                        >
+                            ← Previous
+                        </button>
+                        <span>
+                            Page {currentPage} of {totalPages}
+                        </span>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => fetchDays(currentPage + 1)}
+                            disabled={currentPage === totalPages || isLoadingDays}
+                        >
+                            Next →
+                        </button>
+                    </div>
+                )}
             </div>
         );
     }

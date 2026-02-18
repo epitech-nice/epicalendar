@@ -7,7 +7,7 @@ import { Day } from "@/models/day.model";
  */
 export class DaysController {
     /**
-     * Get all days sorted by date (descending)
+     * Get all days sorted by date (descending) with pagination
      * @param request - Express request object
      * @param response - Express response object
      */
@@ -16,10 +16,31 @@ export class DaysController {
         response: Response,
     ): Promise<void> {
         try {
+            // Pagination parameters
+            const page = parseInt(request.query.page as string) || 1;
+            const limit = parseInt(request.query.limit as string) || 20;
+            const skip = (page - 1) * limit;
+
+            // Get total count for pagination metadata
+            const total = await Day.countDocuments();
+
+            // Fetch days with pagination and populate AERs
             const days = await Day.find()
                 .select("-observations")
-                .sort({ date: -1 });
-            response.json(days);
+                .sort({ date: -1 })
+                .skip(skip)
+                .limit(limit)
+                .populate("aers", "first_name last_name email _id");
+
+            response.json({
+                days,
+                pagination: {
+                    total,
+                    page,
+                    limit,
+                    pages: Math.ceil(total / limit),
+                },
+            });
         } catch (error) {
             console.error("Error fetching days:", error);
             response.status(500).json({ message: `Server error: ${error}` });
