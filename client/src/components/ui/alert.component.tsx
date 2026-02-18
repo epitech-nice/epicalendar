@@ -7,19 +7,15 @@ interface AlertProps {
 }
 
 export function Alert({ children, type = "info", className = "" }: AlertProps) {
-    const types = {
-        success: "bg-status-success-bg text-status-success border-status-success",
-        error: "bg-status-error-bg text-status-error border-status-error",
-        warning:
-            "bg-status-warning-bg text-status-warning border-status-warning",
-        info: "bg-status-info-bg text-status-info border-status-info",
-    };
+    const typeClass = {
+        success: "alert-success",
+        error: "alert-error",
+        warning: "alert-warning",
+        info: "alert-info",
+    }[type];
 
     return (
-        <div
-            className={`px-4 py-3 rounded-lg border ${types[type]} ${className}`}
-            role="alert"
-        >
+        <div className={`${typeClass} ${className}`} role="alert">
             {children}
         </div>
     );

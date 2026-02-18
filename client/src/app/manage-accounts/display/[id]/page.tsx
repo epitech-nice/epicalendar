@@ -67,18 +67,23 @@ export default function ManageAccountsDisplayId() {
     if (loading) {
         content = <Loading />;
     } else if (error) {
-        content = <div className="error">{error}</div>;
+        content = <div className="error-message">{error}</div>;
     } else {
         content = account ? <DisplayAccount account={account} /> : null;
     }
 
     return (
-        <main>
-            <h1 className="page-title">Manage accounts - Display</h1>
+        <div className="page-wrapper">
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <Link href="/manage-accounts" className="back-link">← Back to accounts</Link>
+                        <h1 className="page-title">Account Details</h1>
+                    </div>
+                </div>
 
-            {content}
-
-            <Link href="/manage-accounts">← Back to accounts</Link>
-        </main>
+                {content}
+            </div>
+        </div>
     );
 }

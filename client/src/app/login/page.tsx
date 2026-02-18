@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth.context";
-import { Button, Input, Card, Alert, Container } from "@/components/ui";
+import { Button, Input, Alert } from "@/components/ui";
 
 export default function Login() {
     const router = useRouter();
@@ -63,63 +63,63 @@ export default function Login() {
     }, [isAuthenticated, router]);
 
     return (
-        <main className="min-h-screen flex items-center justify-center py-12">
-            <Container maxWidth="sm">
-                <div className="mb-8">
-                    <h1 className="page-title">Sign In</h1>
+        <main className="auth-page">
+            <div className="auth-card">
+                {/* Header */}
+                <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                    <h1 className="auth-title">Sign In</h1>
+                    <p className="auth-subtitle">Access your EpiCalendar account</p>
                 </div>
 
-                <Card>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <Input
-                            type="email"
-                            label="Email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            placeholder="your.email@example.com"
-                        />
+                <form onSubmit={handleSubmit}>
+                    <Input
+                        type="email"
+                        label="Email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="your.email@epitech.eu"
+                    />
 
-                        <Input
-                            type="password"
-                            label="Password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            placeholder="Your password"
-                        />
+                    <Input
+                        type="password"
+                        label="Password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        placeholder="Your password"
+                    />
 
-                        {error && (
-                            <Alert type="error">{error}</Alert>
-                        )}
+                    {error && (
+                        <Alert type="error" className="mb-4">{error}</Alert>
+                    )}
 
-                        <Button
-                            type="submit"
-                            disabled={responseLoading}
-                            className="w-full"
-                        >
-                            {responseLoading ? "Signing in..." : "Sign in"}
-                        </Button>
-                    </form>
+                    <Button
+                        type="submit"
+                        disabled={responseLoading}
+                        className="btn-full btn-lg"
+                        style={{ marginTop: '0.5rem' }}
+                    >
+                        {responseLoading ? "Signing in..." : "Sign In"}
+                    </Button>
+                </form>
 
-                    <div className="mt-6 text-center text-text-secondary">
-                        <p>
-                            Don&#39;t have an account?{" "}
-                            <Link href="/register" className="text-primary hover:text-primary-dark font-medium">
-                                Sign up
-                            </Link>
-                        </p>
-                    </div>
+                <div className="auth-divider" />
 
-                    <div className="mt-4 text-center">
-                        <Link href="/" className="text-text-tertiary hover:text-primary text-sm">
-                            ← Back to home
-                        </Link>
-                    </div>
-                </Card>
-            </Container>
+                <p className="auth-footer-text">
+                    Don&#39;t have an account?{" "}
+                    <Link href="/register" className="auth-link">
+                        Sign up
+                    </Link>
+                </p>
+                <p className="auth-footer-text" style={{ marginTop: '0.5rem' }}>
+                    <Link href="/" className="back-link">
+                        ← Back to home
+                    </Link>
+                </p>
+            </div>
         </main>
     );
 }

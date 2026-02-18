@@ -34,14 +34,11 @@ export default function Header() {
         <header>
             {/* Title and logo */}
             <Link href="/" className="home-link">
-                {/*<Image
-                    width={32}
-                    height={32}
-                    src="/favicon.ico"
-                    alt="EpiCalendar Logo"
-                    className="logo"
-                />*/}
-                <span className="title">{`{EPICALENDAR}`}</span>
+                <span className="title">
+                    <span className="title-accent">{"{"}</span>
+                    EPICALENDAR
+                    <span className="title-accent">{"}"}</span>
+                </span>
             </Link>
 
             {/* Burger button for mobile */}
@@ -63,46 +60,37 @@ export default function Header() {
                           : ""
                 }`}
             >
-                {/* Other pages */}
+                {/* Main nav links */}
                 <nav className="menu-section nav-center">
-                    <Link className={"nav-link"} href="/calendar">
+                    <Link className="nav-link" href="/calendar">
                         Calendar
                     </Link>
-                    <Link className={"nav-link"} href="/opening-requests">
-                        Opening requests
+                    <Link className="nav-link" href="/opening-requests">
+                        Opening Requests
                     </Link>
-                    <Link className={"nav-link"} href="/stuck">
-                        I&#39;m stuck
+                    <Link className="nav-link" href="/stuck">
+                        I&#39;m Stuck
                     </Link>
                     {isAuthenticated && user && (
                         <>
                             {["aer", "admin"].includes(user.role) && (
-                                <>
-                                    <Link
-                                        className={"nav-link"}
-                                        href="/manage-days"
-                                    >
-                                        Manage days
-                                    </Link>
-                                </>
+                                <Link className="nav-link" href="/manage-days">
+                                    Manage Days
+                                </Link>
                             )}
                             {user.role === "admin" && (
-                                <Link
-                                    className={"nav-link"}
-                                    href="/manage-accounts"
-                                >
-                                    Manage accounts
+                                <Link className="nav-link" href="/manage-accounts">
+                                    Manage Accounts
                                 </Link>
                             )}
                         </>
                     )}
                 </nav>
 
-                <div className="menu-separator"></div>
+                <div className="menu-separator" />
 
-                {/* Connection */}
+                {/* Right side: theme toggle + auth */}
                 <nav className="menu-section nav-right">
-                    {/* Theme Toggle */}
                     <button
                         className="theme-toggle"
                         onClick={toggleTheme}
@@ -114,31 +102,25 @@ export default function Header() {
 
                     {!isAuthenticated ? (
                         <>
-                            <Link className={"nav-link"} href="/login">
+                            <Link className="nav-link" href="/login">
                                 Sign In
                             </Link>
-                            <button
-                                className={"nav-button"}
-                                onClick={() =>
-                                    (window.location.href = "/register")
-                                }
-                            >
+                            <Link className="nav-button nav-button-primary" href="/register">
                                 Sign Up
-                            </button>
+                            </Link>
                         </>
                     ) : (
                         <>
-                            {user && user.role !== "student" && (
-                                <Link className={"nav-link"} href="/profile">
+                            {user && user.role !== "student" ? (
+                                <Link className="nav-user-name" href="/profile">
                                     {user.first_name} {user.last_name}
                                 </Link>
-                            )}
-                            {user && user.role === "student" && (
-                                <span className="text-white/80 font-medium px-3 py-2">
-                                    {user.first_name} {user.last_name}
+                            ) : (
+                                <span className="nav-user-name">
+                                    {user?.first_name} {user?.last_name}
                                 </span>
                             )}
-                            <button className={"nav-button"} onClick={logout}>
+                            <button className="nav-button" onClick={logout}>
                                 Logout
                             </button>
                         </>

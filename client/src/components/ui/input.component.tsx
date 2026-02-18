@@ -13,24 +13,19 @@ export function Input({
     const inputId = id || label?.toLowerCase().replace(/\s+/g, "-");
 
     return (
-        <div className="mb-4">
+        <div className="form-group">
             {label && (
-                <label
-                    htmlFor={inputId}
-                    className="block text-sm font-medium text-text-primary mb-1.5"
-                >
+                <label htmlFor={inputId} className="form-label">
                     {label}
                 </label>
             )}
             <input
                 id={inputId}
-                className={`w-full px-4 py-2.5 rounded-lg bg-input-bg border border-input-border text-input-text
-                    focus:outline-none focus:border-border-focus focus:ring-2 focus:ring-primary/20
-                    transition-all duration-200 ${error ? "border-status-error" : ""} ${className}`}
+                className={`form-input ${error ? "form-input-error" : ""} ${className}`}
                 {...props}
             />
             {error && (
-                <p className="mt-1.5 text-sm text-status-error">{error}</p>
+                <p className="form-error">{error}</p>
             )}
         </div>
     );

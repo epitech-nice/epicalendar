@@ -91,13 +91,43 @@ export default function ManageAccountsAdd() {
         content = <Loading />;
     } else {
         content = (
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email</label>
+            <form onSubmit={handleSubmit} className="card">
+                <div className="form-row-2">
+                    <div className="form-group">
+                        <label htmlFor="first_name" className="form-label">First Name</label>
+                        <input
+                            type="text"
+                            id="first_name"
+                            name="first_name"
+                            className="form-input"
+                            value={formData.first_name}
+                            onChange={handleChange}
+                            required
+                            placeholder="Your first name"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="last_name" className="form-label">Last Name</label>
+                        <input
+                            type="text"
+                            id="last_name"
+                            name="last_name"
+                            className="form-input"
+                            value={formData.last_name}
+                            onChange={handleChange}
+                            required
+                            placeholder="Your last name"
+                        />
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="email" className="form-label">Email</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
+                        className="form-input"
                         value={formData.email}
                         onChange={handleChange}
                         required
@@ -105,35 +135,13 @@ export default function ManageAccountsAdd() {
                     />
                 </div>
 
-                <div>
-                    <label htmlFor="first_name">First Name</label>
-                    <input
-                        type="text"
-                        id="first_name"
-                        name="first_name"
-                        value={formData.first_name}
-                        onChange={handleChange}
-                        required
-                        placeholder="Your first name"
-                    />
-                    <label htmlFor="last_name">Last Name</label>
-                    <input
-                        type="text"
-                        id="last_name"
-                        name="last_name"
-                        value={formData.last_name}
-                        onChange={handleChange}
-                        required
-                        placeholder="Your last name"
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="password">Password</label>
+                <div className="form-group">
+                    <label htmlFor="password" className="form-label">Password</label>
                     <input
                         type="password"
                         id="password"
                         name="password"
+                        className="form-input"
                         value={formData.password}
                         onChange={handleChange}
                         required
@@ -141,11 +149,12 @@ export default function ManageAccountsAdd() {
                     />
                 </div>
 
-                <div>
-                    <label htmlFor="role">Role</label>
+                <div className="form-group">
+                    <label htmlFor="role" className="form-label">Role</label>
                     <select
                         id="role"
                         name="role"
+                        className="form-select"
                         value={formData.role}
                         onChange={handleChange}
                         required
@@ -156,7 +165,7 @@ export default function ManageAccountsAdd() {
                     </select>
                 </div>
 
-                <div>
+                <div className="form-group">
                     {formData.photo && (
                         <ImageUpload
                             onImageUploaded={handleImageUploaded}
@@ -165,62 +174,76 @@ export default function ManageAccountsAdd() {
                     )}
                 </div>
 
-                <div>
-                    <label htmlFor="description">Description</label>
+                <div className="form-group">
+                    <label htmlFor="description" className="form-label">Description</label>
                     <input
                         type="text"
                         id="description"
                         name="description"
+                        className="form-input"
                         value={formData.description}
                         onChange={handleChange}
                         placeholder="A short description of you"
                     />
                 </div>
 
-                <div>
-                    <label htmlFor="day">Preferred day</label>
-                    <select
-                        id="day"
-                        name="day"
-                        value={formData.day}
-                        onChange={handleChange}
-                    >
-                        <option value=""></option>
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
-                        <option value="Saturday">Saturday</option>
-                        <option value="Sunday">Sunday</option>
-                    </select>
-                    <label htmlFor="room">Preferred room</label>
-                    <input
-                        type="text"
-                        id="room"
-                        name="room"
-                        value={formData.room}
-                        onChange={handleChange}
-                        placeholder="Room name"
-                    />
+                <div className="form-row-2">
+                    <div className="form-group">
+                        <label htmlFor="day" className="form-label">Preferred Day</label>
+                        <select
+                            id="day"
+                            name="day"
+                            className="form-select"
+                            value={formData.day}
+                            onChange={handleChange}
+                        >
+                            <option value="">— None —</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="room" className="form-label">Preferred Room</label>
+                        <input
+                            type="text"
+                            id="room"
+                            name="room"
+                            className="form-input"
+                            value={formData.room}
+                            onChange={handleChange}
+                            placeholder="Room name"
+                        />
+                    </div>
                 </div>
 
-                {error && <div>{error}</div>}
+                {error && <div className="error-message">{error}</div>}
 
-                <button type="submit" disabled={responseLoading}>
-                    {responseLoading ? "Adding..." : "Add Account"}
-                </button>
+                <div className="form-actions">
+                    <button type="submit" className="btn btn-primary" disabled={responseLoading}>
+                        {responseLoading ? "Adding..." : "Add Account"}
+                    </button>
+                </div>
             </form>
         );
     }
 
     return (
-        <main>
-            <h1 className="page-title">Manage accounts - Add</h1>
+        <div className="page-wrapper">
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <Link href="/manage-accounts" className="back-link">← Back to accounts</Link>
+                        <h1 className="page-title">Add Account</h1>
+                    </div>
+                </div>
 
-            {content}
-
-            <Link href="/manage-accounts">← Back to accounts</Link>
-        </main>
+                {content}
+            </div>
+        </div>
     );
 }

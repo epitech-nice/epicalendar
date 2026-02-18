@@ -11,16 +11,16 @@ export function Container({
     className = "",
     maxWidth = "lg",
 }: ContainerProps) {
-    const maxWidths = {
-        sm: "max-w-2xl",
-        md: "max-w-4xl",
-        lg: "max-w-6xl",
-        xl: "max-w-7xl",
-        full: "max-w-full",
-    };
+    const containerClass = {
+        sm: "page-container-sm",
+        md: "page-container-md",
+        lg: "page-container",
+        xl: "page-container",
+        full: "w-full",
+    }[maxWidth];
 
     return (
-        <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${maxWidths[maxWidth]} ${className}`}>
+        <div className={`${containerClass} ${className}`}>
             {children}
         </div>
     );

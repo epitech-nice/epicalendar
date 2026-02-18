@@ -54,130 +54,129 @@ export default function DisplayAccount({
     }
 
     if (error) {
-        return <div className="error">{error}</div>;
+        return <div className="error-message">{error}</div>;
     }
 
     return (
-        <div>
-            <div>
-                {/* Je peux pas faire de balise Image next parce que sa pu et qu'il faut autoriser le lien dans le next config */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {/* Top card: avatar + actions */}
+            <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     src={account?.photo || "/default-user.jpg"}
                     alt="User Photo"
+                    className="profile-avatar-lg"
                 />
+                <div style={{ flex: 1 }}>
+                    <div className="page-title" style={{ fontSize: '1.5rem', marginBottom: '0.25rem' }}>
+                        {account?.first_name} {account?.last_name}
+                    </div>
+                    <div style={{ marginBottom: '0.75rem' }}>
+                        <a href={`mailto:${account?.email}`} className="auth-link">
+                            {account?.email}
+                        </a>
+                    </div>
+                    <span className="badge badge-primary">
+                        {account?.role?.toUpperCase() || "NO ROLE"}
+                    </span>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    {profile ? (
+                        <button className="btn btn-secondary btn-sm" onClick={() => router.push("/profile/edit")}>
+                            Edit Profile
+                        </button>
+                    ) : (
+                        <button
+                            className="btn btn-secondary btn-sm"
+                            onClick={() => router.push(`/manage-accounts/edit/${account?._id}`)}
+                        >
+                            Edit
+                        </button>
+                    )}
+                    {account && !profile && (
+                        <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handleDeleteAccount(account._id!)}
+                        >
+                            Delete
+                        </button>
+                    )}
+                </div>
             </div>
 
-            <div>
-                {profile ? (
-                    <button onClick={() => router.push("/profile/edit")}>
-                        Edit
-                    </button>
-                ) : (
-                    <button
-                        onClick={() =>
-                            router.push(`/manage-accounts/edit/${account?._id}`)
-                        }
-                    >
-                        Edit
-                    </button>
+            {/* Info card */}
+            <div className="card">
+                <h3 className="section-title" style={{ fontSize: '1rem', marginBottom: '1rem' }}>Account Details</h3>
+
+                {user?.role === "admin" && (
+                    <>
+                        <div className="info-row">
+                            <span className="info-label">ID</span>
+                            <span className="info-value" style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>{account?._id}</span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-label">Created</span>
+                            <span className="info-value">
+                                {account?.created_at
+                                    ? new Date(account.created_at).toLocaleDateString("fr-FR", {
+                                          year: "numeric", month: "long", day: "numeric",
+                                      })
+                                    : "Unknown"}
+                            </span>
+                        </div>
+                    </>
                 )}
 
-                {account && !profile && (
-                    <button onClick={() => handleDeleteAccount(account._id!)}>
-                        Delete
-                    </button>
-                )}
+                <div className="info-row">
+                    <span className="info-label">Description</span>
+                    <span className="info-value">{account?.description || "No description provided."}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">Preferred Day</span>
+                    <span className="info-value">{account?.day || "Not set"}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">Preferred Room</span>
+                    <span className="info-value">{account?.room || "Not set"}</span>
+                </div>
             </div>
 
-            {user?.role === "admin" && (
-                <div>
-                    <em>
-                        <b>ID:</b>
-                        {account?._id}
-                    </em>
-
-                    <em>
-                        <b>Created at:</b>
-                        {account?.created_at
-                            ? new Date(account?.created_at).toLocaleDateString(
-                                  "fr-FR",
-                                  {
-                                      year: "numeric",
-                                      month: "long",
-                                      day: "numeric",
-                                  },
-                              )
-                            : "unknown date"}
-                    </em>
+            {/* Guard time */}
+            {account?.guard_time && (
+                <div className="card">
+                    <h3 className="section-title" style={{ fontSize: '1rem', marginBottom: '1rem' }}>Guard Time</h3>
+                    <div style={{ overflowX: 'auto' }}>
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                    <th>Sun</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{account.guard_time.monday || "0h"}</td>
+                                    <td>{account.guard_time.tuesday || "0h"}</td>
+                                    <td>{account.guard_time.wednesday || "0h"}</td>
+                                    <td>{account.guard_time.thursday || "0h"}</td>
+                                    <td>{account.guard_time.friday || "0h"}</td>
+                                    <td>{account.guard_time.saturday || "0h"}</td>
+                                    <td>{account.guard_time.sunday || "0h"}</td>
+                                    <td><strong>{account.guard_time.total || "0h"}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             )}
-
-            <div>
-                {account?.first_name} {account?.last_name}
-            </div>
-
-            <div>
-                <a href={`mailto:${account?.email}`}>{account?.email}</a>
-            </div>
-
-            <div>
-                <b>Role:</b>
-                {account?.role
-                    ? account.role.toUpperCase()
-                    : "No role assigned"}
-                <b>Total guard time:</b>
-                {!account?.guard_time ? (
-                    "No guard time recorded"
-                ) : (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Monday</th>
-                                <th>Tuesday</th>
-                                <th>Wednesday</th>
-                                <th>Thursday</th>
-                                <th>Friday</th>
-                                <th>Saturday</th>
-                                <th>Sunday</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>{account?.guard_time?.monday || "0h"}</td>
-                                <td>{account?.guard_time?.tuesday || "0h"}</td>
-                                <td>
-                                    {account?.guard_time?.wednesday || "0h"}
-                                </td>
-                                <td>{account?.guard_time?.thursday || "0h"}</td>
-                                <td>{account?.guard_time?.friday || "0h"}</td>
-                                <td>{account?.guard_time?.saturday || "0h"}</td>
-                                <td>{account?.guard_time?.sunday || "0h"}</td>
-                                <td>
-                                    {account?.guard_time
-                                        ? account.guard_time.total
-                                        : "0h"}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                )}
-            </div>
-
-            <div>
-                <b>description</b>
-                {account?.description || "No description provided."}
-            </div>
-
-            <div>
-                <b>Preferred day:</b>
-                {account?.day || "No preferred day set."}
-
-                <b>Preferred room:</b>
-                {account?.room || "No preferred room set."}
-            </div>
         </div>
     );
 }

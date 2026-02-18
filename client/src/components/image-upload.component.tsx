@@ -85,14 +85,13 @@ export default function ImageUpload({
     };
 
     return (
-        <div>
-            <div>
-                {/* Je peux pas faire de balise Image next parce que sa pu et qu'il faut autoriser le lien dans le next config */}
+        <div className="image-upload">
+            <div className="image-upload-preview">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={preview} alt="Preview" />
+                <img src={preview} alt="Preview" className="image-upload-img" />
             </div>
 
-            <div>
+            <div className="image-upload-controls">
                 <input
                     type="file"
                     ref={fileInputRef}
@@ -102,18 +101,19 @@ export default function ImageUpload({
                 />
                 <button
                     type="button"
+                    className="btn btn-secondary btn-sm"
                     onClick={handleChooseFile}
                     disabled={uploading}
                 >
-                    {uploading ? "Uploading..." : "Choose image"}
+                    {uploading ? "Uploading..." : "Choose Image"}
                 </button>
 
-                <button type="button" onClick={handleReset}>
-                    Reset image
+                <button type="button" className="btn btn-ghost btn-sm" onClick={handleReset}>
+                    Reset
                 </button>
             </div>
 
-            {error && <div>{error}</div>}
+            {error && <div className="error-message">{error}</div>}
         </div>
     );
 }

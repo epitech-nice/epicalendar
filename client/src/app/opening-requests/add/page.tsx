@@ -105,9 +105,14 @@ export default function ManageOpeningRequestsAdd() {
         content = <Loading />;
     } else {
         content = (
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="date">Date</label>
+            <form onSubmit={handleSubmit} className="card">
+                <div className="alert-info" style={{ marginBottom: "1.5rem" }}>
+                    <strong>Note:</strong> Only EPITECH students can submit an opening request.
+                    Requests must be sent at least 24h in advance.
+                </div>
+
+                <div className="form-group">
+                    <label className="form-label">Date</label>
                     <DatePicker
                         selected={formData.date}
                         onChange={(date) => handleDateChange("date", date)}
@@ -116,39 +121,44 @@ export default function ManageOpeningRequestsAdd() {
                     />
                 </div>
 
-                <div>
-                    <label htmlFor="open">Campus opens at</label>
-                    <DatePicker
-                        selected={formData.open}
-                        onChange={(date) => handleDateChange("open", date)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Open"
-                        dateFormat="HH:mm"
-                        timeFormat="HH:mm"
-                        required
-                    />
-                    <label htmlFor="close">Campus closes at</label>
-                    <DatePicker
-                        selected={formData.close}
-                        onChange={(date) => handleDateChange("close", date)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Close"
-                        dateFormat="HH:mm"
-                        timeFormat="HH:mm"
-                        required
-                    />
+                <div className="form-row-2">
+                    <div className="form-group">
+                        <label className="form-label">Campus opens at</label>
+                        <DatePicker
+                            selected={formData.open}
+                            onChange={(date) => handleDateChange("open", date)}
+                            showTimeSelect
+                            showTimeSelectOnly
+                            timeIntervals={15}
+                            timeCaption="Open"
+                            dateFormat="HH:mm"
+                            timeFormat="HH:mm"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label className="form-label">Campus closes at</label>
+                        <DatePicker
+                            selected={formData.close}
+                            onChange={(date) => handleDateChange("close", date)}
+                            showTimeSelect
+                            showTimeSelectOnly
+                            timeIntervals={15}
+                            timeCaption="Close"
+                            dateFormat="HH:mm"
+                            timeFormat="HH:mm"
+                            required
+                        />
+                    </div>
                 </div>
 
-                <div>
-                    <label htmlFor="message">Message</label>
+                <div className="form-group">
+                    <label htmlFor="message" className="form-label">Reason for request</label>
                     <input
                         type="text"
                         id="message"
                         name="message"
+                        className="form-input"
                         value={formData.message}
                         onChange={handleChange}
                         placeholder="Why do you want to open the campus?"
@@ -156,28 +166,29 @@ export default function ManageOpeningRequestsAdd() {
                     />
                 </div>
 
-                {error && <div>{error}</div>}
+                {error && <div className="error-message">{error}</div>}
 
-                <button type="submit" disabled={responseLoading}>
-                    {responseLoading ? "Adding..." : "Add opening request"}
-                </button>
+                <div className="form-actions">
+                    <button type="submit" className="btn btn-primary" disabled={responseLoading}>
+                        {responseLoading ? "Submitting..." : "Submit Request"}
+                    </button>
+                </div>
             </form>
         );
     }
 
     return (
-        <main>
-            <h1 className="page-title">Opening requests - Add</h1>
+        <div className="page-wrapper">
+            <div className="page-container-md">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <Link href="/opening-requests" className="back-link">← Back to opening requests</Link>
+                        <h1 className="page-title">New Opening Request</h1>
+                    </div>
+                </div>
 
-            <div>
-                WARNING: only EPITECH student can formulate an opening request.
-                An opening request must be send 24h before the day to open the
-                campus.
+                {content}
             </div>
-
-            {content}
-
-            <Link href="/opening-requests">← Back to opening requests</Link>
-        </main>
+        </div>
     );
 }

@@ -10,7 +10,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/contexts/auth.context";
-import Link from "next/link";
 import Loading from "@/components/ui/loading.component";
 import DisplayAccount from "@/components/display-account.component";
 import { ProfileService } from "@/services/profile.service";
@@ -61,7 +60,7 @@ export default function Profile() {
     if (loading) {
         content = <Loading />;
     } else if (error) {
-        content = <div className="error">{error}</div>;
+        content = <div className="error-message">{error}</div>;
     } else {
         content = account ? (
             <DisplayAccount account={account} profile={true} />
@@ -69,12 +68,18 @@ export default function Profile() {
     }
 
     return (
-        <main>
-            <h1 className="page-title">My profile</h1>
+        <main className="page-wrapper">
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <h1 className="page-title">My Profile</h1>
+                        <p className="page-subtitle">Your account information</p>
+                    </div>
+                    <a href="/" className="back-link">← Back to home</a>
+                </div>
 
-            {content}
-
-            <Link href="/">← Back to home</Link>
+                {content}
+            </div>
         </main>
     );
 }

@@ -10,71 +10,77 @@
 
 export default function Stuck() {
     return (
-        <main>
-            <h1 className="page-title">I&#39;m stuck</h1>
-
-            <p>
-                You are stuck on the campus with no way out? Don&#39;t worry,
-                we&#39;ll find a solution. Contact the AERs or directors of your
-                campus.
-            </p>
-
-            <div>
-                <h2>The AERs of your campus</h2>
-
-                <div>
-                    <h3>EPITECH</h3>
-                    <p>
-                        They are responsible for the guard, for opening and
-                        closing the campus.
-                    </p>
-                    <p>
-                        <b>Contact:</b>{" "}
-                        <a href="mailto:aer-nice@epitech.eu">
-                            aer-nice@epitech.eu
-                        </a>
-                    </p>
-                </div>
-            </div>
-
-            <div>
-                <h2>Directors of your campus</h2>
-
-                <div>
-                    <h3>EPITECH</h3>
-                    <p>They are responsible for the campus and can help you.</p>
-                    <p>
-                        <b>Contact:</b>{" "}
-                        <a href="mailto:dpr-nice@epitech.eu">
-                            dpr-nice@epitech.eu
-                        </a>{" "}
-                        | <a href="tel:+330422133266">+33 04 22 13 32 66</a>
-                    </p>
+        <main className="page-wrapper">
+            <div className="page-container-md" style={{ margin: '0 auto' }}>
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <h1 className="page-title">I&#39;m Stuck</h1>
+                        <p className="page-subtitle">Locked on campus? Contact the right people.</p>
+                    </div>
                 </div>
 
-                <div>
-                    <h3>ISEGCOM</h3>
-                    <p>They are responsible for the campus and can help you.</p>
-                    <p>
-                        <b>Contact:</b>{" "}
-                        <a href="mailto:dpr-nice@isegcom.eu">
-                            dpr-nice@isegcom.eu
-                        </a>{" "}
-                        | <a href="tel:+330422133266">+33 04 22 13 32 66</a>
-                    </p>
+                <div className="alert-info" style={{ marginBottom: '2rem' }}>
+                    You are stuck on campus with no way out? Don&#39;t worry — contact the AERs or directors below.
                 </div>
 
-                <div>
-                    <h3>E-ARTSUP</h3>
-                    <p>They are responsible for the campus and can help you.</p>
-                    <p>
-                        <b>Contact:</b>{" "}
-                        <a href="mailto:dpr-nice@eartsup.eu">
-                            dpr-nice@eartsup.eu
-                        </a>{" "}
-                        | <a href="tel:+330422133266">+33 04 22 13 32 66</a>
+                {/* AERs Section */}
+                <section style={{ marginBottom: '2.5rem' }}>
+                    <h2 className="section-title">AERs</h2>
+                    <p className="page-subtitle" style={{ marginBottom: '1rem' }}>
+                        They are responsible for the guard, opening and closing the campus.
                     </p>
-                </div>
+                    <div className="contact-grid">
+                        <div className="contact-card">
+                            <div className="contact-school-name">EPITECH</div>
+                            <p className="contact-description">Responsible for the guard and access.</p>
+                            <a href="mailto:aer-nice@epitech.eu" className="contact-link">
+                                ✉ aer-nice@epitech.eu
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Directors Section */}
+                <section>
+                    <h2 className="section-title">Campus Directors</h2>
+                    <p className="page-subtitle" style={{ marginBottom: '1rem' }}>
+                        Responsible for the campus — they can help in any situation.
+                    </p>
+                    <div className="contact-grid">
+                        <div className="contact-card">
+                            <div className="contact-school-name">EPITECH</div>
+                            <p className="contact-description">Responsible for the campus and students.</p>
+                            <a href="mailto:dpr-nice@epitech.eu" className="contact-link">
+                                ✉ dpr-nice@epitech.eu
+                            </a>
+                            <a href="tel:+330422133266" className="contact-link">
+                                📞 +33 04 22 13 32 66
+                            </a>
+                        </div>
+
+                        <div className="contact-card">
+                            <div className="contact-school-name">ISEGCOM</div>
+                            <p className="contact-description">Responsible for the campus and students.</p>
+                            <a href="mailto:dpr-nice@isegcom.eu" className="contact-link">
+                                ✉ dpr-nice@isegcom.eu
+                            </a>
+                            <a href="tel:+330422133266" className="contact-link">
+                                📞 +33 04 22 13 32 66
+                            </a>
+                        </div>
+
+                        <div className="contact-card">
+                            <div className="contact-school-name">E-ARTSUP</div>
+                            <p className="contact-description">Responsible for the campus and students.</p>
+                            <a href="mailto:dpr-nice@eartsup.eu" className="contact-link">
+                                ✉ dpr-nice@eartsup.eu
+                            </a>
+                            <a href="tel:+330422133266" className="contact-link">
+                                📞 +33 04 22 13 32 66
+                            </a>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     );

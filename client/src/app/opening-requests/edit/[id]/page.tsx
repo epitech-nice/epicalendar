@@ -163,34 +163,28 @@ export default function ManageOpeningRequestsEditId() {
         content = <Loading />;
     } else {
         content = openingRequest ? (
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <em>
-                        <b>ID:</b>
-                        {openingRequest._id}
-                    </em>
-
-                    <em>
-                        <b>Created at:</b>
-                        {openingRequest.created_at
-                            ? new Date(
-                                  openingRequest.created_at,
-                              ).toLocaleDateString("fr-FR", {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                              })
-                            : "unknown date"}
-                    </em>
-
-                    <em>
-                        <b>Created by:</b>
-                        {openingRequest.account}
-                    </em>
+            <form onSubmit={handleSubmit} className="card">
+                <div style={{ marginBottom: "1.25rem", padding: "0.75rem", background: "rgb(var(--color-background-secondary))", borderLeft: "3px solid rgb(var(--color-primary))" }}>
+                    <div className="info-row">
+                        <span className="info-label">ID</span>
+                        <span className="info-value" style={{ fontFamily: "monospace", fontSize: "0.85rem" }}>{openingRequest._id}</span>
+                    </div>
+                    <div className="info-row">
+                        <span className="info-label">Created at</span>
+                        <span className="info-value">
+                            {openingRequest.created_at
+                                ? new Date(openingRequest.created_at).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" })
+                                : "Unknown date"}
+                        </span>
+                    </div>
+                    <div className="info-row">
+                        <span className="info-label">Submitted by</span>
+                        <span className="info-value">{openingRequest.account}</span>
+                    </div>
                 </div>
 
-                <div>
-                    <label htmlFor="date">Date</label>
+                <div className="form-group">
+                    <label className="form-label">Date</label>
                     <DatePicker
                         selected={formData?.date}
                         onChange={(date) => handleDateChange("date", date)}
@@ -199,88 +193,103 @@ export default function ManageOpeningRequestsEditId() {
                     />
                 </div>
 
-                <div>
-                    <label htmlFor="open">Campus opens at</label>
-                    <DatePicker
-                        selected={formData?.open}
-                        onChange={(date) => handleDateChange("open", date)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Open"
-                        dateFormat="HH:mm"
-                        timeFormat="HH:mm"
-                        required
-                    />
-                    <label htmlFor="close">Campus closes at</label>
-                    <DatePicker
-                        selected={formData?.close}
-                        onChange={(date) => handleDateChange("close", date)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Close"
-                        dateFormat="HH:mm"
-                        timeFormat="HH:mm"
-                        required
-                    />
+                <div className="form-row-2">
+                    <div className="form-group">
+                        <label className="form-label">Campus opens at</label>
+                        <DatePicker
+                            selected={formData?.open}
+                            onChange={(date) => handleDateChange("open", date)}
+                            showTimeSelect
+                            showTimeSelectOnly
+                            timeIntervals={15}
+                            timeCaption="Open"
+                            dateFormat="HH:mm"
+                            timeFormat="HH:mm"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label className="form-label">Campus closes at</label>
+                        <DatePicker
+                            selected={formData?.close}
+                            onChange={(date) => handleDateChange("close", date)}
+                            showTimeSelect
+                            showTimeSelectOnly
+                            timeIntervals={15}
+                            timeCaption="Close"
+                            dateFormat="HH:mm"
+                            timeFormat="HH:mm"
+                            required
+                        />
+                    </div>
                 </div>
 
-                <div>
-                    <label htmlFor="message">Message</label>
+                <div className="form-group">
+                    <label htmlFor="message" className="form-label">Message</label>
                     <input
                         type="text"
                         id="message"
                         name="message"
+                        className="form-input"
                         value={formData?.message}
                         onChange={handleChange}
                         placeholder="Why do you want to open the campus?"
                     />
                 </div>
 
-                <div>
-                    <label htmlFor="status">Status</label>
-                    <select
-                        id="status"
-                        name="status"
-                        value={formData?.status}
-                        onChange={handleChange}
-                        required
-                    >
-                        <option value="waiting">Waiting</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="rejected">Rejected</option>
-                    </select>
+                <div className="form-row-2">
+                    <div className="form-group">
+                        <label htmlFor="status" className="form-label">Status</label>
+                        <select
+                            id="status"
+                            name="status"
+                            className="form-select"
+                            value={formData?.status}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="waiting">Waiting</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="response" className="form-label">Response</label>
+                        <input
+                            type="text"
+                            id="response"
+                            name="response"
+                            className="form-input"
+                            value={formData?.response}
+                            onChange={handleChange}
+                            placeholder="Response to the opening request"
+                        />
+                    </div>
                 </div>
 
-                <div>
-                    <label htmlFor="response">Response</label>
-                    <input
-                        type="text"
-                        id="response"
-                        name="response"
-                        value={formData?.response}
-                        onChange={handleChange}
-                        placeholder="Response to the opening request"
-                    />
+                {error && <div className="error-message">{error}</div>}
+
+                <div className="form-actions">
+                    <button type="submit" className="btn btn-primary" disabled={responseLoading}>
+                        {responseLoading ? "Updating..." : "Update Request"}
+                    </button>
                 </div>
-
-                {error && <div>{error}</div>}
-
-                <button type="submit" disabled={responseLoading}>
-                    {responseLoading ? "Updating..." : "Update opening request"}
-                </button>
             </form>
         ) : null;
     }
 
     return (
-        <main>
-            <h1 className="page-title">Opening requests - Edit</h1>
+        <div className="page-wrapper">
+            <div className="page-container-md">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <Link href="/opening-requests" className="back-link">← Back to opening requests</Link>
+                        <h1 className="page-title">Edit Opening Request</h1>
+                    </div>
+                </div>
 
-            {content}
-
-            <Link href="/opening-requests">← Back to opening requests</Link>
-        </main>
+                {content}
+            </div>
+        </div>
     );
 }

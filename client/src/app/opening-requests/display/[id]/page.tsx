@@ -113,117 +113,111 @@ export default function ManageOpeningRequestsDisplayId() {
     if (loading) {
         content = <Loading />;
     } else if (error) {
-        content = <div className="error">{error}</div>;
+        content = <div className="error-message">{error}</div>;
     } else {
         content = openingRequest ? (
             <div>
-                {user?.role !== "student" && (
-                    <div>
-                        <em>
-                            <b>ID:</b>
-                            {openingRequest._id}
-                        </em>
-
-                        <em>
-                            <b>Created at:</b>
-                            {openingRequest.created_at
-                                ? new Date(
-                                      openingRequest.created_at,
-                                  ).toLocaleDateString("fr-FR", {
-                                      year: "numeric",
-                                      month: "long",
-                                      day: "numeric",
-                                  })
-                                : "unknown date"}
-                        </em>
-
-                        <em>
-                            <b>Created by:</b>
-                            {openingRequest.account}
-                        </em>
+                <div className="card">
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.25rem" }}>
+                        <div>
+                            <h2 className="section-title" style={{ margin: 0 }}>
+                                {new Date(openingRequest.date).toLocaleDateString("fr-FR", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                })}
+                            </h2>
+                            <span className={`badge ${openingRequest.status === "accepted" ? "badge-success" : openingRequest.status === "rejected" ? "badge-error" : "badge-neutral"}`}
+                                style={{ marginTop: "0.5rem", display: "inline-block" }}>
+                                {openingRequest.status}
+                            </span>
+                        </div>
+                        <div style={{ display: "flex", gap: "0.5rem" }}>
+                            {user?.role !== "student" && (
+                                <button
+                                    className="btn btn-secondary btn-sm"
+                                    onClick={() => router.push(`/opening-requests/edit/${openingRequest?._id}`)}
+                                >
+                                    Edit
+                                </button>
+                            )}
+                            <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => handleDeleteOpeningRequest(openingRequest._id!)}
+                            >
+                                Delete
+                            </button>
+                        </div>
                     </div>
-                )}
 
-                <div>
-                    {new Date(openingRequest.date).toLocaleDateString("fr-FR", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                    })}
-                </div>
-
-                <div>
-                    <b>Status:</b>
-                    {openingRequest.status}
-                </div>
-
-                <div>
                     {user?.role !== "student" && (
-                        <button
-                            onClick={() =>
-                                router.push(
-                                    `/opening-requests/edit/${openingRequest?._id}`,
-                                )
-                            }
-                        >
-                            Edit
-                        </button>
+                        <div style={{ marginBottom: "1.25rem", padding: "0.75rem", background: "rgb(var(--color-background-secondary))", borderLeft: "3px solid rgb(var(--color-border))" }}>
+                            <div className="info-row">
+                                <span className="info-label">ID</span>
+                                <span className="info-value" style={{ fontFamily: "monospace", fontSize: "0.85rem" }}>{openingRequest._id}</span>
+                            </div>
+                            <div className="info-row">
+                                <span className="info-label">Created at</span>
+                                <span className="info-value">
+                                    {openingRequest.created_at
+                                        ? new Date(openingRequest.created_at).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" })
+                                        : "Unknown date"}
+                                </span>
+                            </div>
+                            <div className="info-row">
+                                <span className="info-label">Submitted by</span>
+                                <span className="info-value">{openingRequest.account}</span>
+                            </div>
+                        </div>
                     )}
 
-                    <button
-                        onClick={() =>
-                            handleDeleteOpeningRequest(openingRequest._id!)
-                        }
-                    >
-                        Delete
-                    </button>
-                </div>
-
-                <div>
-                    <b>Campus opens at:</b>
-                    {openingRequest.open
-                        ? new Date(openingRequest.open).toLocaleTimeString(
-                              "fr-FR",
-                              {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                              },
-                          )
-                        : "Not set"}
-                    <b>Campus closes at:</b>
-                    {openingRequest.close
-                        ? new Date(openingRequest.close).toLocaleTimeString(
-                              "fr-FR",
-                              {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                              },
-                          )
-                        : "Not set"}
-                </div>
-
-                <div>
-                    <b>Message:</b>
-                    {openingRequest.message}
-                </div>
-
-                {openingRequest.status !== "waiting" && (
-                    <div>
-                        <b>Response:</b>
-                        {openingRequest.response || "No response provided."}
+                    <div className="form-row-2">
+                        <div className="info-row">
+                            <span className="info-label">Campus opens at</span>
+                            <span className="info-value">
+                                {openingRequest.open
+                                    ? new Date(openingRequest.open).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
+                                    : "Not set"}
+                            </span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-label">Campus closes at</span>
+                            <span className="info-value">
+                                {openingRequest.close
+                                    ? new Date(openingRequest.close).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
+                                    : "Not set"}
+                            </span>
+                        </div>
                     </div>
-                )}
+
+                    <div className="info-row" style={{ marginTop: "0.75rem" }}>
+                        <span className="info-label">Message</span>
+                        <span className="info-value">{openingRequest.message}</span>
+                    </div>
+
+                    {openingRequest.status !== "waiting" && (
+                        <div className="info-row">
+                            <span className="info-label">Response</span>
+                            <span className="info-value">{openingRequest.response || "No response provided."}</span>
+                        </div>
+                    )}
+                </div>
             </div>
         ) : null;
     }
 
     return (
-        <main>
-            <h1 className="page-title">Opening requests - Display</h1>
+        <div className="page-wrapper">
+            <div className="page-container-md">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <Link href="/opening-requests" className="back-link">← Back to opening requests</Link>
+                        <h1 className="page-title">Request Details</h1>
+                    </div>
+                </div>
 
-            {content}
-
-            <Link href="/opening-requests">← Back to opening requests</Link>
-        </main>
+                {content}
+            </div>
+        </div>
     );
 }

@@ -112,102 +112,119 @@ export default function Home() {
 
     if (error) {
         return (
-            <main>
-                <div className="error">{error}</div>
+            <main className="page-wrapper">
+                <div className="page-container">
+                    <div className="error-message">{error}</div>
+                </div>
             </main>
         );
     }
 
     return (
-        <main>
-            {day && (
+        <main className="page-wrapper">
+            <div className="page-container">
+                {/* Campus Status Banner */}
+                {day ? (
+                    <div className={`campus-status-banner ${day.end && new Date(day.end) < new Date(Date.now()) ? "status-closed" : "status-open"}`}>
+                        <div>
+                            <div className="campus-status-label">Campus Status</div>
+                            {day.end && new Date(day.end) < new Date(Date.now()) ? (
+                                <div className="campus-status-time">
+                                    Closed at {formatDate(new Date(day.end), "HH:mm")}
+                                </div>
+                            ) : (
+                                <div className="campus-status-time">
+                                    Open until {formatDate(new Date(day.close), "HH:mm")}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                ) : null}
+
+                {day?.message && (
+                    <div className="alert-info" style={{ marginBottom: '1.5rem' }}>
+                        {day.message}
+                    </div>
+                )}
+
+                {/* Calendar Section */}
+                <div style={{ marginBottom: '2rem' }}>
+                    <h2 className="section-title">Today&#39;s Schedule</h2>
+                    <div className="card" style={{ padding: '0' }}>
+                        <Calendar
+                            localizer={localizer}
+                            events={events}
+                            defaultView={Views.DAY}
+                            views={[Views.DAY]}
+                            startAccessor="start"
+                            endAccessor="end"
+                            date={new Date()}
+                            toolbar={false}
+                            onNavigate={() => {}}
+                            formats={formats}
+                            style={{ height: 500 }}
+                            eventPropGetter={(event) => {
+                                const backgroundColor =
+                                    event.title === "AER guard"
+                                        ? "rgb(var(--color-primary))"
+                                        : "rgb(var(--color-success))";
+                                return {
+                                    style: {
+                                        backgroundColor,
+                                        borderRadius: "0",
+                                        color: "#ffffff",
+                                        border: "none",
+                                        padding: "0.5rem 0.75rem",
+                                        fontFamily: "'IBM Plex Sans', sans-serif",
+                                        fontSize: "0.85rem",
+                                        fontWeight: 500,
+                                    },
+                                };
+                            }}
+                        />
+                    </div>
+                </div>
+
+                {/* AERs Section */}
                 <div>
-                    {day.end && new Date(day.end) < new Date(Date.now()) ? (
-                        <h1>
-                            Campus was closed at{" "}
-                            {formatDate(new Date(day.end), "HH:mm")}
-                        </h1>
+                    <h2 className="section-title">AERs on Guard</h2>
+                    {aers.length > 0 ? (
+                        <div className="aer-grid">
+                            {aers.map(
+                                (aer) =>
+                                    day?.aers?.includes(aer._id as string) && (
+                                        <div key={aer._id} className="aer-card">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={aer.photo || "/default-user.jpg"}
+                                                alt={`${aer.first_name} ${aer.last_name}`}
+                                                className="profile-avatar"
+                                            />
+                                            <div>
+                                                <div className="aer-name">
+                                                    {aer.first_name} {aer.last_name}
+                                                </div>
+                                                <a href={`mailto:${aer.email}`} className="aer-email">
+                                                    {aer.email}
+                                                </a>
+                                                {aer.room && (
+                                                    <div className="aer-detail">📍 {aer.room}</div>
+                                                )}
+                                                {aer.description && (
+                                                    <div className="aer-detail">{aer.description}</div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ),
+                            )}
+                        </div>
                     ) : (
-                        <h1>
-                            Campus is open until{" "}
-                            {formatDate(new Date(day.close), "HH:mm")}
-                        </h1>
+                        <div className="empty-state">
+                            <div className="empty-state-icon">👤</div>
+                            <p>No AERs assigned for today.</p>
+                        </div>
                     )}
                 </div>
-            )}
-
-            {day && day.message && <div>{day.message}</div>}
-
-            <div>
-                <Calendar
-                    localizer={localizer}
-                    events={events}
-                    defaultView={Views.DAY}
-                    views={[Views.DAY]}
-                    startAccessor="start"
-                    endAccessor="end"
-                    date={new Date()}
-                    toolbar={false}
-                    onNavigate={() => {}}
-                    formats={formats}
-                    eventPropGetter={(event) => {
-                        const backgroundColor =
-                            event.title === "AER guard"
-                                ? "var(--color-epitech)"
-                                : "#00FF90";
-                        return {
-                            style: {
-                                backgroundColor,
-                                borderRadius: "0.5rem",
-                                color: "var(--foreground)",
-                                border: "none",
-                                padding: "0.5rem",
-                            },
-                        };
-                    }}
-                />
-            </div>
-
-            <div>
-                <h2>AERs for guard</h2>
-                {aers.length > 0 ? (
-                    aers.map(
-                        (aer) =>
-                            day?.aers?.includes(aer._id as string) && (
-                                <div key={aer._id} className="aer">
-                                    <div>
-                                        {/* Je peux pas faire de balise Image next parce que sa pu et qu'il faut autoriser le lien dans le next config */}
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={
-                                                aer.photo || "/default-user.jpg"
-                                            }
-                                            alt="User Photo"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        {aer.first_name} {aer.last_name}
-                                    </div>
-
-                                    <div>
-                                        <a href={`mailto:${aer.email}`}>
-                                            {aer.email}
-                                        </a>
-                                    </div>
-
-                                    <div>{aer.description}</div>
-
-                                    <div>
-                                        <b>Preferred room:</b>{" "}
-                                        {aer.room || "Not specified"}
-                                    </div>
-                                </div>
-                            ),
-                    )
-                ) : (
-                    <p>No AERs assigned.</p>
-                )}
             </div>
         </main>
     );

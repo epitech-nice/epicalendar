@@ -104,93 +104,100 @@ export default function ManageDaysDisplayId() {
     if (loading) {
         content = <Loading />;
     } else if (error) {
-        content = <div className="error">{error}</div>;
+        content = <div className="error-message">{error}</div>;
     } else {
         content = day ? (
             <div>
-                <div>
-                    {new Date(day.date).toLocaleDateString("fr-FR", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                    })}
-                </div>
+                <div className="card" style={{ marginBottom: "1.5rem" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+                        <h2 className="section-title" style={{ margin: 0 }}>
+                            {new Date(day.date).toLocaleDateString("fr-FR", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            })}
+                        </h2>
+                        <div style={{ display: "flex", gap: "0.5rem" }}>
+                            <button
+                                className="btn btn-secondary btn-sm"
+                                onClick={() => router.push(`/manage-days/edit/${day?._id}`)}
+                            >
+                                Edit
+                            </button>
+                            <button className="btn btn-danger btn-sm" onClick={() => handleDeleteDay(day._id!)}>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
 
-                <div>
-                    <button
-                        onClick={() =>
-                            router.push(`/manage-days/edit/${day?._id}`)
-                        }
-                    >
-                        Edit
-                    </button>
+                    <div className="form-row-2">
+                        <div>
+                            <div className="info-row">
+                                <span className="info-label">Campus opens at</span>
+                                <span className="info-value">
+                                    {day.open ? new Date(day.open).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "Not set"}
+                                </span>
+                            </div>
+                            <div className="info-row">
+                                <span className="info-label">Guard starts at</span>
+                                <span className="info-value">
+                                    {day.start ? new Date(day.start).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "Not set"}
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="info-row">
+                                <span className="info-label">Campus closes at</span>
+                                <span className="info-value">
+                                    {day.close ? new Date(day.close).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "Not set"}
+                                </span>
+                            </div>
+                            <div className="info-row">
+                                <span className="info-label">Guard ends at</span>
+                                <span className="info-value">
+                                    {day.end ? new Date(day.end).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "Not set"}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <button onClick={() => handleDeleteDay(day._id!)}>
-                        Delete
-                    </button>
-                </div>
+                    <div className="info-row" style={{ marginTop: "1rem" }}>
+                        <span className="info-label">AERs assigned</span>
+                        <span className="info-value">
+                            {day.aers && day.aers.length > 0 ? day.aers.join(", ") : "No AER assigned"}
+                        </span>
+                    </div>
 
-                <div>
-                    <b>Campus opens at:</b>
-                    {day.open
-                        ? new Date(day.open).toLocaleTimeString("fr-FR", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                          })
-                        : "Not set"}
-                    <b>Guard starts at:</b>
-                    {day.start
-                        ? new Date(day.start).toLocaleTimeString("fr-FR", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                          })
-                        : "Not set"}
-                </div>
+                    {day.message && (
+                        <div className="info-row">
+                            <span className="info-label">Message</span>
+                            <span className="info-value">{day.message}</span>
+                        </div>
+                    )}
 
-                <div>
-                    <b>Campus closes at:</b>
-                    {day.close
-                        ? new Date(day.close).toLocaleTimeString("fr-FR", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                          })
-                        : "Not set"}
-                    <b>Guard ends at:</b>
-                    {day.end
-                        ? new Date(day.end).toLocaleTimeString("fr-FR", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                          })
-                        : "Not set"}
-                </div>
-
-                <div>
-                    <b>AER:</b>
-                    {day.aers && day.aers.length > 0
-                        ? day.aers.join(", ")
-                        : "No AER assigned"}
-                </div>
-
-                <div>
-                    <b>Message:</b>
-                    {day.message || "No message provided."}
-                </div>
-
-                <div>
-                    <b>Observations:</b>
-                    {day.observations || "No observations provided."}
+                    {day.observations && (
+                        <div className="info-row">
+                            <span className="info-label">Observations</span>
+                            <span className="info-value">{day.observations}</span>
+                        </div>
+                    )}
                 </div>
             </div>
         ) : null;
     }
 
     return (
-        <main>
-            <h1 className="page-title">Manage days - Display</h1>
+        <div className="page-wrapper">
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <Link href="/manage-days" className="back-link">← Back to days</Link>
+                        <h1 className="page-title">Day Details</h1>
+                    </div>
+                </div>
 
-            {content}
-
-            <Link href="/manage-days">← Back to days</Link>
-        </main>
+                {content}
+            </div>
+        </div>
     );
 }

@@ -110,40 +110,55 @@ export default function CalendarPage() {
 
     if (error) {
         return (
-            <main>
-                <div className="error">{error}</div>
+            <main className="page-wrapper">
+                <div className="page-container">
+                    <div className="error-message">{error}</div>
+                </div>
             </main>
         );
     }
 
     return (
-        <main>
-            <h1 className="page-title">Opening Calendar</h1>
+        <main className="page-wrapper">
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <h1 className="page-title">Opening Calendar</h1>
+                        <p className="page-subtitle">Campus opening schedule</p>
+                    </div>
+                </div>
 
-            <Calendar
-                localizer={localizer}
-                events={events}
-                defaultView={Views.WEEK}
-                views={[Views.DAY, Views.WEEK]} //Views.MONTH ne marche pas
-                startAccessor="start"
-                endAccessor="end"
-                formats={formats}
-                eventPropGetter={(event) => {
-                    const backgroundColor =
-                        event.title === "AER guard"
-                            ? "var(--color-epitech)"
-                            : "#00FF90";
-                    return {
-                        style: {
-                            backgroundColor,
-                            borderRadius: "0.5rem",
-                            color: "var(--foreground)",
-                            border: "none",
-                            padding: "0.5rem",
-                        },
-                    };
-                }}
-            />
+                <div className="card" style={{ padding: '0' }}>
+                    <Calendar
+                        localizer={localizer}
+                        events={events}
+                        defaultView={Views.WEEK}
+                        views={[Views.DAY, Views.WEEK]}
+                        startAccessor="start"
+                        endAccessor="end"
+                        formats={formats}
+                        style={{ height: 600 }}
+                        eventPropGetter={(event) => {
+                            const backgroundColor =
+                                event.title === "AER guard"
+                                    ? "rgb(var(--color-primary))"
+                                    : "rgb(var(--color-success))";
+                            return {
+                                style: {
+                                    backgroundColor,
+                                    borderRadius: "0",
+                                    color: "#ffffff",
+                                    border: "none",
+                                    padding: "0.4rem 0.6rem",
+                                    fontFamily: "'IBM Plex Sans', sans-serif",
+                                    fontSize: "0.82rem",
+                                    fontWeight: 500,
+                                },
+                            };
+                        }}
+                    />
+                </div>
+            </div>
         </main>
     );
 }
