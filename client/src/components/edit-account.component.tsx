@@ -1,5 +1,5 @@
 /**
- * @file edit-account.components.tsx
+ * @file edit-account.component.tsx
  * @brief
  * @project EpiCalendar - Epitech Project
  * @author Nicolas TORO <nicolas.toro@epitech.eu>
