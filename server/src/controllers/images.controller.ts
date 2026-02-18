@@ -15,7 +15,7 @@ export class ImagesController {
      */
     static getImages(request: Request, response: Response): void {
         try {
-            const uploadsPath = path.join(__dirname, "../../../uploads");
+            const uploadsPath = path.join(__dirname, "../../uploads");
 
             // Check if uploads directory exists
             if (!fs.existsSync(uploadsPath)) {
@@ -64,7 +64,7 @@ export class ImagesController {
             const { filename } = request.params;
             const imagePath = path.join(
                 __dirname,
-                "../../../uploads",
+                "../../uploads",
                 filename,
             );
 
