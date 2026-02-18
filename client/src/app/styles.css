@@ -327,6 +327,10 @@
         font-size: 0.95rem;
         border-radius: 0;
         @apply bg-input-bg border border-input-border text-input-text;
+        /* Explicit overrides so browser color-scheme UA rules can't win */
+        background-color: rgb(var(--color-input-bg));
+        color: rgb(var(--color-input-text));
+        color-scheme: light dark;
         transition:
             border-color 0.15s ease,
             box-shadow 0.15s ease;
@@ -970,6 +974,143 @@
         gap: 0.5rem;
         align-items: center;
     }
+}
+
+/* =============================================================
+ * REACT DATEPICKER OVERRIDES
+ * Must be outside @layer so they beat the library's unlayered CSS
+ * ============================================================= */
+
+/* Input field — force our design-system colors regardless of browser color-scheme */
+.react-datepicker-wrapper input {
+    background-color: rgb(var(--color-input-bg)) !important;
+    color: rgb(var(--color-input-text)) !important;
+    border: 1px solid rgb(var(--color-input-border)) !important;
+    padding: 0.65rem 0.9rem !important;
+}
+
+.react-datepicker-wrapper input:focus {
+    border-color: rgb(var(--color-primary)) !important;
+    box-shadow: 0 0 0 3px rgb(var(--color-primary) / 0.15) !important;
+    outline: none !important;
+}
+
+/* Popper container */
+.react-datepicker {
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.875rem;
+    color: rgb(var(--color-text-primary));
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+}
+
+.react-datepicker__triangle {
+    display: none;
+}
+
+/* Header (month + navigation) */
+.react-datepicker__header {
+    background-color: rgb(var(--color-background-secondary));
+    border-bottom: 1px solid rgb(var(--color-border));
+    border-radius: 0;
+    padding: 0.6rem 0 0.4rem;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    color: rgb(var(--color-text-primary));
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Day names row */
+.react-datepicker__day-name {
+    color: rgb(var(--color-text-tertiary));
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+/* Day cells */
+.react-datepicker__day {
+    color: rgb(var(--color-text-primary));
+    border-radius: 0;
+}
+
+.react-datepicker__day:hover {
+    background-color: rgb(var(--color-background-secondary)) !important;
+    color: rgb(var(--color-text-primary)) !important;
+    border-radius: 0 !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background-color: rgb(var(--color-primary));
+    color: #fff;
+    border-radius: 0;
+}
+
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--keyboard-selected:hover {
+    background-color: rgb(var(--color-primary-dark));
+    color: #fff;
+}
+
+.react-datepicker__day--today {
+    font-weight: 700;
+    color: rgb(var(--color-primary));
+}
+
+.react-datepicker__day--today.react-datepicker__day--selected {
+    color: #fff;
+}
+
+.react-datepicker__day--disabled {
+    color: rgb(var(--color-text-disabled));
+}
+
+.react-datepicker__day--disabled:hover {
+    background-color: transparent;
+}
+
+/* Navigation arrows */
+.react-datepicker__navigation-icon::before {
+    border-color: rgb(var(--color-text-tertiary));
+}
+
+.react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
+    border-color: rgb(var(--color-text-primary));
+}
+
+/* Month container background */
+.react-datepicker__month {
+    background-color: rgb(var(--color-surface));
+    margin: 0.3rem;
+}
+
+/* Time list */
+.react-datepicker__time-container {
+    border-left: 1px solid rgb(var(--color-border));
+}
+
+.react-datepicker__time,
+.react-datepicker__time-box {
+    background-color: rgb(var(--color-surface));
+}
+
+.react-datepicker__time-list-item {
+    color: rgb(var(--color-text-primary));
+}
+
+.react-datepicker__time-list-item:hover {
+    background-color: rgb(var(--color-background-secondary)) !important;
+}
+
+.react-datepicker__time-list-item--selected {
+    background-color: rgb(var(--color-primary)) !important;
+    color: #fff !important;
 }
 
 /* =============================================================
