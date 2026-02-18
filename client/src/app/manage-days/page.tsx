@@ -272,7 +272,9 @@ export default function ManageDays() {
                         <button
                             className="btn btn-secondary"
                             onClick={() => fetchDays(currentPage + 1)}
-                            disabled={currentPage === totalPages || isLoadingDays}
+                            disabled={
+                                currentPage === totalPages || isLoadingDays
+                            }
                         >
                             Next →
                         </button>

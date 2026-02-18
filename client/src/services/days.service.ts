@@ -44,7 +44,10 @@ export interface DaysPaginatedResponse {
 }
 
 export const DaysService = {
-    async getDays(page: number = 1, limit: number = 20): Promise<DaysPaginatedResponse> {
+    async getDays(
+        page: number = 1,
+        limit: number = 20,
+    ): Promise<DaysPaginatedResponse> {
         try {
             return (await api.get("/days", { params: { page, limit } })).data;
         } catch (error) {

@@ -52,13 +52,16 @@ export default function Home() {
             if (!el) return;
             const top = el.getBoundingClientRect().top;
             const height = window.innerHeight - top - 32;
-            el.style.setProperty("--calendar-height", `${Math.max(200, height)}px`);
+            el.style.setProperty(
+                "--calendar-height",
+                `${Math.max(200, height)}px`,
+            );
             el.style.height = `${Math.max(200, height)}px`;
         };
         updateHeight();
         window.addEventListener("resize", updateHeight);
         return () => window.removeEventListener("resize", updateHeight);
-    });  // runs after every render so it reacts to alert appearing/disappearing
+    }); // runs after every render so it reacts to alert appearing/disappearing
 
     const formats = {
         timeGutterFormat: (date: Date) => formatDate(date, "HH:mm"),
@@ -179,7 +182,10 @@ export default function Home() {
                     {/* Calendar Section */}
                     <div className="home-calendar-col">
                         <h2 className="section-title">Today&#39;s Schedule</h2>
-                        <div ref={calendarCardRef} className="card home-calendar-card">
+                        <div
+                            ref={calendarCardRef}
+                            className="card home-calendar-card"
+                        >
                             <Calendar
                                 localizer={localizer}
                                 events={events}
@@ -195,15 +201,25 @@ export default function Home() {
                                 timeslots={1}
                                 scrollToTime={(() => {
                                     if (events.length === 0)
-                                        return new Date(new Date().setHours(7, 0, 0, 0));
+                                        return new Date(
+                                            new Date().setHours(7, 0, 0, 0),
+                                        );
                                     const earliest = events.reduce(
-                                        (min, e) => e.start < min ? e.start : min,
-                                        events[0].start
+                                        (min, e) =>
+                                            e.start < min ? e.start : min,
+                                        events[0].start,
                                     );
                                     const scroll = new Date(earliest);
-                                    scroll.setHours(Math.max(0, earliest.getHours() - 1), 0, 0, 0);
+                                    scroll.setHours(
+                                        Math.max(0, earliest.getHours() - 1),
+                                        0,
+                                        0,
+                                        0,
+                                    );
                                     // Never scroll before 07:00
-                                    const floor = new Date(new Date().setHours(7, 0, 0, 0));
+                                    const floor = new Date(
+                                        new Date().setHours(7, 0, 0, 0),
+                                    );
                                     return scroll < floor ? floor : scroll;
                                 })()}
                                 eventPropGetter={(event) => {
@@ -236,26 +252,42 @@ export default function Home() {
                             <div className="aer-grid-vertical">
                                 {aers.map(
                                     (aer) =>
-                                        day?.aers?.includes(aer._id as string) && (
-                                            <div key={aer._id} className="aer-card-row">
+                                        day?.aers?.includes(
+                                            aer._id as string,
+                                        ) && (
+                                            <div
+                                                key={aer._id}
+                                                className="aer-card-row"
+                                            >
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
-                                                    src={aer.photo || "/default-user.jpg"}
+                                                    src={
+                                                        aer.photo ||
+                                                        "/default-user.jpg"
+                                                    }
                                                     alt={`${aer.first_name} ${aer.last_name}`}
                                                     className="profile-avatar"
                                                 />
                                                 <div className="aer-card-info">
                                                     <div className="aer-name">
-                                                        {aer.first_name} {aer.last_name}
+                                                        {aer.first_name}{" "}
+                                                        {aer.last_name}
                                                     </div>
-                                                    <a href={`mailto:${aer.email}`} className="aer-email">
+                                                    <a
+                                                        href={`mailto:${aer.email}`}
+                                                        className="aer-email"
+                                                    >
                                                         {aer.email}
                                                     </a>
                                                     {aer.room && (
-                                                        <div className="aer-detail">📍 {aer.room}</div>
+                                                        <div className="aer-detail">
+                                                            📍 {aer.room}
+                                                        </div>
                                                     )}
                                                     {aer.description && (
-                                                        <div className="aer-detail">{aer.description}</div>
+                                                        <div className="aer-detail">
+                                                            {aer.description}
+                                                        </div>
                                                     )}
                                                 </div>
                                             </div>

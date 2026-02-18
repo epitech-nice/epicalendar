@@ -1000,7 +1000,7 @@
     background-color: rgb(var(--color-surface));
     border: 1px solid rgb(var(--color-border));
     border-radius: 0;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     font-size: 0.875rem;
     color: rgb(var(--color-text-primary));
     box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
@@ -1119,8 +1119,12 @@
  * ============================================================= */
 
 /* Hide all-day row */
-.rbc-allday-cell { display: none !important; }
-.rbc-row.rbc-allday { display: none !important; }
+.rbc-allday-cell {
+    display: none !important;
+}
+.rbc-row.rbc-allday {
+    display: none !important;
+}
 
 /* Whole calendar widget — fill the flex card */
 .rbc-calendar {
@@ -1175,7 +1179,7 @@
     background-color: rgb(var(--color-background-secondary));
     color: rgb(var(--color-text-tertiary));
     font-size: 0.7rem;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     padding: 0 0.4rem;
     line-height: 1;
 }
@@ -1190,7 +1194,7 @@
     background-color: rgb(var(--color-background-secondary));
     border-bottom: 1px solid rgb(var(--color-border));
     color: rgb(var(--color-text-secondary));
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     font-size: 0.82rem;
     font-weight: 600;
     padding: 0.4rem 0;
@@ -1199,8 +1203,12 @@
     background-color: rgb(var(--color-background-secondary));
     border-bottom: 1px solid rgb(var(--color-border));
 }
-.rbc-time-header-content { border-left: none; }
-.rbc-time-view { border: none; }
+.rbc-time-header-content {
+    border-left: none;
+}
+.rbc-time-view {
+    border: none;
+}
 
 /* Borders */
 .rbc-time-content {
@@ -1214,7 +1222,10 @@
 }
 
 /* Events */
-.rbc-event:focus { outline: none; box-shadow: none; }
+.rbc-event:focus {
+    outline: none;
+    box-shadow: none;
+}
 
 /* Toolbar */
 .rbc-toolbar-label {
@@ -1271,7 +1282,7 @@
 
 .rbc-time-header.rbc-overflowing {
     border-right: 1px solid rgb(var(--color-border));
-    border-top: 1px solid rgb(var(--color-border))
+    border-top: 1px solid rgb(var(--color-border));
 }
 
 .rbc-time-header-gutter {
