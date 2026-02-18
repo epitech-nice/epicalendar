@@ -22,8 +22,10 @@ export default function ManageAccounts() {
 
     const [accounts, setAccounts] = useState<Account[]>([]);
     const [error, setError] = useState("");
+    const [isLoadingData, setIsLoadingData] = useState(false);
 
     const fetchAccounts = useCallback(async () => {
+        setIsLoadingData(true);
         try {
             setAccounts(await AccountsService.getAccounts());
         } catch (err) {
@@ -32,6 +34,8 @@ export default function ManageAccounts() {
                     ? err.message
                     : "An error occurred while fetching accounts.",
             );
+        } finally {
+            setIsLoadingData(false);
         }
     }, []);
 
@@ -78,7 +82,7 @@ export default function ManageAccounts() {
 
     let content = null;
 
-    if (loading) {
+    if (loading || isLoadingData) {
         content = <Loading />;
     } else if (error) {
         content = <div className="error">{error}</div>;

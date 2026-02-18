@@ -31,8 +31,10 @@ export default function ManageOpeningRequests() {
         [],
     );
     const [error, setError] = useState<string | null>("");
+    const [isLoadingData, setIsLoadingData] = useState(false);
 
     const fetchOpeningRequests = useCallback(async () => {
+        setIsLoadingData(true);
         try {
             const fetchedOpeningRequests =
                 await OpeningRequestsService.getOpeningRequests();
@@ -43,6 +45,8 @@ export default function ManageOpeningRequests() {
                     ? err.message
                     : "An error occurred while fetching opening requests.",
             );
+        } finally {
+            setIsLoadingData(false);
         }
     }, []);
 
@@ -94,7 +98,7 @@ export default function ManageOpeningRequests() {
 
     let content = null;
 
-    if (loading) {
+    if (loading || isLoadingData) {
         content = <Loading />;
     } else if (error) {
         content = <div className="error-message">{error}</div>;
