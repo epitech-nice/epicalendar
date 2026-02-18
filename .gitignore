@@ -16,8 +16,6 @@ node_modules/
 !.yarn/plugins
 !.yarn/versions
 !.yarn/releases
-
-# pnpm
 pnpm-lock.yaml
 
 # =============================================================================
@@ -64,6 +62,10 @@ uploads/
 Thumbs.db
 *.pem
 *.key
+*.bak
+*.backup
+*.old
+*.tmp
 
 # =============================================================================
 # Docker / Runtime
