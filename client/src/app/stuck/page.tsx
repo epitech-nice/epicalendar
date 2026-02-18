@@ -11,7 +11,7 @@
 export default function Stuck() {
     return (
         <main className="page-wrapper">
-            <div className="page-container-md" style={{ margin: "0 auto" }}>
+            <div className="page-container" style={{ margin: "0 auto" }}>
                 <div className="page-header">
                     <div className="page-header-left">
                         <h1 className="page-title">I&#39;m Stuck</h1>

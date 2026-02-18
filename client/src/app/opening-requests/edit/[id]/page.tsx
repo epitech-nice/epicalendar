@@ -313,7 +313,7 @@ export default function ManageOpeningRequestsEditId() {
 
     return (
         <div className="page-wrapper">
-            <div className="page-container-md">
+            <div className="page-container">
                 <div className="page-header">
                     <div className="page-header-left">
                         <Link href="/opening-requests" className="back-link">
