@@ -46,7 +46,7 @@ export default function Stuck() {
                                 href="mailto:aer-nice@epitech.eu"
                                 className="contact-link"
                             >
-                                ✉ aer-nice@epitech.eu
+                                📧 aer-nice@epitech.eu
                             </a>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ export default function Stuck() {
                                 href="mailto:dpr-nice@epitech.eu"
                                 className="contact-link"
                             >
-                                ✉ dpr-nice@epitech.eu
+                                📧 dpr-nice@epitech.eu
                             </a>
                             <a
                                 href="tel:+330422133266"
@@ -91,7 +91,7 @@ export default function Stuck() {
                                 href="mailto:dpr-nice@isegcom.eu"
                                 className="contact-link"
                             >
-                                ✉ dpr-nice@isegcom.eu
+                                📧 dpr-nice@isegcom.eu
                             </a>
                             <a
                                 href="tel:+330422133266"
@@ -110,7 +110,7 @@ export default function Stuck() {
                                 href="mailto:dpr-nice@eartsup.eu"
                                 className="contact-link"
                             >
-                                ✉ dpr-nice@eartsup.eu
+                                📧 dpr-nice@eartsup.eu
                             </a>
                             <a
                                 href="tel:+330422133266"
