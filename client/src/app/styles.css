@@ -7,7 +7,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
 
-@tailwind base;
+@layer tailwind-base {
+    @tailwind base;
+}
 @tailwind components;
 @tailwind utilities;
 
@@ -997,46 +999,46 @@
 
 /* Popper container */
 .react-datepicker {
-    background-color: rgb(var(--color-surface));
-    border: 1px solid rgb(var(--color-border));
-    border-radius: 0;
-    font-family: "IBM Plex Sans", sans-serif;
-    font-size: 0.875rem;
-    color: rgb(var(--color-text-primary));
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+    background-color: rgb(var(--color-surface)) !important;
+    border: 1px solid rgb(var(--color-border)) !important;
+    border-radius: 0 !important;
+    font-family: "IBM Plex Sans", sans-serif !important;
+    font-size: 0.875rem !important;
+    color: rgb(var(--color-text-primary)) !important;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.15) !important;
 }
 
 .react-datepicker__triangle {
-    display: none;
+    display: none !important;
 }
 
 /* Header (month + navigation) */
 .react-datepicker__header {
-    background-color: rgb(var(--color-background-secondary));
-    border-bottom: 1px solid rgb(var(--color-border));
-    border-radius: 0;
-    padding: 0.6rem 0 0.4rem;
+    background-color: rgb(var(--color-background-secondary)) !important;
+    border-bottom: 1px solid rgb(var(--color-border)) !important;
+    border-radius: 0 !important;
+    padding: 0.6rem 0 0.4rem !important;
 }
 
 .react-datepicker__current-month,
 .react-datepicker-time__header,
 .react-datepicker-year-header {
-    color: rgb(var(--color-text-primary));
-    font-weight: 600;
-    font-size: 0.9rem;
+    color: rgb(var(--color-text-primary)) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
 }
 
 /* Day names row */
 .react-datepicker__day-name {
-    color: rgb(var(--color-text-tertiary));
-    font-size: 0.78rem;
-    font-weight: 500;
+    color: rgb(var(--color-text-tertiary)) !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
 }
 
 /* Day cells */
 .react-datepicker__day {
-    color: rgb(var(--color-text-primary));
-    border-radius: 0;
+    color: rgb(var(--color-text-primary)) !important;
+    border-radius: 0 !important;
 }
 
 .react-datepicker__day:hover {
@@ -1047,61 +1049,61 @@
 
 .react-datepicker__day--selected,
 .react-datepicker__day--keyboard-selected {
-    background-color: rgb(var(--color-primary));
-    color: #fff;
-    border-radius: 0;
+    background-color: rgb(var(--color-primary)) !important;
+    color: #fff !important;
+    border-radius: 0 !important;
 }
 
 .react-datepicker__day--selected:hover,
 .react-datepicker__day--keyboard-selected:hover {
-    background-color: rgb(var(--color-primary-dark));
-    color: #fff;
+    background-color: rgb(var(--color-primary-dark)) !important;
+    color: #fff !important;
 }
 
 .react-datepicker__day--today {
-    font-weight: 700;
-    color: rgb(var(--color-primary));
+    font-weight: 700 !important;
+    color: rgb(var(--color-primary)) !important;
 }
 
 .react-datepicker__day--today.react-datepicker__day--selected {
-    color: #fff;
+    color: #fff !important;
 }
 
 .react-datepicker__day--disabled {
-    color: rgb(var(--color-text-disabled));
+    color: rgb(var(--color-text-disabled)) !important;
 }
 
 .react-datepicker__day--disabled:hover {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 /* Navigation arrows */
 .react-datepicker__navigation-icon::before {
-    border-color: rgb(var(--color-text-tertiary));
+    border-color: rgb(var(--color-text-tertiary)) !important;
 }
 
 .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
-    border-color: rgb(var(--color-text-primary));
+    border-color: rgb(var(--color-text-primary)) !important;
 }
 
 /* Month container background */
 .react-datepicker__month {
-    background-color: rgb(var(--color-surface));
-    margin: 0.3rem;
+    background-color: rgb(var(--color-surface)) !important;
+    margin: 0.3rem !important;
 }
 
 /* Time list */
 .react-datepicker__time-container {
-    border-left: 1px solid rgb(var(--color-border));
+    border-left: 1px solid rgb(var(--color-border)) !important;
 }
 
 .react-datepicker__time,
 .react-datepicker__time-box {
-    background-color: rgb(var(--color-surface));
+    background-color: rgb(var(--color-surface)) !important;
 }
 
 .react-datepicker__time-list-item {
-    color: rgb(var(--color-text-primary));
+    color: rgb(var(--color-text-primary)) !important;
 }
 
 .react-datepicker__time-list-item:hover {
@@ -1128,11 +1130,11 @@
 
 /* Whole calendar widget — fill the flex card */
 .rbc-calendar {
-    margin: 0;
-    background-color: rgb(var(--color-surface));
-    color: rgb(var(--color-text-primary));
-    height: 100%;
-    min-height: 0;
+    margin: 0 !important;
+    background-color: rgb(var(--color-surface)) !important;
+    color: rgb(var(--color-text-primary)) !important;
+    height: 100% !important;
+    min-height: 0 !important;
 }
 
 /* All major layout panels */
@@ -1144,99 +1146,99 @@
 .rbc-day-bg,
 .rbc-month-view,
 .rbc-agenda-view {
-    background-color: rgb(var(--color-surface));
+    background-color: rgb(var(--color-surface)) !important;
 }
 
 /* Every individual time slot cell */
 .rbc-time-slot {
-    background-color: rgb(var(--color-surface));
+    background-color: rgb(var(--color-surface)) !important;
     /* Compact slot height so more hours fit */
-    min-height: 20px;
+    min-height: 20px !important;
 }
 
 .rbc-timeslot-group {
-    background-color: rgb(var(--color-surface));
+    background-color: rgb(var(--color-surface)) !important;
     /* 2 slots per group × 20px */
-    min-height: 40px;
-    border-bottom: 1px solid rgb(var(--color-border));
+    min-height: 40px !important;
+    border-bottom: 1px solid rgb(var(--color-border)) !important;
 }
 
 /* Day column */
 .rbc-day-slot,
 .rbc-day-slot .rbc-time-slot {
-    background-color: rgb(var(--color-surface));
+    background-color: rgb(var(--color-surface)) !important;
 }
 
 /* Time gutter — slightly different background */
 .rbc-time-gutter {
-    background-color: rgb(var(--color-background-secondary));
+    background-color: rgb(var(--color-background-secondary)) !important;
 }
 .rbc-time-gutter .rbc-timeslot-group,
 .rbc-time-gutter .rbc-time-slot {
-    background-color: rgb(var(--color-background-secondary));
+    background-color: rgb(var(--color-background-secondary)) !important;
 }
 .rbc-label {
-    background-color: rgb(var(--color-background-secondary));
-    color: rgb(var(--color-text-tertiary));
-    font-size: 0.7rem;
-    font-family: "IBM Plex Sans", sans-serif;
-    padding: 0 0.4rem;
-    line-height: 1;
+    background-color: rgb(var(--color-background-secondary)) !important;
+    color: rgb(var(--color-text-tertiary)) !important;
+    font-size: 0.7rem !important;
+    font-family: "IBM Plex Sans", sans-serif !important;
+    padding: 0 0.4rem !important;
+    line-height: 1 !important;
 }
 
 /* Today column */
 .rbc-today {
-    background-color: rgb(var(--color-surface));
+    background-color: rgb(var(--color-surface)) !important;
 }
 
 /* Header row */
 .rbc-header {
-    background-color: rgb(var(--color-background-secondary));
-    border-bottom: 1px solid rgb(var(--color-border));
-    color: rgb(var(--color-text-secondary));
-    font-family: "IBM Plex Sans", sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
-    padding: 0.4rem 0;
+    background-color: rgb(var(--color-background-secondary)) !important;
+    border-bottom: 1px solid rgb(var(--color-border)) !important;
+    color: rgb(var(--color-text-secondary)) !important;
+    font-family: "IBM Plex Sans", sans-serif !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    padding: 0.4rem 0 !important;
 }
 .rbc-time-header-gutter {
-    background-color: rgb(var(--color-background-secondary));
-    border-bottom: 1px solid rgb(var(--color-border));
+    background-color: rgb(var(--color-background-secondary)) !important;
+    border-bottom: 1px solid rgb(var(--color-border)) !important;
 }
 .rbc-time-header-content {
-    border-left: none;
+    border-left: none !important;
 }
 .rbc-time-view {
-    border: none;
+    border: none !important;
 }
 
 /* Borders */
 .rbc-time-content {
-    border-top: 1px solid rgb(var(--color-border));
+    border-top: 1px solid rgb(var(--color-border)) !important;
 }
 .rbc-day-slot .rbc-time-slot {
-    border-top: 1px solid rgb(var(--color-border));
+    border-top: 1px solid rgb(var(--color-border)) !important;
 }
 .rbc-time-content > * + * > * {
-    border-left: 1px solid rgb(var(--color-border));
+    border-left: 1px solid rgb(var(--color-border)) !important;
 }
 
 /* Events */
 .rbc-event:focus {
-    outline: none;
-    box-shadow: none;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 /* Toolbar */
 .rbc-toolbar-label {
-    font-weight: bold;
-    color: rgb(var(--color-text-primary));
+    font-weight: bold !important;
+    color: rgb(var(--color-text-primary)) !important;
 }
 .rbc-btn-group button {
-    border: 1px solid rgb(var(--color-border));
-    border-radius: 0.5rem;
-    color: rgb(var(--color-text-primary));
-    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-border)) !important;
+    border-radius: 0.5rem !important;
+    color: rgb(var(--color-text-primary)) !important;
+    background-color: rgb(var(--color-surface)) !important;
 }
 .rbc-toolbar button.rbc-active,
 .rbc-toolbar button.rbc-active:focus,
@@ -1245,10 +1247,10 @@
 .rbc-toolbar button:hover,
 .rbc-toolbar button:active:focus,
 .rbc-toolbar button:active:hover {
-    background-color: rgb(var(--color-background-secondary));
-    border: 1px solid rgb(var(--color-border));
-    color: rgb(var(--color-text-primary));
-    box-shadow: none;
+    background-color: rgb(var(--color-background-secondary)) !important;
+    border: 1px solid rgb(var(--color-border)) !important;
+    color: rgb(var(--color-text-primary)) !important;
+    box-shadow: none !important;
 }
 
 @keyframes pulse {
@@ -1263,30 +1265,30 @@
 
 /* Current time indicator */
 .rbc-current-time-indicator {
-    background-color: rgb(var(--color-error));
-    height: 2px;
-    animation: pulse 1.5s infinite ease-in-out;
+    background-color: rgb(var(--color-error)) !important;
+    height: 2px !important;
+    animation: pulse 1.5s infinite ease-in-out !important;
 }
 
 .rbc-timeslot-group {
-    min-height: 1.7rem;
+    min-height: 1.7rem !important;
 }
 
 .rbc-btn-group button {
-    border-radius: 0%;
+    border-radius: 0% !important;
 }
 
 .rbc-header + .rbc-header {
-    border-left: 1px solid rgb(var(--color-border));
+    border-left: 1px solid rgb(var(--color-border)) !important;
 }
 
 .rbc-time-header.rbc-overflowing {
-    border-right: 1px solid rgb(var(--color-border));
-    border-top: 1px solid rgb(var(--color-border));
+    border-right: 1px solid rgb(var(--color-border)) !important;
+    border-top: 1px solid rgb(var(--color-border)) !important;
 }
 
 .rbc-time-header-gutter {
-    border-right: 1px solid rgb(var(--color-border));
+    border-right: 1px solid rgb(var(--color-border)) !important;
 }
 
 /* Calendar Styles - React Big Calendar — moved into main @layer block above */
