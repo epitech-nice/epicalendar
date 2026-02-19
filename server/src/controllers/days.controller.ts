@@ -88,7 +88,10 @@ export class DaysController {
     ): Promise<void> {
         try {
             const dayId = request.params.id;
-            const day = await Day.findById(dayId);
+            const day = await Day.findById(dayId).populate(
+                "aers",
+                "first_name last_name email _id",
+            );
 
             if (!day) {
                 response.status(404).json({ message: "Day not found." });
