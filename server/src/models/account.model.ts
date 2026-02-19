@@ -91,8 +91,8 @@ export async function formatAccountFields(
                       part.slice(1).toLowerCase(),
               )
               .join(first_name.includes("-") ? "-" : " ");
-    const formattedLastName = !first_name ? null : last_name.toUpperCase();
-    const formattedPassword = !first_name
+    const formattedLastName = !last_name ? null : last_name.toUpperCase();
+    const formattedPassword = !password
         ? null
         : await bcrypt.hash(password, 10);
 
