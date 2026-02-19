@@ -62,7 +62,11 @@ export class ImagesController {
     static getImageByFilename(request: Request, response: Response): void {
         try {
             const { filename } = request.params;
-            const imagePath = path.join(__dirname, "../../uploads", filename);
+            const imagePath = path.join(
+                __dirname,
+                "../../uploads",
+                filename as string,
+            );
 
             // Check if file exists
             if (!fs.existsSync(imagePath)) {
