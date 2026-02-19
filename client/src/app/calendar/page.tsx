@@ -8,6 +8,10 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
+import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
+import { DayResponse, DaysService } from "@/services/days.service";
+import { format } from "date-fns/format";
 import { parse } from "date-fns/parse";
 import { fr } from "date-fns/locale/fr";
 import { getDay } from "date-fns/getDay";
@@ -22,7 +26,7 @@ interface Event {
     title: string;
     start: Date;
     end: Date;
-    resource: Day;
+    resource: DayResponse;
 }
 
 const locales = {

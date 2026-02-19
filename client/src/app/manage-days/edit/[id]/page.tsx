@@ -10,7 +10,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { DaysService, Day, DayUpdate } from "@/services/days.service";
+import {
+    DaysService,
+    Day,
+    DayUpdate,
+    DayResponse,
+} from "@/services/days.service";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
 import Loading from "@/components/ui/loading.component";
@@ -25,7 +30,7 @@ export default function ManageDaysEditId() {
     const { user, loading, isAuthenticated } = useAuth();
 
     const [aers, setAers] = useState<Account[]>([]);
-    const [day, setDay] = useState<Day | null>(null);
+    const [day, setDay] = useState<DayResponse | null>(null);
     const [preset, setPreset] = useState<string>("Custom");
     const [formData, setFormData] = useState<DayUpdate | null>(null);
     const [responseLoading, setResponseLoading] = useState(false);
@@ -62,7 +67,9 @@ export default function ManageDaysEditId() {
                     start: new Date(dayData.start),
                     close: new Date(dayData.close),
                     end: dayData.end ? new Date(dayData.end) : undefined,
-                    aers: dayData.aers || [],
+                    aers: (dayData.aers || []).map((aer) =>
+                        typeof aer === "string" ? aer : aer._id!,
+                    ),
                     message: dayData.message || "",
                     observations: dayData.observations || "",
                 });
@@ -189,7 +196,7 @@ export default function ManageDaysEditId() {
             const k = key as keyof DayUpdate;
             // avoid using `any` to satisfy ESLint rule
             const originalValue = day
-                ? (day as Day)[k as keyof Day]
+                ? (day as DayResponse)[k as keyof DayResponse]
                 : undefined;
             const newValue = formData[k];
 

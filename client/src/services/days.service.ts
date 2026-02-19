@@ -17,9 +17,14 @@ export interface Day {
     start: Date;
     close: Date;
     end?: Date;
-    aers?: (string | Account)[];
+    aers?: string[];
     message?: string;
     observations?: string;
+}
+
+// Day as returned by the API with populated AER objects
+export interface DayResponse extends Omit<Day, "aers"> {
+    aers?: (string | Account)[];
 }
 
 export interface DayUpdate {
@@ -34,7 +39,7 @@ export interface DayUpdate {
 }
 
 export interface DaysPaginatedResponse {
-    days: Day[];
+    days: DayResponse[];
     pagination: {
         total: number;
         page: number;
@@ -61,7 +66,7 @@ export const DaysService = {
         }
     },
 
-    async getAllDays(): Promise<Day[]> {
+    async getAllDays(): Promise<DayResponse[]> {
         try {
             const response = (
                 await api.get("/days", { params: { page: 1, limit: 10000 } })
@@ -78,7 +83,7 @@ export const DaysService = {
         }
     },
 
-    async getDayById(id: string): Promise<Day> {
+    async getDayById(id: string): Promise<DayResponse> {
         try {
             return (await api.get(`/days/${id}`)).data;
         } catch (error) {

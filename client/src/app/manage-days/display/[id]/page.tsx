@@ -10,11 +10,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { DaysService, Day } from "@/services/days.service";
+import { DaysService, DayResponse } from "@/services/days.service";
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
 import Loading from "@/components/ui/loading.component";
-import { AccountsService } from "@/services/accounts.service";
+import { Account } from "@/services/accounts.service";
 
 export default function ManageDaysDisplayId() {
     const router = useRouter();
@@ -23,26 +23,12 @@ export default function ManageDaysDisplayId() {
 
     const { user, loading, isAuthenticated } = useAuth();
 
-    const [day, setDay] = useState<Day | null>(null);
+    const [day, setDay] = useState<DayResponse | null>(null);
     const [error, setError] = useState("");
 
     const fetchDay = useCallback(async () => {
         try {
             const dayData = await DaysService.getDayById(id);
-            const aers: string[] = [];
-            for (const aerId of dayData.aers || []) {
-                try {
-                    const account = await AccountsService.getAerById(aerId);
-                    if (account) {
-                        aers.push(`${account.first_name} ${account.last_name}`);
-                    } else {
-                        console.warn(`AER with ID ${aerId} not found.`);
-                    }
-                } catch (err) {
-                    console.error(`Error fetching AER with ID ${aerId}:`, err);
-                }
-            }
-            dayData.aers = aers;
             setDay(dayData);
         } catch (err) {
             setError(
@@ -215,7 +201,13 @@ export default function ManageDaysDisplayId() {
                         <span className="info-label">AERs assigned</span>
                         <span className="info-value">
                             {day.aers && day.aers.length > 0
-                                ? day.aers.join(", ")
+                                ? day.aers
+                                      .map((aer) =>
+                                          typeof aer === "string"
+                                              ? aer
+                                              : `${(aer as Account).first_name} ${(aer as Account).last_name}`,
+                                      )
+                                      .join(", ")
                                 : "No AER assigned"}
                         </span>
                     </div>

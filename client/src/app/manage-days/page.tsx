@@ -11,7 +11,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/contexts/auth.context";
 import { useRouter } from "next/navigation";
-import { Day, DaysService } from "@/services/days.service";
+import { DayResponse, DaysService } from "@/services/days.service";
 import Loading from "@/components/ui/loading.component";
 import { Account } from "@/services/accounts.service";
 import Link from "next/link";
@@ -21,7 +21,7 @@ export default function ManageDays() {
 
     const { user, loading, isAuthenticated } = useAuth();
 
-    const [days, setDays] = useState<Day[]>([]);
+    const [days, setDays] = useState<DayResponse[]>([]);
     const [error, setError] = useState<string | null>("");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
