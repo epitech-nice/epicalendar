@@ -15,6 +15,8 @@ import {
 import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
 import Loading from "@/components/ui/loading.component";
+import { useParams, useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 export default function ManageOpeningRequestsDisplayId() {
     const router = useRouter();
