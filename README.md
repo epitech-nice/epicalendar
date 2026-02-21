@@ -8,7 +8,7 @@ This project supports multiple deployment modes: local development, development 
 
 ### Prerequisites
 
-- Node.js and npm
+- Node.js and pnpm
 - Docker and Docker Compose
 - MongoDB (for local development only)
 - A `.env` (for local development and development with Docker) and a `.env.prod` (for production with Docker) in the project root

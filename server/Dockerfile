@@ -2,12 +2,17 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-COPY package.json ./
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@8.6.0 --activate
 
+# Copy dependency files first for better caching
+COPY package.json pnpm-lock.yaml* ./
+
+RUN pnpm install
+
+# Copy source code after dependencies
 COPY . .
-
-RUN npm install
 
 EXPOSE 5000
 
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]

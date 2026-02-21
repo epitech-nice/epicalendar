@@ -1,9 +1,18 @@
+/**
+ * @file page.tsx
+ * @brief
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/auth.context";
+import { Button, Input, Alert } from "@/components/ui";
 
 export default function Register() {
     const router = useRouter();
@@ -58,80 +67,86 @@ export default function Register() {
     }, [isAuthenticated, router]);
 
     return (
-        <main>
-            <div>
-                <h1 className="page-title">Sign Up</h1>
-
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            placeholder="your.email@example.com"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="first_name">First Name</label>
-                        <input
-                            type="text"
-                            id="first_name"
-                            name="first_name"
-                            value={formData.first_name}
-                            onChange={handleChange}
-                            required
-                            placeholder="Your first name"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="last_name">Last Name</label>
-                        <input
-                            type="text"
-                            id="last_name"
-                            name="last_name"
-                            value={formData.last_name}
-                            onChange={handleChange}
-                            required
-                            placeholder="Your last name"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            placeholder="Your password"
-                        />
-                    </div>
-
-                    {error && <div>{error}</div>}
-
-                    <button type="submit" disabled={responseLoading}>
-                        {responseLoading ? "Creating..." : "Create account"}
-                    </button>
-                </form>
-
-                <div>
-                    <p>
-                        Already have an account?{" "}
-                        <Link href="/login">Sign in</Link>
+        <main className="auth-page">
+            <div className="auth-card">
+                {/* Header */}
+                <div style={{ marginBottom: "2rem", textAlign: "center" }}>
+                    <h1 className="auth-title">Sign Up</h1>
+                    <p className="auth-subtitle">
+                        Create your EpiCalendar account
                     </p>
                 </div>
 
-                <div>
-                    <Link href="/">← Back to home</Link>
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <Input
+                        type="email"
+                        label="Email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="your.email@epitech.eu"
+                    />
+
+                    <Input
+                        type="text"
+                        label="First Name"
+                        name="first_name"
+                        value={formData.first_name}
+                        onChange={handleChange}
+                        required
+                        placeholder="Your first name"
+                    />
+
+                    <Input
+                        type="text"
+                        label="Last Name"
+                        name="last_name"
+                        value={formData.last_name}
+                        onChange={handleChange}
+                        required
+                        placeholder="Your last name"
+                    />
+
+                    <Input
+                        type="password"
+                        label="Password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        placeholder="Choose a password"
+                    />
+
+                    {error && (
+                        <Alert type="error" className="mb-4">
+                            {error}
+                        </Alert>
+                    )}
+
+                    <Button
+                        type="submit"
+                        disabled={responseLoading}
+                        className="btn-full btn-lg"
+                        style={{ marginTop: "0.5rem" }}
+                    >
+                        {responseLoading ? "Creating..." : "Create Account"}
+                    </Button>
+                </form>
+
+                <div className="auth-divider" />
+
+                <p className="auth-footer-text">
+                    Already have an account?{" "}
+                    <Link href="/login" className="auth-link">
+                        Sign in
+                    </Link>
+                </p>
+                <p className="auth-footer-text" style={{ marginTop: "0.5rem" }}>
+                    <Link href="/" className="back-link">
+                        ← Back to home
+                    </Link>
+                </p>
             </div>
         </main>
     );

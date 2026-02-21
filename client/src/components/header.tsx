@@ -4,7 +4,7 @@ import "./header.css";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/auth.context";
 
 export default function Header() {
     const { isAuthenticated, logout, user } = useAuth();

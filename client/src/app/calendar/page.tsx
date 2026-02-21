@@ -1,20 +1,28 @@
+/**
+ * @file page.tsx
+ * @brief
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
+import { useEffect, useState } from "react";
+import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
+import { DayResponse, DaysService } from "@/services/days.service";
+import { format } from "date-fns/format";
+import { format as formatDate } from "date-fns";
 import { parse } from "date-fns/parse";
 import { fr } from "date-fns/locale/fr";
 import { getDay } from "date-fns/getDay";
-import { format } from "date-fns/format";
-import { useEffect, useState } from "react";
-import { format as formatDate } from "date-fns";
 import { startOfWeek } from "date-fns/startOfWeek";
-import { Day, DaysService } from "@/services/daysService";
-import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
 
 interface Event {
     title: string;
     start: Date;
     end: Date;
-    resource: Day;
+    resource: DayResponse;
 }
 
 const locales = {
@@ -47,7 +55,7 @@ export default function CalendarPage() {
     useEffect(() => {
         const fetchDays = async () => {
             try {
-                const days = await DaysService.getDays();
+                const days = await DaysService.getAllDays();
                 const formattedEvents: Event[] = [];
 
                 for (const day of days) {
@@ -102,40 +110,77 @@ export default function CalendarPage() {
 
     if (error) {
         return (
-            <main>
-                <div className="error">{error}</div>
+            <main className="page-wrapper">
+                <div className="page-container">
+                    <div className="error-message">{error}</div>
+                </div>
             </main>
         );
     }
 
     return (
-        <main>
-            <h1 className="page-title">Opening Calendar</h1>
+        <main className="page-wrapper">
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <h1 className="page-title">Opening Calendar</h1>
+                        <p className="page-subtitle">Campus opening schedule</p>
+                    </div>
+                </div>
 
-            <Calendar
-                localizer={localizer}
-                events={events}
-                defaultView={Views.WEEK}
-                views={[Views.DAY, Views.WEEK]} //Views.MONTH ne marche pas
-                startAccessor="start"
-                endAccessor="end"
-                formats={formats}
-                eventPropGetter={(event) => {
-                    const backgroundColor =
-                        event.title === "AER guard"
-                            ? "var(--color-epitech)"
-                            : "#00FF90";
-                    return {
-                        style: {
-                            backgroundColor,
-                            borderRadius: "0.5rem",
-                            color: "var(--foreground)",
-                            border: "none",
-                            padding: "0.5rem",
-                        },
-                    };
-                }}
-            />
+                <div className="card" style={{ padding: "0" }}>
+                    <Calendar
+                        localizer={localizer}
+                        events={events}
+                        defaultView={Views.WEEK}
+                        views={[Views.DAY, Views.WEEK]}
+                        startAccessor="start"
+                        endAccessor="end"
+                        formats={formats}
+                        scrollToTime={(() => {
+                            if (events.length === 0)
+                                return new Date(
+                                    new Date().setHours(7, 0, 0, 0),
+                                );
+                            const earliest = events.reduce(
+                                (min, e) => (e.start < min ? e.start : min),
+                                events[0].start,
+                            );
+                            const scroll = new Date(earliest);
+                            scroll.setHours(
+                                Math.max(0, earliest.getHours() - 1),
+                                0,
+                                0,
+                                0,
+                            );
+                            // Never scroll before 07:00
+                            const floor = new Date(
+                                new Date().setHours(7, 0, 0, 0),
+                            );
+                            return scroll < floor ? floor : scroll;
+                        })()}
+                        style={{ height: 600 }}
+                        eventPropGetter={(event) => {
+                            const backgroundColor =
+                                event.title === "AER guard"
+                                    ? "rgb(var(--color-primary))"
+                                    : "rgb(var(--color-success))";
+                            return {
+                                style: {
+                                    backgroundColor,
+                                    borderRadius: "0",
+                                    color: "#ffffff",
+                                    border: "none",
+                                    padding: "0.4rem 0.6rem",
+                                    fontFamily: "'IBM Plex Sans', sans-serif",
+                                    fontSize: "0.82rem",
+                                    fontWeight: 500,
+                                },
+                            };
+                        }}
+                    />
+                </div>
+            </div>
         </main>
     );
 }

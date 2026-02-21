@@ -1,13 +1,21 @@
+/**
+ * @file page.tsx
+ * @brief
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
-import Link from "next/link";
-import Loading from "@/components/loading";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext";
-import { Account } from "@/services/accountsService";
 import { useCallback, useEffect, useState } from "react";
-import DisplayAccount from "@/components/displayAccount";
-import { ProfileService } from "@/services/profileService";
+import { useAuth } from "@/contexts/auth.context";
+import Loading from "@/components/ui/loading.component";
+import DisplayAccount from "@/components/display-account.component";
+import { ProfileService } from "@/services/profile.service";
+import { useRouter } from "next/navigation";
+import { Account } from "@/services/accounts.service";
+import Link from "next/link";
 
 export default function Profile() {
     const router = useRouter();
@@ -53,7 +61,7 @@ export default function Profile() {
     if (loading) {
         content = <Loading />;
     } else if (error) {
-        content = <div className="error">{error}</div>;
+        content = <div className="error-message">{error}</div>;
     } else {
         content = account ? (
             <DisplayAccount account={account} profile={true} />
@@ -61,12 +69,22 @@ export default function Profile() {
     }
 
     return (
-        <main>
-            <h1 className="page-title">My profile</h1>
+        <main className="page-wrapper">
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <h1 className="page-title">My Profile</h1>
+                        <p className="page-subtitle">
+                            Your account information
+                        </p>
+                    </div>
+                    <Link href="/" className="back-link">
+                        ← Back to home
+                    </Link>
+                </div>
 
-            {content}
-
-            <Link href="/">← Back to home</Link>
+                {content}
+            </div>
         </main>
     );
 }

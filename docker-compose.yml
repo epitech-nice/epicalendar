@@ -14,7 +14,13 @@ services:
       - ./mongo-init:/docker-entrypoint-initdb.d:ro
     networks:
       - app-network
-    restart: unless-stopped
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   # Service pour le serveur backend
   server:
@@ -22,7 +28,8 @@ services:
       context: server/
     container_name: epicalendar-server
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       MONGODB_URI: "${MONGODB_URI:-mongodb://mongo:mongo@db:27017/epicalendar?authSource=admin}"
       PORT: "${PORT:-5000}"

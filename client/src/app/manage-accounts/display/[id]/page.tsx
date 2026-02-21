@@ -1,12 +1,20 @@
+/**
+ * @file page.tsx
+ * @brief
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
-import Link from "next/link";
-import Loading from "@/components/loading";
-import { useAuth } from "@/contexts/authContext";
-import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import DisplayAccount from "@/components/displayAccount";
-import { AccountsService, Account } from "@/services/accountsService";
+import { useParams, useRouter } from "next/navigation";
+import { AccountsService, Account } from "@/services/accounts.service";
+import { useAuth } from "@/contexts/auth.context";
+import Link from "next/link";
+import Loading from "@/components/ui/loading.component";
+import DisplayAccount from "@/components/display-account.component";
 
 export default function ManageAccountsDisplayId() {
     const router = useRouter();
@@ -59,18 +67,25 @@ export default function ManageAccountsDisplayId() {
     if (loading) {
         content = <Loading />;
     } else if (error) {
-        content = <div className="error">{error}</div>;
+        content = <div className="error-message">{error}</div>;
     } else {
         content = account ? <DisplayAccount account={account} /> : null;
     }
 
     return (
-        <main>
-            <h1 className="page-title">Manage accounts - Display</h1>
+        <div className="page-wrapper">
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="page-header-left">
+                        <Link href="/manage-accounts" className="back-link">
+                            ← Back to accounts
+                        </Link>
+                        <h1 className="page-title">Account Details</h1>
+                    </div>
+                </div>
 
-            {content}
-
-            <Link href="/manage-accounts">← Back to accounts</Link>
-        </main>
+                {content}
+            </div>
+        </div>
     );
 }

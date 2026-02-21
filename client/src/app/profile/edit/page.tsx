@@ -1,13 +1,21 @@
+/**
+ * @file page.tsx
+ * @brief
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 "use client";
 
-import Link from "next/link";
-import Loading from "@/components/loading";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext";
-import EditAccount from "@/components/editAccount";
-import { Account } from "@/services/accountsService";
 import { useCallback, useEffect, useState } from "react";
-import { ProfileService } from "@/services/profileService";
+import { useAuth } from "@/contexts/auth.context";
+import Link from "next/link";
+import Loading from "@/components/ui/loading.component";
+import { ProfileService } from "@/services/profile.service";
+import { useRouter } from "next/navigation";
+import { Account } from "@/services/accounts.service";
+import EditAccount from "@/components/edit-account.component";
 
 export default function ProfileEdit() {
     const router = useRouter();

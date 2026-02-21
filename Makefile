@@ -89,8 +89,9 @@ clean: dev-down
 fclean: clean
 	@read -p "Are you sure you want to clean everything (the mongodb will be reset) ? [y/N] " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
-		@$(DC) -f $(DEV_COMPOSE) down -v; \
-		@$(DC) -f $(PROD_COMPOSE) down -v; \
+		$(DC) -f $(DEV_COMPOSE) down -v; \
+		$(DC) -f $(PROD_COMPOSE) down -v; \
+		echo "All volumes removed."; \
 	else \
 		echo "Aborted."; \
 	fi

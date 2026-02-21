@@ -1,9 +1,22 @@
 "use client";
 
+/**
+ * @file page.tsx
+ * @brief EpiCalendar — web application to manage schedules, opening requests,
+ * accounts and presence for Epitech students and staff. Offers calendar
+ * views, account management, day management, opening-requests workflow,
+ * image uploads, and integrations with the Epitech intranet and Office365.
+ * Built with Next.js, React, TypeScript, Tailwind CSS and a Node.js backend.
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/auth.context";
+import { Button, Input, Alert } from "@/components/ui";
 
 export default function Login() {
     const router = useRouter();
@@ -50,54 +63,66 @@ export default function Login() {
     }, [isAuthenticated, router]);
 
     return (
-        <main>
-            <div>
-                <h1 className="page-title">Sign In</h1>
-
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            placeholder="your.email@example.com"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            placeholder="Your password"
-                        />
-                    </div>
-
-                    {error && <div>{error}</div>}
-
-                    <button type="submit" disabled={responseLoading}>
-                        {responseLoading ? "Signing in..." : "Sign in"}
-                    </button>
-                </form>
-
-                <div>
-                    <p>
-                        Don&#39;t have an account?{" "}
-                        <Link href="/register">Sign up</Link>
+        <main className="auth-page">
+            <div className="auth-card">
+                {/* Header */}
+                <div style={{ marginBottom: "2rem", textAlign: "center" }}>
+                    <h1 className="auth-title">Sign In</h1>
+                    <p className="auth-subtitle">
+                        Access your EpiCalendar account
                     </p>
                 </div>
 
-                <div>
-                    <Link href="/">← Back to home</Link>
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <Input
+                        type="email"
+                        label="Email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="your.email@epitech.eu"
+                    />
+
+                    <Input
+                        type="password"
+                        label="Password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        placeholder="Your password"
+                    />
+
+                    {error && (
+                        <Alert type="error" className="mb-4">
+                            {error}
+                        </Alert>
+                    )}
+
+                    <Button
+                        type="submit"
+                        disabled={responseLoading}
+                        className="btn-full btn-lg"
+                        style={{ marginTop: "0.5rem" }}
+                    >
+                        {responseLoading ? "Signing in..." : "Sign In"}
+                    </Button>
+                </form>
+
+                <div className="auth-divider" />
+
+                <p className="auth-footer-text">
+                    Don&#39;t have an account?{" "}
+                    <Link href="/register" className="auth-link">
+                        Sign up
+                    </Link>
+                </p>
+                <p className="auth-footer-text" style={{ marginTop: "0.5rem" }}>
+                    <Link href="/" className="back-link">
+                        ← Back to home
+                    </Link>
+                </p>
             </div>
         </main>
     );

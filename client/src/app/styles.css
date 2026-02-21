@@ -1,55 +1,1256 @@
-/* CSS Reset */
-@tailwind base;
+/**
+ * EpiCalendar Global Styles
+ * Design System — inspired by EpiCheck & PoolTracker
+ * Colors: Epitech Blue brand system, dark/light theming
+ * Typography: Anton (titles) + IBM Plex Sans (body)
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
+
+@layer tailwind-base {
+    @tailwind base;
+}
 @tailwind components;
 @tailwind utilities;
 
-/* Variables */
-
-:root {
-    --background: #e0e0e0;
-    --background-item: #ffffff;
-    --foreground: #202020;
-    --text-color: #404040;
-    --color-epitech: #2693d0;
-    --color-epitech-hover: #3ba8e5;
-}
-/*
-@media (prefers-color-scheme: dark) {
+@layer base {
+    /* Light Theme (Default) */
     :root {
-        --background: #171717;
-        --foreground: #ffffff;
+        /* Brand Colors */
+        --color-primary: 1 58 251; /* Epitech Blue #013afb */
+        --color-primary-dark: 0 30 180; /* #001EB4 */
+        --color-primary-light: 66 107 255; /* #426BFF */
+
+        /* Background Colors */
+        --color-background: 248 249 252; /* Very light #F8F9FC */
+        --color-background-secondary: 241 242 248; /* Light Gray #F1F2F8 */
+        --color-background-tertiary: 255 255 255; /* White */
+
+        /* Surface Colors */
+        --color-surface: 255 255 255;
+        --color-surface-elevated: 255 255 255;
+
+        /* Text Colors */
+        --color-text-primary: 15 23 42; /* Near Black #0F1726 */
+        --color-text-secondary: 51 65 85; /* Slate #334155 */
+        --color-text-tertiary: 100 116 139; /* Slate-500 #64748B */
+        --color-text-disabled: 203 213 225; /* Slate-300 */
+
+        /* Border Colors */
+        --color-border: 226 232 240; /* Slate-200 #E2E8F0 */
+        --color-border-focus: 1 58 251; /* Epitech Blue */
+
+        /* Status Colors */
+        --color-success: 22 163 74;
+        --color-success-bg: 240 253 244;
+        --color-error: 220 38 38;
+        --color-error-bg: 254 242 242;
+        --color-warning: 234 88 12;
+        --color-warning-bg: 255 247 237;
+        --color-info: 37 99 235;
+        --color-info-bg: 239 246 255;
+
+        /* Card Colors */
+        --color-card-bg: 255 255 255;
+        --color-card-border: 226 232 240;
+
+        /* Input Colors */
+        --color-input-bg: 248 249 252;
+        --color-input-border: 203 213 225;
+        --color-input-text: 15 23 42;
+    }
+
+    /* Dark Theme */
+    :root.dark {
+        /* Brand Colors */
+        --color-primary: 1 58 251;
+        --color-primary-dark: 66 107 255;
+        --color-primary-light: 147 166 255;
+
+        /* Background Colors */
+        --color-background: 10 14 26; /* Deep dark #0A0E1A */
+        --color-background-secondary: 15 22 40; /* Dark Slate #0F1628 */
+        --color-background-tertiary: 22 32 55; /* Dark Blue #162037 */
+
+        /* Surface Colors */
+        --color-surface: 20 28 48; /* #141C30 */
+        --color-surface-elevated: 28 38 62; /* #1C263E */
+
+        /* Text Colors */
+        --color-text-primary: 241 245 249; /* Slate-100 */
+        --color-text-secondary: 203 213 225; /* Slate-300 */
+        --color-text-tertiary: 148 163 184; /* Slate-400 */
+        --color-text-disabled: 71 85 105; /* Slate-600 */
+
+        /* Border Colors */
+        --color-border: 30 41 59; /* Slate-800 */
+        --color-border-focus: 66 107 255; /* Lighter Blue */
+
+        /* Status Colors */
+        --color-success: 34 197 94;
+        --color-success-bg: 20 83 45;
+        --color-error: 239 68 68;
+        --color-error-bg: 127 29 29;
+        --color-warning: 251 146 60;
+        --color-warning-bg: 124 45 18;
+        --color-info: 96 165 250;
+        --color-info-bg: 30 58 138;
+
+        /* Card Colors */
+        --color-card-bg: 20 28 48;
+        --color-card-border: 30 41 59;
+
+        /* Input Colors */
+        --color-input-bg: 22 32 55;
+        --color-input-border: 30 41 59;
+        --color-input-text: 241 245 249;
+    }
+
+    /* Base styles */
+    body {
+        @apply bg-background text-text-primary;
+        margin: 0;
+        font-family:
+            "IBM Plex Sans",
+            system-ui,
+            -apple-system,
+            sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Headings use Anton (like PoolTracker titles) */
+    h1,
+    h2,
+    h3 {
+        font-family: "Anton", "IBM Plex Sans", system-ui, sans-serif;
+        font-weight: 400; /* Anton is inherently bold */
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        font-weight: 600;
+    }
+
+    * {
+        box-sizing: border-box;
     }
 }
-*/
 
-/* Styles */
+@layer components {
+    /* =====================================================
+     * PAGE LAYOUT
+     * ===================================================== */
+    .page-wrapper {
+        @apply bg-background;
+        padding: 2rem 1rem;
+    }
 
-:root {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    text-align: center;
+    .page-container {
+        @apply mx-auto w-full;
+        max-width: 1200px;
+        padding: 0 1rem;
+    }
+
+    .page-container-sm {
+        @apply mx-auto w-full;
+        max-width: 480px;
+    }
+
+    .page-container-md {
+        @apply mx-auto w-full;
+        max-width: 720px;
+    }
+
+    /* =====================================================
+     * TYPOGRAPHY — PoolTracker/EpiCheck style
+     * ===================================================== */
+    .page-title {
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        @apply text-text-primary;
+        font-size: 2.25rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.1;
+    }
+
+    .page-title-accent {
+        @apply text-primary;
+    }
+
+    .page-subtitle {
+        @apply text-text-tertiary;
+        font-family: "IBM Plex Sans", sans-serif;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .section-title {
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        @apply text-text-primary;
+        font-size: 1.25rem;
+        letter-spacing: 0.04em;
+        padding-bottom: 0.5rem;
+        @apply border-b-2 border-primary;
+        margin-bottom: 1.5rem;
+    }
+
+    /* =====================================================
+     * CARDS
+     * ===================================================== */
+    .card {
+        @apply bg-card-bg border border-card-border;
+        border-radius: 0; /* Sharp edges like PoolTracker */
+        padding: 1.5rem;
+        transition:
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .card-hover:hover {
+        @apply shadow-lg;
+        transform: translateY(-3px);
+    }
+
+    .card-primary {
+        @apply bg-primary text-white border-primary;
+        border-radius: 0;
+        padding: 1.5rem;
+    }
+
+    .card-accent-left {
+        @apply bg-card-bg border border-card-border border-l-4 border-l-primary;
+        border-radius: 0;
+        padding: 1.5rem;
+    }
+
+    /* =====================================================
+     * BUTTONS — inspired by PoolTracker style (sharp edges)
+     * ===================================================== */
+    .btn {
+        @apply font-medium transition-all duration-200 cursor-pointer;
+        font-family: "IBM Plex Sans", sans-serif;
+        border-radius: 0;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.25rem;
+        font-size: 0.95rem;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+    }
+
+    .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+
+    .btn-primary {
+        @apply btn bg-primary text-white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        @apply bg-primary-dark;
+    }
+
+    .btn-secondary {
+        @apply btn bg-transparent text-text-primary;
+        border: 1px solid rgb(var(--color-border));
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+        @apply bg-background-secondary;
+    }
+
+    .btn-danger {
+        @apply btn bg-status-error text-white;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+        background-color: rgb(185 28 28);
+    }
+
+    .btn-ghost {
+        @apply btn bg-transparent text-text-secondary;
+        border: none;
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+        @apply text-text-primary bg-background-secondary;
+    }
+
+    .btn-sm {
+        padding: 0.35rem 0.85rem;
+        font-size: 0.85rem;
+    }
+
+    .btn-lg {
+        padding: 0.85rem 1.75rem;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+    }
+
+    .btn-full {
+        width: 100%;
+    }
+
+    /* =====================================================
+     * FORM ELEMENTS
+     * ===================================================== */
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-family: "IBM Plex Sans", sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        @apply text-text-secondary;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.65rem 0.9rem;
+        font-family: "IBM Plex Sans", sans-serif;
+        font-size: 0.95rem;
+        border-radius: 0;
+        @apply bg-input-bg border border-input-border text-input-text;
+        /* Explicit overrides so browser color-scheme UA rules can't win */
+        background-color: rgb(var(--color-input-bg));
+        color: rgb(var(--color-input-text));
+        color-scheme: light dark;
+        transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease;
+        outline: none;
+    }
+
+    .form-input:focus {
+        @apply border-primary;
+        box-shadow: 0 0 0 3px rgb(var(--color-primary) / 0.15);
+    }
+
+    .form-input::placeholder {
+        @apply text-text-disabled;
+    }
+
+    .form-input-error {
+        @apply border-status-error;
+    }
+
+    .form-input-error:focus {
+        @apply border-status-error;
+        box-shadow: 0 0 0 3px rgb(var(--color-error) / 0.15);
+    }
+
+    .form-error {
+        margin-top: 0.35rem;
+        font-size: 0.8rem;
+        @apply text-status-error;
+    }
+
+    .form-select {
+        @apply form-input;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+    }
+
+    .form-textarea {
+        @apply form-input;
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .form-row-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    @media (max-width: 640px) {
+        .form-row-2 {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 0.75rem;
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+        border-top: 1px solid rgb(var(--color-border));
+    }
+
+    /* DatePicker override — match our form-input style */
+    .react-datepicker-wrapper {
+        display: block;
+        width: 100%;
+    }
+
+    .react-datepicker-wrapper input {
+        @apply form-input;
+        width: 100%;
+    }
+
+    /* =====================================================
+     * ALERTS & BADGES
+     * ===================================================== */
+    .alert {
+        padding: 0.75rem 1rem;
+        border-radius: 0;
+        border-left: 4px solid;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .alert-success {
+        @apply alert bg-status-success-bg text-status-success border-status-success;
+    }
+
+    .alert-error {
+        @apply alert bg-status-error-bg text-status-error border-status-error;
+    }
+
+    .alert-warning {
+        @apply alert bg-status-warning-bg text-status-warning border-status-warning;
+    }
+
+    .alert-info {
+        @apply alert bg-status-info-bg text-status-info border-status-info;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        border-radius: 0;
+    }
+
+    .badge-primary {
+        @apply badge bg-primary text-white;
+    }
+
+    .badge-success {
+        @apply badge bg-status-success text-white;
+    }
+
+    .badge-error {
+        @apply badge bg-status-error text-white;
+    }
+
+    .badge-warning {
+        @apply badge bg-status-warning text-white;
+    }
+
+    .badge-info {
+        @apply badge bg-status-info text-white;
+    }
+
+    .badge-neutral {
+        @apply badge bg-background-secondary text-text-secondary;
+        border: 1px solid rgb(var(--color-border));
+    }
+
+    /* =====================================================
+     * TABLE
+     * ===================================================== */
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: "IBM Plex Sans", sans-serif;
+        font-size: 0.9rem;
+    }
+
+    .data-table thead {
+        @apply bg-background-secondary;
+        border-bottom: 2px solid rgb(var(--color-primary));
+    }
+
+    .data-table th {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.78rem;
+        @apply text-text-tertiary;
+    }
+
+    .data-table td {
+        padding: 0.8rem 1rem;
+        @apply border-b border-card-border text-text-primary;
+    }
+
+    .data-table tbody tr {
+        transition: background-color 0.15s ease;
+    }
+
+    .data-table tbody tr:hover {
+        @apply bg-background-secondary;
+        cursor: pointer;
+    }
+
+    .data-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* =====================================================
+     * LOADING
+     * ===================================================== */
+    .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 200px;
+        gap: 1rem;
+        @apply text-text-tertiary;
+    }
+
+    .spinner {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 3px solid rgb(var(--color-border));
+        border-top-color: rgb(var(--color-primary));
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* =====================================================
+     * AUTH PAGES (login / register)
+     * ===================================================== */
+    .auth-page {
+        @apply min-h-screen bg-background flex items-center justify-center;
+        padding: 2rem 1rem;
+    }
+
+    .auth-card {
+        @apply card;
+        width: 100%;
+        max-width: 440px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .auth-title {
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        @apply text-primary;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 0.25rem;
+    }
+
+    .auth-subtitle {
+        @apply text-text-tertiary;
+        text-align: center;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .auth-divider {
+        @apply border-t border-card-border;
+        margin: 1.5rem 0;
+    }
+
+    .auth-footer-text {
+        @apply text-text-tertiary;
+        text-align: center;
+        font-size: 0.875rem;
+    }
+
+    .auth-link {
+        @apply text-primary;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .auth-link:hover {
+        @apply text-primary-dark;
+        text-decoration: underline;
+    }
+
+    /* =====================================================
+     * PAGE HEADERS
+     * ===================================================== */
+    .page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        @apply border-b-2 border-primary;
+    }
+
+    .page-header-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    /* =====================================================
+     * STATUS INDICATORS (for opening requests, etc)
+     * ===================================================== */
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+    }
+
+    .status-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    /* =====================================================
+     * PROFILE / ACCOUNT DISPLAY
+     * ===================================================== */
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid rgb(var(--color-primary));
+    }
+
+    .profile-avatar-lg {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid rgb(var(--color-primary));
+    }
+
+    .info-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.65rem 0;
+        @apply border-b border-card-border;
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        @apply text-text-tertiary;
+        min-width: 130px;
+        flex-shrink: 0;
+        padding-top: 0.1rem;
+    }
+
+    .info-value {
+        @apply text-text-primary;
+        font-size: 0.9rem;
+    }
+
+    /* =====================================================
+     * HOME PAGE — 2-column layout
+     * ===================================================== */
+    .home-main-grid {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    @media (max-width: 900px) {
+        .home-main-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .home-calendar-col {
+        min-width: 0; /* prevent grid blowout */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .home-calendar-card {
+        padding: 0 !important;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        /* Height is set dynamically via JS as a CSS variable */
+        height: var(--calendar-height, 500px);
+    }
+
+    /* Let rbc fill the flex container fully */
+    .home-calendar-card .rbc-calendar {
+        flex: 1 1 0;
+        height: 100% !important;
+        min-height: 0;
+    }
+
+    .home-calendar-card .rbc-time-view {
+        flex: 1 1 0;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .home-aers-col {
+        min-width: 0;
+    }
+
+    /* =====================================================
+     * AER CARDS (home page)
+     * ===================================================== */
+    .aer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+    }
+
+    /* Vertical stack for sidebar layout */
+    .aer-grid-vertical {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .aer-card-row {
+        @apply card card-hover;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+    }
+
+    .aer-card-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        min-width: 0;
+    }
+
+    .aer-card {
+        @apply card card-hover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.75rem;
+        padding: 1.75rem 1.25rem;
+    }
+
+    .aer-name {
+        font-family: "IBM Plex Sans", sans-serif;
+        font-weight: 600;
+        @apply text-text-primary;
+        font-size: 1rem;
+    }
+
+    .aer-email {
+        @apply text-primary;
+        font-size: 0.85rem;
+        text-decoration: none;
+    }
+
+    .aer-email:hover {
+        @apply text-primary-dark;
+        text-decoration: underline;
+    }
+
+    .aer-detail {
+        @apply text-text-tertiary;
+        font-size: 0.82rem;
+    }
+
+    /* =====================================================
+     * CAMPUS STATUS BANNER
+     * ===================================================== */
+    .campus-status-banner {
+        @apply bg-card-bg border border-card-border;
+        border-left: 5px solid rgb(var(--color-primary));
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .campus-status-banner.status-closed {
+        border-left-color: rgb(var(--color-error));
+    }
+
+    .campus-status-banner.status-open {
+        border-left-color: rgb(var(--color-success));
+    }
+
+    .campus-status-time {
+        font-family: "Anton", sans-serif;
+        font-size: 1.5rem;
+        @apply text-text-primary;
+    }
+
+    .campus-status-label {
+        @apply text-text-tertiary;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* =====================================================
+     * STUCK PAGE — Contact Cards
+     * ===================================================== */
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin-top: 1.25rem;
+    }
+
+    .contact-card {
+        @apply card-accent-left;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .contact-school-name {
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        @apply text-primary;
+        font-size: 1.1rem;
+    }
+
+    .contact-description {
+        @apply text-text-secondary;
+        font-size: 0.875rem;
+    }
+
+    .contact-link {
+        @apply text-primary;
+        font-size: 0.875rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .contact-link:hover {
+        text-decoration: underline;
+    }
+
+    /* =====================================================
+     * EMPTY STATE
+     * ===================================================== */
+    .empty-state {
+        @apply bg-background-secondary border border-card-border;
+        padding: 3rem 2rem;
+        text-align: center;
+        color: rgb(var(--color-text-tertiary));
+    }
+
+    .empty-state-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    /* =====================================================
+     * ERROR STATE
+     * ===================================================== */
+    .error-message {
+        @apply alert-error;
+        margin: 1rem 0;
+    }
+
+    /* =====================================================
+     * BACK LINK
+     * ===================================================== */
+    .back-link {
+        @apply text-text-tertiary;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.875rem;
+        text-decoration: none;
+        margin-bottom: 1.5rem;
+        transition: color 0.15s ease;
+    }
+
+    .back-link:hover {
+        @apply text-primary;
+    }
+
+    /* =====================================================
+     * AER TAG (inline chip for assigned AERs)
+     * ===================================================== */
+    .aer-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.25rem 0.6rem;
+        @apply bg-surface border border-border text-text-primary;
+        font-size: 0.8rem;
+        border-radius: 0;
+    }
+
+    .aer-tag-remove {
+        background: none;
+        border: none;
+        cursor: pointer;
+        @apply text-text-tertiary;
+        font-size: 0.75rem;
+        line-height: 1;
+        padding: 0;
+        transition: color 0.15s ease;
+    }
+
+    .aer-tag-remove:hover {
+        @apply text-status-error;
+    }
+
+    /* =====================================================
+     * IMAGE UPLOAD
+     * ===================================================== */
+    .image-upload {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .image-upload-preview {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        @apply border border-border;
+        flex-shrink: 0;
+    }
+
+    .image-upload-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .image-upload-controls {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
 }
 
-body {
-    margin: 0;
-    background: var(--background);
-    color: var(--text-color);
-    font-family: Arial, Helvetica, sans-serif;
+/* =============================================================
+ * REACT DATEPICKER OVERRIDES
+ * Must be outside @layer so they beat the library's unlayered CSS
+ * ============================================================= */
+
+/* Input field — force our design-system colors regardless of browser color-scheme */
+.react-datepicker-wrapper input {
+    background-color: rgb(var(--color-input-bg)) !important;
+    color: rgb(var(--color-input-text)) !important;
+    border: 1px solid rgb(var(--color-input-border)) !important;
+    padding: 0.65rem 0.9rem !important;
 }
 
-.page-title {
-    text-align: center;
-    color: var(--color-epitech);
+.react-datepicker-wrapper input:focus {
+    border-color: rgb(var(--color-primary)) !important;
+    box-shadow: 0 0 0 3px rgb(var(--color-primary) / 0.15) !important;
+    outline: none !important;
 }
 
-/* Calendar styles */
+/* Popper container */
+.react-datepicker {
+    background-color: rgb(var(--color-surface)) !important;
+    border: 1px solid rgb(var(--color-border)) !important;
+    border-radius: 0 !important;
+    font-family: "IBM Plex Sans", sans-serif !important;
+    font-size: 0.875rem !important;
+    color: rgb(var(--color-text-primary)) !important;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.15) !important;
+}
 
-/* Line for current time indicator */
-.rbc-current-time-indicator {
-    background-color: #900000;
-    height: 0.25rem;
-    box-shadow: 0 0 0.5rem #900000;
-    animation: pulse 1.5s infinite ease-in-out;
+.react-datepicker__triangle {
+    display: none !important;
+}
+
+/* Header (month + navigation) */
+.react-datepicker__header {
+    background-color: rgb(var(--color-background-secondary)) !important;
+    border-bottom: 1px solid rgb(var(--color-border)) !important;
+    border-radius: 0 !important;
+    padding: 0.6rem 0 0.4rem !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    color: rgb(var(--color-text-primary)) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+/* Day names row */
+.react-datepicker__day-name {
+    color: rgb(var(--color-text-tertiary)) !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+}
+
+/* Day cells */
+.react-datepicker__day {
+    color: rgb(var(--color-text-primary)) !important;
+    border-radius: 0 !important;
+}
+
+.react-datepicker__day:hover {
+    background-color: rgb(var(--color-background-secondary)) !important;
+    color: rgb(var(--color-text-primary)) !important;
+    border-radius: 0 !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background-color: rgb(var(--color-primary)) !important;
+    color: #fff !important;
+    border-radius: 0 !important;
+}
+
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--keyboard-selected:hover {
+    background-color: rgb(var(--color-primary-dark)) !important;
+    color: #fff !important;
+}
+
+.react-datepicker__day--today {
+    font-weight: 700 !important;
+    color: rgb(var(--color-primary)) !important;
+}
+
+.react-datepicker__day--today.react-datepicker__day--selected {
+    color: #fff !important;
+}
+
+.react-datepicker__day--disabled {
+    color: rgb(var(--color-text-disabled)) !important;
+}
+
+.react-datepicker__day--disabled:hover {
+    background-color: transparent !important;
+}
+
+/* Navigation arrows */
+.react-datepicker__navigation-icon::before {
+    border-color: rgb(var(--color-text-tertiary)) !important;
+}
+
+.react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
+    border-color: rgb(var(--color-text-primary)) !important;
+}
+
+/* Month container background */
+.react-datepicker__month {
+    background-color: rgb(var(--color-surface)) !important;
+    margin: 0.3rem !important;
+}
+
+/* Time list */
+.react-datepicker__time-container {
+    border-left: 1px solid rgb(var(--color-border)) !important;
+}
+
+.react-datepicker__time,
+.react-datepicker__time-box {
+    background-color: rgb(var(--color-surface)) !important;
+}
+
+.react-datepicker__time-list-item {
+    color: rgb(var(--color-text-primary)) !important;
+}
+
+.react-datepicker__time-list-item:hover {
+    background-color: rgb(var(--color-background-secondary)) !important;
+}
+
+.react-datepicker__time-list-item--selected {
+    background-color: rgb(var(--color-primary)) !important;
+    color: #fff !important;
+}
+
+/* =============================================================
+ * REACT BIG CALENDAR OVERRIDES
+ * Must be outside @layer so they beat the library's unlayered CSS
+ * ============================================================= */
+
+/* Hide all-day row */
+.rbc-allday-cell {
+    display: none !important;
+}
+.rbc-row.rbc-allday {
+    display: none !important;
+}
+
+/* Whole calendar widget — fill the flex card */
+.rbc-calendar {
+    margin: 0 !important;
+    background-color: rgb(var(--color-surface)) !important;
+    color: rgb(var(--color-text-primary)) !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+/* All major layout panels */
+.rbc-time-view,
+.rbc-time-content,
+.rbc-time-header,
+.rbc-time-header-content,
+.rbc-time-header-gutter,
+.rbc-day-bg,
+.rbc-month-view,
+.rbc-agenda-view {
+    background-color: rgb(var(--color-surface)) !important;
+}
+
+/* Every individual time slot cell */
+.rbc-time-slot {
+    background-color: rgb(var(--color-surface)) !important;
+    /* Compact slot height so more hours fit */
+    min-height: 20px !important;
+}
+
+.rbc-timeslot-group {
+    background-color: rgb(var(--color-surface)) !important;
+    /* 2 slots per group × 20px */
+    min-height: 40px !important;
+    border-bottom: 1px solid rgb(var(--color-border)) !important;
+}
+
+/* Day column */
+.rbc-day-slot,
+.rbc-day-slot .rbc-time-slot {
+    background-color: rgb(var(--color-surface)) !important;
+}
+
+/* Time gutter — slightly different background */
+.rbc-time-gutter {
+    background-color: rgb(var(--color-background-secondary)) !important;
+}
+.rbc-time-gutter .rbc-timeslot-group,
+.rbc-time-gutter .rbc-time-slot {
+    background-color: rgb(var(--color-background-secondary)) !important;
+}
+.rbc-label {
+    background-color: rgb(var(--color-background-secondary)) !important;
+    color: rgb(var(--color-text-tertiary)) !important;
+    font-size: 0.7rem !important;
+    font-family: "IBM Plex Sans", sans-serif !important;
+    padding: 0 0.4rem !important;
+    line-height: 1 !important;
+}
+
+/* Today column */
+.rbc-today {
+    background-color: rgb(var(--color-surface)) !important;
+}
+
+/* Header row */
+.rbc-header {
+    background-color: rgb(var(--color-background-secondary)) !important;
+    border-bottom: 1px solid rgb(var(--color-border)) !important;
+    color: rgb(var(--color-text-secondary)) !important;
+    font-family: "IBM Plex Sans", sans-serif !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    padding: 0.4rem 0 !important;
+}
+.rbc-time-header-gutter {
+    background-color: rgb(var(--color-background-secondary)) !important;
+    border-bottom: 1px solid rgb(var(--color-border)) !important;
+}
+.rbc-time-header-content {
+    border-left: none !important;
+}
+.rbc-time-view {
+    border: none !important;
+}
+
+/* Borders */
+.rbc-time-content {
+    border-top: 1px solid rgb(var(--color-border)) !important;
+}
+.rbc-day-slot .rbc-time-slot {
+    border-top: 1px solid rgb(var(--color-border)) !important;
+}
+.rbc-time-content > * + * > * {
+    border-left: 1px solid rgb(var(--color-border)) !important;
+}
+
+/* Events */
+.rbc-event:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Toolbar */
+.rbc-toolbar-label {
+    font-weight: bold !important;
+    color: rgb(var(--color-text-primary)) !important;
+}
+.rbc-btn-group button {
+    border: 1px solid rgb(var(--color-border)) !important;
+    border-radius: 0.5rem !important;
+    color: rgb(var(--color-text-primary)) !important;
+    background-color: rgb(var(--color-surface)) !important;
+}
+.rbc-toolbar button.rbc-active,
+.rbc-toolbar button.rbc-active:focus,
+.rbc-toolbar button.rbc-active:hover,
+.rbc-toolbar button:focus,
+.rbc-toolbar button:hover,
+.rbc-toolbar button:active:focus,
+.rbc-toolbar button:active:hover {
+    background-color: rgb(var(--color-background-secondary)) !important;
+    border: 1px solid rgb(var(--color-border)) !important;
+    color: rgb(var(--color-text-primary)) !important;
+    box-shadow: none !important;
 }
 
 @keyframes pulse {
@@ -62,96 +1263,32 @@ body {
     }
 }
 
-/* Hide all-day events */
-.rbc-allday-cell {
-    display: none;
+/* Current time indicator */
+.rbc-current-time-indicator {
+    background-color: rgb(var(--color-error)) !important;
+    height: 2px !important;
+    animation: pulse 1.5s infinite ease-in-out !important;
 }
 
-.rbc-row.rbc-allday {
-    display: none;
-}
-
-/* Toolbar styles */
-.rbc-btn-group button {
-    border: 1px solid var(--foreground);
-    border-radius: 0.5rem;
-}
-
-.rbc-toolbar button.rbc-active {
-    background-color: var(--background-item);
-    border: 1px solid var(--foreground);
-}
-
-.rbc-toolbar button.rbc-active:focus,
-.rbc-toolbar button.rbc-active:hover,
-.rbc-toolbar button:focus,
-.rbc-toolbar button:hover,
-.rbc-toolbar button:active:focus,
-.rbc-toolbar button:active:hover {
-    background-color: var(--background-item);
-    border: 1px solid var(--foreground);
-}
-
-.rbc-toolbar-label {
-    font-weight: bold;
-}
-
-/* Margin around the calendar */
-.rbc-calendar {
-    margin: 1rem;
-}
-
-/* Events styles */
-.rbc-event:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-/* Current day highlight */
-.rbc-today {
-    background-color: var(--background-item);
-}
-
-.rbc-header.rbc-today {
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-}
-
-/* Borders and lines */
 .rbc-timeslot-group {
-    border: none;
+    min-height: 1.7rem !important;
 }
 
-.rbc-time-content {
-    border: none;
+.rbc-btn-group button {
+    border-radius: 0% !important;
 }
 
-.rbc-header {
-    border: none;
+.rbc-header + .rbc-header {
+    border-left: 1px solid rgb(var(--color-border)) !important;
 }
 
-.rbc-time-header-content {
-    border: none;
+.rbc-time-header.rbc-overflowing {
+    border-right: 1px solid rgb(var(--color-border)) !important;
+    border-top: 1px solid rgb(var(--color-border)) !important;
 }
 
-.rbc-time-view {
-    border: none;
+.rbc-time-header-gutter {
+    border-right: 1px solid rgb(var(--color-border)) !important;
 }
 
-.rbc-day-slot .rbc-time-slot {
-    border-top: 1px solid var(--foreground);
-}
-
-.rbc-time-content > * + * > * {
-    border-left: 1px solid var(--foreground);
-}
-
-.rbc-day-slot:last-child {
-    /* Dernière colonne horizontale */
-    border-right: 1px solid var(--foreground);
-}
-
-.rbc-day-slot {
-    /* Dernière ligne verticale */
-    border-bottom: 1px solid var(--foreground);
-}
+/* Calendar Styles - React Big Calendar — moved into main @layer block above */

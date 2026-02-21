@@ -1,3 +1,11 @@
+/**
+ * @file layout.tsx
+ * @brief
+ * @project EpiCalendar - Epitech Project
+ * @author Nicolas TORO <nicolas.toro@epitech.eu>
+ * @copyright (c) 2025-2026 EPITECH Nice
+ */
+
 import "react-datepicker/dist/react-datepicker.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./styles.css";
@@ -5,19 +13,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { AuthProvider } from "@/contexts/authContext";
-import ClientLayout from "@/components/clientLayout";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
+import { AuthProvider } from "@/contexts/auth.context";
+import { ThemeProvider } from "@/contexts/theme.context";
+import ClientLayout from "@/components/client-layout.component";
 
 export const metadata: Metadata = {
     title: "EpiCalendar",
@@ -29,12 +27,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-                <AuthProvider>
-                    <ClientLayout>{children}</ClientLayout>
-                </AuthProvider>
+            <body className={`antialiased`}>
+                <ThemeProvider>
+                    <AuthProvider>
+                        <ClientLayout>{children}</ClientLayout>
+                    </AuthProvider>
+                </ThemeProvider>
             </body>
         </html>
     );
