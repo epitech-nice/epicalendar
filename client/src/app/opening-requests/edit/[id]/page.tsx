@@ -17,8 +17,6 @@ import { useAuth } from "@/contexts/auth.context";
 import Link from "next/link";
 import Loading from "@/components/ui/loading.component";
 import DatePicker from "react-datepicker";
-import Loading from "@/components/loading";
-import { useAuth } from "@/contexts/authContext";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";

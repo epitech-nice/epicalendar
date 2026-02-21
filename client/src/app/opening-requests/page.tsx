@@ -17,10 +17,6 @@ import {
 } from "@/services/opening-requests.service";
 import Loading from "@/components/ui/loading.component";
 import Link from "next/link";
-import Loading from "@/components/loading";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext";
-import { useState, useEffect, useCallback } from "react";
 
 export default function ManageOpeningRequests() {
     const router = useRouter();

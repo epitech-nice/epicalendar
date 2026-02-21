@@ -12,15 +12,11 @@ import { useEffect, useState } from "react";
 import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
 import { DayResponse, DaysService } from "@/services/days.service";
 import { format } from "date-fns/format";
+import { format as formatDate } from "date-fns";
 import { parse } from "date-fns/parse";
 import { fr } from "date-fns/locale/fr";
 import { getDay } from "date-fns/getDay";
-import { format } from "date-fns/format";
-import { useEffect, useState } from "react";
-import { format as formatDate } from "date-fns";
 import { startOfWeek } from "date-fns/startOfWeek";
-import { Day, DaysService } from "@/services/days.service";
-import { Calendar, Views, dateFnsLocalizer } from "react-big-calendar";
 
 interface Event {
     title: string;

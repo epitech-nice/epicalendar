@@ -18,10 +18,6 @@ import {
 } from "@/services/opening-requests.service";
 import Loading from "@/components/ui/loading.component";
 import DatePicker from "react-datepicker";
-import Loading from "@/components/loading";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useAuth } from "@/contexts/authContext";
 
 export default function ManageOpeningRequestsAdd() {
     const router = useRouter();
