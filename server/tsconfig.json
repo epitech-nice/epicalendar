@@ -15,7 +15,6 @@
         "noUnusedLocals": false,
         "noUnusedParameters": false,
         "noImplicitReturns": false,
-        "types": ["node", "express"],
         "baseUrl": ".",
         "paths": {
             "@/*": ["./src/*"]
