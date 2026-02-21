@@ -63,7 +63,7 @@ jobs:
             - name: Build and push Server Docker image
               uses: docker/build-push-action@v5
               with:
-                context: ./server
+                context: .
                 file: ./server/Dockerfile.prod
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
@@ -113,7 +113,7 @@ jobs:
             - name: Build and push Client Docker image
               uses: docker/build-push-action@v5
               with:
-                context: ./client
+                context: .
                 file: ./client/Dockerfile.prod
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
