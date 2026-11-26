@@ -69,7 +69,7 @@ Use these commands to generate secure secrets:
 openssl rand -base64 32
 
 # Generate MongoDB password
-openssl rand -base64 24
+openssl rand -hex 24  # hex: safe inside the MongoDB URI
 ```
 
 ### 4. Prepare Kubeconfig

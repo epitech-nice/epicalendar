@@ -87,7 +87,7 @@ JWT_SECRET=$(openssl rand -base64 32)
 echo "JWT_SECRET: $JWT_SECRET"
 
 # Generate MongoDB password
-MONGO_PASSWORD=$(openssl rand -base64 24)
+MONGO_PASSWORD=$(openssl rand -hex 24)  # hex: safe inside MONGODB_URI, no percent-encoding needed
 echo "MONGO_PASSWORD: $MONGO_PASSWORD"
 ```
 

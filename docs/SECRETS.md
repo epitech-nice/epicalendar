@@ -37,7 +37,7 @@ This document explains how to configure all required secrets for the CI/CD pipel
 - **Name:** `MONGO_ROOT_PASSWORD`
 - **Value:** Strong password for MongoDB root user
 - **Used for:** MongoDB authentication in Kubernetes
-- **Example:** Generate a strong password like `$(openssl rand -base64 32)`
+- **Example:** Generate a strong password like `$(openssl rand -hex 32)`. Use hex: the deploy workflow inserts it as is in `MONGODB_URI`, where base64 characters (`/`, `+`, `=`) would break the connection string
 
 ### 5. JWT_SECRET
 
@@ -65,7 +65,7 @@ Generate secure values for secrets:
 openssl rand -base64 64
 
 # Generate MONGO_ROOT_PASSWORD
-openssl rand -base64 32
+openssl rand -hex 32
 
 ```
 
