@@ -1,5 +1,7 @@
 # Kubernetes Deployment Guide
 
+> **Archived project, no longer deployed.** On 2026-11-26 the `epicalendar` namespace was removed from the cluster, the "Deploy to Kubernetes" workflow was disabled and the `KUBECONFIG`, `MONGO_*` and `JWT_SECRET` secrets were deleted. If the project comes back, give CI a ServiceAccount restricted to the `epicalendar` namespace, never the cluster admin kubeconfig.
+
 This directory contains Kubernetes manifests for deploying the EpiCalendar application.
 
 ## Prerequisites
@@ -21,8 +23,8 @@ The application consists of:
 
 - `namespace.yaml`: Creates the epicalendar namespace
 - `mongodb-pvc.yaml`: Persistent volume claim for MongoDB data
-- `mongodb-secret.yaml`: MongoDB credentials
-- `app-secret.yaml`: Application secrets (JWT)
+- `mongodb-secret.example.yaml`: shape of the MongoDB credentials Secret (not applied)
+- `app-secret.example.yaml`: shape of the application Secret (JWT, not applied)
 - `mongodb-configmap.yaml`: MongoDB configuration
 - `mongodb-deployment.yaml`: MongoDB deployment and service
 - `server-deployment.yaml`: Backend API deployment and service
@@ -59,9 +61,11 @@ rules:
 
 ### 2. Update Secrets (Production)
 
-For production, update the secrets with secure values:
+The Kubernetes Secrets are created by the deploy workflow from the GitHub Secrets. `kubernetes/mongodb-secret.example.yaml` and `kubernetes/app-secret.example.yaml` only show their shape; they are not applied.
 
-#### `mongodb-secret.yaml`
+Create them by hand only for a manual deployment:
+
+#### `mongodb-secret.example.yaml`
 ```yaml
 stringData:
   MONGO_INITDB_ROOT_USERNAME: <secure-username>
@@ -69,7 +73,7 @@ stringData:
   MONGODB_URI: mongodb://<username>:<password>@mongodb-service:27017/epicalendar?authSource=admin
 ```
 
-#### `app-secret.yaml`
+#### `app-secret.example.yaml`
 ```yaml
 stringData:
   JWT_SECRET: <secure-random-string>
@@ -89,8 +93,6 @@ Or apply individually:
 ```bash
 kubectl apply -f kubernetes/namespace.yaml
 kubectl apply -f kubernetes/mongodb-pvc.yaml
-kubectl apply -f kubernetes/mongodb-secret.yaml
-kubectl apply -f kubernetes/app-secret.yaml
 kubectl apply -f kubernetes/mongodb-configmap.yaml
 kubectl apply -f kubernetes/mongodb-deployment.yaml
 kubectl apply -f kubernetes/server-deployment.yaml

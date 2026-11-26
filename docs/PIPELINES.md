@@ -1,5 +1,7 @@
 # GitHub Actions CI/CD
 
+> **Archived project, no longer deployed.** On 2026-11-26 the `epicalendar` namespace was removed from the cluster, the "Deploy to Kubernetes" workflow was disabled and the `KUBECONFIG`, `MONGO_*` and `JWT_SECRET` secrets were deleted. If the project comes back, give CI a ServiceAccount restricted to the `epicalendar` namespace, never the cluster admin kubeconfig.
+
 This directory contains GitHub Actions workflows for continuous integration and deployment.
 
 ## Workflows
@@ -48,11 +50,7 @@ Configure the following secrets in your GitHub repository:
 #### Repository Settings → Secrets and variables → Actions → New repository secret
 
 **Kubernetes Configuration:**
-- `KUBECONFIG`: Base64-encoded kubeconfig file
-  ```bash
-  cat ~/.kube/config | base64 | pbcopy  # macOS
-  cat ~/.kube/config | base64 -w 0      # Linux
-  ```
+- `KUBECONFIG`: Base64-encoded kubeconfig of a ServiceAccount restricted to the `epicalendar` namespace (Role + RoleBinding on the resources the app uses). **Never** the cluster admin kubeconfig (`~/.kube/config`, `kubectl config view --raw`): any workflow of the repository could read it.
 
 **MongoDB Secrets:**
 - `MONGO_ROOT_USERNAME`: MongoDB root username (e.g., `mongo`)
@@ -76,15 +74,9 @@ openssl rand -base64 24
 
 ### 4. Prepare Kubeconfig
 
-Get your kubeconfig file:
+Base64-encoded kubeconfig of a ServiceAccount restricted to the `epicalendar` namespace (Role + RoleBinding on the resources the app uses). **Never** the cluster admin kubeconfig (`~/.kube/config`, `kubectl config view --raw`): any workflow of the repository could read it.
 
-```bash
-# Copy kubeconfig and encode it
-kubectl config view --raw | base64 | pbcopy  # macOS
-kubectl config view --raw | base64 -w 0      # Linux
-```
-
-Then paste the output as the `KUBECONFIG` secret in GitHub.
+Encode it with `base64` and paste the output as the `KUBECONFIG` secret in GitHub.
 
 ### 5. Configure Remote Host
 
