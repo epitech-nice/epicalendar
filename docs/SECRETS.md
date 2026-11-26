@@ -1,5 +1,7 @@
 # GitHub Actions Secrets Setup
 
+> **Archived project, no longer deployed.** On 2026-11-26 the `epicalendar` namespace was removed from the cluster, the "Deploy to Kubernetes" workflow was disabled and the `KUBECONFIG`, `MONGO_*` and `JWT_SECRET` secrets were deleted. If the project comes back, give CI a ServiceAccount restricted to the `epicalendar` namespace, never the cluster admin kubeconfig.
+
 ## Overview
 
 This document explains how to configure all required secrets for the CI/CD pipeline in GitHub Actions.
@@ -21,13 +23,8 @@ This document explains how to configure all required secrets for the CI/CD pipel
 ### 2. KUBECONFIG
 
 - **Name:** `KUBECONFIG`
-- **Value:** Base64-encoded Kubernetes config file
+- **Value:** Base64-encoded kubeconfig of a ServiceAccount restricted to the `epicalendar` namespace (Role + RoleBinding on the resources the app uses). **Never** the cluster admin kubeconfig (`~/.kube/config`, `kubectl config view --raw`): any workflow of the repository could read it. Setup: `docs/DEPLOYMENT.md`, "Cluster Admin Setup".
 - **Used for:** Authenticating with your Kubernetes cluster
-- **How to get it:**
-  ```bash
-  cat ~/.kube/config | base64
-  ```
-  Copy the entire base64 output
 
 ### 3. MONGO_ROOT_USERNAME
 
@@ -40,7 +37,7 @@ This document explains how to configure all required secrets for the CI/CD pipel
 - **Name:** `MONGO_ROOT_PASSWORD`
 - **Value:** Strong password for MongoDB root user
 - **Used for:** MongoDB authentication in Kubernetes
-- **Example:** Generate a strong password like `$(openssl rand -base64 32)`
+- **Example:** Generate a strong password like `$(openssl rand -hex 32)`. Use hex: the deploy workflow inserts it as is in `MONGODB_URI`, where base64 characters (`/`, `+`, `=`) would break the connection string
 
 ### 5. JWT_SECRET
 
@@ -56,7 +53,7 @@ This document explains how to configure all required secrets for the CI/CD pipel
 - **Already provided** by GitHub Actions automatically
 - **Used for:** 
   - Authenticating to GitHub Container Registry (ghcr.io) to push images
-  - Creating Kubernetes imagePullSecret to pull private images from ghcr.io
+  - Creating Kubernetes imagePullSecret to pull private images from ghcr.io (this token expires at the end of the job: pods recreated later cannot pull a private image; use a dedicated read:packages token or a public package)
 - No action required
 
 ## Quick Setup Commands
@@ -68,16 +65,14 @@ Generate secure values for secrets:
 openssl rand -base64 64
 
 # Generate MONGO_ROOT_PASSWORD
-openssl rand -base64 32
+openssl rand -hex 32
 
-# Get base64-encoded kubeconfig
-cat ~/.kube/config | base64
 ```
 
 ## Setup Checklist
 
 - [ ] `NEXT_PUBLIC_API_URL` - Your production API URL
-- [ ] `KUBECONFIG` - Base64-encoded Kubernetes config
+- [ ] `KUBECONFIG` - Base64 kubeconfig of the restricted ServiceAccount
 - [ ] `MONGO_ROOT_USERNAME` - MongoDB admin username
 - [ ] `MONGO_ROOT_PASSWORD` - MongoDB admin password
 - [ ] `JWT_SECRET` - JWT signing secret

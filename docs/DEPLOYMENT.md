@@ -1,5 +1,7 @@
 # EpiCalendar Deployment Guide
 
+> **Archived project, no longer deployed.** On 2026-11-26 the `epicalendar` namespace was removed from the cluster, the "Deploy to Kubernetes" workflow was disabled and the `KUBECONFIG`, `MONGO_*` and `JWT_SECRET` secrets were deleted. If the project comes back, give CI a ServiceAccount restricted to the `epicalendar` namespace, never the cluster admin kubeconfig.
+
 Complete guide for deploying EpiCalendar to a Kubernetes cluster with CI/CD.
 
 ## Table of Contents
@@ -85,28 +87,76 @@ JWT_SECRET=$(openssl rand -base64 32)
 echo "JWT_SECRET: $JWT_SECRET"
 
 # Generate MongoDB password
-MONGO_PASSWORD=$(openssl rand -base64 24)
+MONGO_PASSWORD=$(openssl rand -hex 24)  # hex: safe inside MONGODB_URI, no percent-encoding needed
 echo "MONGO_PASSWORD: $MONGO_PASSWORD"
 ```
 
 **Save these values securely - you'll need them later!**
 
-### 4. Update Kubernetes Secrets
+### 4. Cluster Admin Setup (once)
 
-Edit `kubernetes/mongodb-secret.yaml`:
-```yaml
-stringData:
-  MONGO_INITDB_ROOT_USERNAME: admin
-  MONGO_INITDB_ROOT_PASSWORD: <your-mongo-password>
-  MONGO_INITDB_DATABASE: epicalendar_db
-  MONGODB_URI: mongodb://admin:<your-mongo-password>@mongodb-service:27017/epicalendar?authSource=admin
+The namespace is cluster-scoped: a cluster admin creates it, with the restricted account used by CI. Neither the manifests nor CI create it.
+
+```bash
+kubectl apply -f kubernetes/namespace.yaml
+kubectl apply -f - <<'EOF'
+apiVersion: v1
+kind: ServiceAccount
+metadata: { name: github-deployer, namespace: epicalendar }
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: github-deployer-token
+  namespace: epicalendar
+  annotations: { kubernetes.io/service-account.name: github-deployer }
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: { name: github-deployer, namespace: epicalendar }
+rules:
+  - apiGroups: [""]
+    resources: [services, secrets, configmaps, persistentvolumeclaims]
+    verbs: [get, list, watch, create, update, patch, delete]
+  - apiGroups: [""]
+    resources: [pods, pods/log, events]
+    verbs: [get, list, watch]
+  - apiGroups: [apps]
+    resources: [deployments, replicasets]
+    verbs: [get, list, watch, create, update, patch, delete]
+  - apiGroups: [networking.k8s.io]
+    resources: [ingresses]
+    verbs: [get, list, watch, create, update, patch, delete]
+  - apiGroups: [traefik.io]
+    resources: [ingressroutes, middlewares]
+    verbs: [get, list, watch, create, update, patch, delete]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: { name: github-deployer, namespace: epicalendar }
+roleRef: { apiGroup: rbac.authorization.k8s.io, kind: Role, name: github-deployer }
+subjects: [{ kind: ServiceAccount, name: github-deployer, namespace: epicalendar }]
+EOF
 ```
 
-Edit `kubernetes/app-secret.yaml`:
-```yaml
-stringData:
-  JWT_SECRET: <your-jwt-secret>
-  JWT_EXPIRATION: 7d
+Build the `KUBECONFIG` secret from the token (`kubectl get secret github-deployer-token -n epicalendar -o jsonpath='{.data.token}' | base64 -d`), the cluster CA and the API server URL. Check it: `kubectl --kubeconfig <file> auth can-i create deployments -n epicalendar` → `yes`, and `... auth can-i create namespaces` → `no`.
+
+> `.github/workflows/deploy.yml` still runs `kubectl create namespace epicalendar`: remove that line before re-enabling the workflow, this account is not allowed to do it.
+
+### 5. Kubernetes Secrets
+
+The Kubernetes Secrets are created by the deploy workflow from the GitHub Secrets. `kubernetes/mongodb-secret.example.yaml` and `kubernetes/app-secret.example.yaml` only show their shape; they are not applied. For a manual deployment, create them before applying the manifests:
+
+```bash
+kubectl create secret generic mongodb-secret -n epicalendar \
+  --from-literal=MONGO_INITDB_ROOT_USERNAME=admin \
+  --from-literal=MONGO_INITDB_ROOT_PASSWORD="$MONGO_PASSWORD" \
+  --from-literal=MONGO_INITDB_DATABASE=epicalendar_db \
+  --from-literal=MONGODB_URI="mongodb://admin:$MONGO_PASSWORD@mongodb-service:27017/epicalendar?authSource=admin"
+kubectl create secret generic app-secret -n epicalendar \
+  --from-literal=JWT_SECRET="$JWT_SECRET" \
+  --from-literal=JWT_EXPIRATION=7d
 ```
 
 ## Configure GitHub Secrets
@@ -120,17 +170,7 @@ stringData:
 ### 2. Add Required Secrets
 
 #### KUBECONFIG
-Get your kubeconfig file:
-```bash
-# For most clusters
-kubectl config view --raw | base64
-
-# For macOS (copies to clipboard)
-kubectl config view --raw | base64 | pbcopy
-
-# For Linux (copies to clipboard, if xclip installed)
-kubectl config view --raw | base64 -w 0 | xclip -selection clipboard
-```
+Base64-encoded kubeconfig of a ServiceAccount restricted to the `epicalendar` namespace (Role + RoleBinding on the resources the app uses). **Never** the cluster admin kubeconfig (`~/.kube/config`, `kubectl config view --raw`): any workflow of the repository could read it. Setup: `docs/DEPLOYMENT.md`, "Cluster Admin Setup".
 
 Add as secret named: `KUBECONFIG`
 
@@ -155,17 +195,14 @@ Ensure all secrets are added:
 
 ### 1. Initial Manual Deployment
 
-First deployment should be done manually to verify everything works:
+First deployment should be done manually to verify everything works, after the cluster admin setup and the Kubernetes Secrets (Initial Setup, steps 4 and 5):
 
 ```bash
 # Apply all Kubernetes manifests
 kubectl apply -k kubernetes/
 
 # Or apply individually
-kubectl apply -f kubernetes/namespace.yaml
 kubectl apply -f kubernetes/mongodb-pvc.yaml
-kubectl apply -f kubernetes/mongodb-secret.yaml
-kubectl apply -f kubernetes/app-secret.yaml
 kubectl apply -f kubernetes/mongodb-deployment.yaml
 kubectl apply -f kubernetes/server-deployment.yaml
 kubectl apply -f kubernetes/client-deployment.yaml
