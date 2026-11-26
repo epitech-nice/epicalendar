@@ -23,7 +23,7 @@ This document explains how to configure all required secrets for the CI/CD pipel
 ### 2. KUBECONFIG
 
 - **Name:** `KUBECONFIG`
-- **Value:** Base64-encoded kubeconfig of a ServiceAccount restricted to the `epicalendar` namespace (Role + RoleBinding on the resources the app uses). **Never** the cluster admin kubeconfig (`~/.kube/config`, `kubectl config view --raw`): any workflow of the repository could read it.
+- **Value:** Base64-encoded kubeconfig of a ServiceAccount restricted to the `epicalendar` namespace (Role + RoleBinding on the resources the app uses). **Never** the cluster admin kubeconfig (`~/.kube/config`, `kubectl config view --raw`): any workflow of the repository could read it. Setup: `docs/DEPLOYMENT.md`, "Cluster Admin Setup".
 - **Used for:** Authenticating with your Kubernetes cluster
 
 ### 3. MONGO_ROOT_USERNAME

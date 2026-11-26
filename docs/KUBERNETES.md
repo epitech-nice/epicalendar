@@ -21,7 +21,7 @@ The application consists of:
 
 ## Files Overview
 
-- `namespace.yaml`: Creates the epicalendar namespace
+- `namespace.yaml`: the epicalendar namespace, applied once by a cluster admin (not part of the kustomization)
 - `mongodb-pvc.yaml`: Persistent volume claim for MongoDB data
 - `mongodb-secret.example.yaml`: shape of the MongoDB credentials Secret (not applied)
 - `app-secret.example.yaml`: shape of the application Secret (JWT, not applied)
@@ -63,7 +63,7 @@ rules:
 
 The Kubernetes Secrets are created by the deploy workflow from the GitHub Secrets. `kubernetes/mongodb-secret.example.yaml` and `kubernetes/app-secret.example.yaml` only show their shape; they are not applied.
 
-Create them by hand only for a manual deployment:
+For a manual deployment, create them before applying the manifests (commands in `docs/DEPLOYMENT.md`, "Kubernetes Secrets"). Expected content:
 
 #### `mongodb-secret.example.yaml`
 ```yaml
@@ -82,7 +82,7 @@ stringData:
 
 ### 3. Deploy to Kubernetes
 
-Apply all manifests using kustomize:
+A cluster admin first creates the namespace (`kubectl apply -f kubernetes/namespace.yaml`). Then apply all manifests using kustomize:
 
 ```bash
 kubectl apply -k kubernetes/
@@ -91,7 +91,6 @@ kubectl apply -k kubernetes/
 Or apply individually:
 
 ```bash
-kubectl apply -f kubernetes/namespace.yaml
 kubectl apply -f kubernetes/mongodb-pvc.yaml
 kubectl apply -f kubernetes/mongodb-configmap.yaml
 kubectl apply -f kubernetes/mongodb-deployment.yaml
